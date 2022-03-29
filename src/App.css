@@ -25,6 +25,13 @@ form h1 {
 	margin: 2rem 0;
 }
 
+.buttons {
+	display: flex;
+	justify-content: center;
+	/* flex-wrap: wrap; */
+	margin: 2rem 0;
+}
+
 .buttons button {
 	padding: 1rem;
 	background-color: aliceblue;
@@ -37,6 +44,10 @@ form h1 {
 /* .buttons button {
 	background-color: blue;
 } */
+
+#active {
+	background-color: rgb(144, 232, 43);
+}
 
 .textarea-wrapper {
 	display: flex;

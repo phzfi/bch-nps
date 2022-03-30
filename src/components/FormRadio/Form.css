@@ -37,12 +37,25 @@ form button {
 	font-size: 1rem;
 	font-weight: 700;
 	padding: 0.5rem;
+	margin: 0 0.5rem;
 	border-radius: 0.5rem;
 	transition: 0.2s ease-in-out;
 }
 
 form button:hover {
 	background-color: lightblue;
+}
+
+form .close-btn {
+	border: none;
+	background-color: transparent;
+	font-weight: 400;
+	transition: 0.2s ease-in-out;
+}
+
+form .close-btn:hover {
+	background-color: transparent;
+	color: red;
 }
 
 .radio-buttons {

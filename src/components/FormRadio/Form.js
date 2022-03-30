@@ -49,6 +49,7 @@ const Form = () => {
 					></textarea>
 				</div>
 				<button type="submit">Submit</button>
+				<button className="close-btn">No thanks</button>
 			</form>
 		</div>
 	);

@@ -10,9 +10,6 @@
 	position: absolute;
 	height: 100vh;
 	width: 100vw;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	z-index: 2;
 	background-color: rgba(0, 0, 0, 0.5);
 	display: flex;
@@ -39,7 +36,7 @@ form button {
 	border: 2px solid black;
 	font-size: 1rem;
 	font-weight: 700;
-	padding: 0.75rem;
+	padding: 0.5rem;
 	border-radius: 0.5rem;
 	transition: 0.2s ease-in-out;
 }
@@ -79,7 +76,8 @@ textarea {
 @media screen and (max-width: 415px) {
 	form {
 		margin: 0.75rem;
-		width: 80%;
+		width: 90%;
+		padding: 0.5rem;
 	}
 
 	form h1 {

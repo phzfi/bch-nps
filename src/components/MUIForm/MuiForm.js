@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import {
 	FormControl,
 	RadioGroup,
@@ -10,39 +11,82 @@ import {
 	Dialog,
 	DialogContent,
 	DialogTitle,
+	Zoom,
+	Container,
+	Alert
 } from "@mui/material";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
+
 
 
 function range(start, end) {
 	return Array(end - start + 1).fill().map((_, idx) => start + idx)
 }
-const radioArray = range(1, 10);
+const radioArray = range(0, 10);
+
 
 const MuiForm = () => {
-	const [open, setOpen] = useState(true);
+	const [surveyOpen, setSurveyOpen] = useState(true);
 	const [score, setScore] = useState(undefined);
+	const [comment, setComment] = useState(undefined);
+	const [thankyouOpen, setThankyouOpen] = useState(false);
+	const theme = useTheme();
+	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-	
-	const handleClose = () => {
-		setOpen(false);
+	useEffect(() => {
+		getResults();
+	}, [])
+
+	const handleSubmit = () => {
+		sendSurvey();
+		setSurveyOpen(false);
+		setThankyouOpen(true);
 	};
 
-	console.log('score now', score);
+	const handleCloseSurvey = () => {
+		setSurveyOpen(false);
+	};
+
+	const handleCloseThankyou = () => {
+		setThankyouOpen(false);
+	};
+
+	const sendSurvey = () => {
+		axios.post('http://localhost:8080/api/reviews', {
+			score: score,
+			comment: comment
+		});
+	};
+
+	const getResults = () => {
+		axios.get('http://localhost:8080/api/reviews')
+		.catch(err => console.log(err))
+		.then(res => console.log(res.data));
+	};
+		
 
 	return (
 		<div>
-			<Button variant="outlined" onClick={handleClickOpen}>
-			Open form dialog
-			</Button>
-			<Dialog open={open} onClose={handleClose} maxWidth="xl"  >
-			
+			<Typography variant="h3"
+						sx={{position: "absolute", top: "3rem", left: "3rem"}}>
+			Promoter Score Survey test page
+			</Typography>
+			{/* <Zoom > */}
+			<Dialog open={surveyOpen} 
+					onClose={handleCloseSurvey}
+					maxWidth="xl"
+					fullScreen={fullScreen}
+					>
+				<img
+					style={{ maxWidth: "15%", alignSelf: "center", paddingTop: "2rem" }}
+					src="https://phz.fi/app/uploads/2019/04/cropped-mstile-310x310.png"
+					alt="PHZ logo"
+				/>
 				<DialogTitle align="center">
 					How likely are you to recommend us to a friend or colleague?
 				</DialogTitle>
-			
 				<DialogContent align="center">
 					<Typography
 						variant="subtitle1"
@@ -58,14 +102,14 @@ const MuiForm = () => {
 							name="radio-buttons-group"
 							row
 							onChange={(event) => setScore(event.target.value)}
-							style={{flexWrap: "wrap", flexBasis: 0}}>
+							sx={{flexWrap: "nowrap"}}
+							>
 							{radioArray.map((radio, i) => (
 								<FormControlLabel key={i}
+								sx={{width: "9%", margin: "0rem", padding: "0rem"}}	
 								value={radio}
-								control={<Radio size="small" 
-								sx={{'& .MuiSvgIcon-root': {
-									margin: 0, padding: 0}}}
-								
+								control={<Radio
+								sx={{ margin: "0rem", padding: "0rem"}}			
 								/>}
 								label={radio}
 								labelPlacement="top"/>
@@ -81,22 +125,43 @@ const MuiForm = () => {
 						</Typography>
 						<TextareaAutosize
 							aria-label="empty textarea"
-							minRows={5}/>
-	
-						<Button
-							type="submit"
-							variant="contained"
-							color="primary"
-							style={{minWidth: '200px', margin: "1rem 0 0 0", alignSelf: "center"}}
-							onClick={handleClose}>
-								Submit
-						</Button>
-
+							minRows={5}
+							onChange={e => setComment(e.target.value)}
+						/>
+						<Container>
+							<Button
+								type="submit"
+								variant="contained"
+								color="primary"
+								sx={{minWidth: '200px',
+									margin: "1rem 1rem"}}
+								onClick={handleSubmit}>
+									Submit
+							</Button>
+							<Button
+								type="submit"
+								variant="outlined"
+								color="primary"
+								sx={{minWidth: '200px',
+								margin: "1rem 1rem",
+								':hover': {
+									bgcolor: 'primary.main',
+									color: 'white',
+								}
+								}}
+								onClick={handleCloseSurvey}>
+									Close
+							</Button>
+						</Container>
 					</FormControl>
-
 				</DialogContent>
-	
 			</Dialog>
+			{/* </Zoom> */}
+			{thankyouOpen &&
+				(<Alert onClose={handleCloseThankyou}>
+					Score <strong>submitted</strong>. Thank you for your feedback!
+				</Alert>)}
+
 		</div>
 	);
 };

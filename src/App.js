@@ -15,9 +15,9 @@ function App() {
 	return (
 		<div className="App">
 			{/* <Form /> */}
-			<MuiForm />
-			{/* <h1>Promoter Score survey</h1> 
-			{openModal && <FormRadio />} */}
+			{/* <MuiForm /> */}
+			<h1>Promoter Score survey</h1>
+			{openModal && <FormRadio />}
 		</div>
 	);
 }

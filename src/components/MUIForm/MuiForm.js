@@ -30,17 +30,74 @@ const radioArray = range(0, 10);
 const MuiForm = () => {
 	const [surveyOpen, setSurveyOpen] = useState(true);
 	const [score, setScore] = useState(undefined);
+	const [country, setCountry] = useState(undefined);
+	const [cookieFound, setCookieFound] = useState(false);
 	const [comment, setComment] = useState(undefined);
 	const [thankyouOpen, setThankyouOpen] = useState(false);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 	useEffect(() => {
-		getResults();
-	}, [])
+		// info.map(i => console.log(i));
+		const geo = navigator.geolocation;
+		if (geo) {
+			geo.getCurrentPosition(getCountry, error, options)
+		};
+		checkACookieExists();
+	}, [cookieFound]);
+
+
+	const options = {
+	  enableHighAccuracy: true,
+	  timeout: 5000,
+	  maximumAge: 10000
+	};
+
+	function getCountry(position) {
+		const crd = position.coords;
+		const latitude = crd.latitude;
+		const longitude= crd.longitude;
+		axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
+		.then(res => setCountry(res.data.countryName));
+	}
+
+	const info = [
+		navigator.userAgent, // Get the User-agent
+		navigator.cookieEnabled, // Checks whether cookies are enabled in browser
+		navigator.appName, // Get the Name of Browser
+		navigator.language,  // Get the Language of Browser
+		navigator.appVersion,  // Get the Version of Browser
+		navigator.platform,  // Get the platform for which browser is compiled
+		document.location,
+		document.referrer,
+		navigator.languages,
+		document.cookie,
+	]
+
+
+	function error(err) {
+		console.warn(`ERROR(${err.code}): ${err.message}`);
+	}
+
+
+	function checkACookieExists() {
+		if (document.cookie.split(';').some((item) => item.trim().startsWith('-surveyAnswering-'))) {
+			setCookieFound(true);
+		}
+	}
+
+	function createCookie() {
+		const cookieName = "-surveyAnswering-";
+		const cookieValue = "-surveyWasAnswered-";
+		const date = new Date();
+		date.setDate(date.getDate() + 30);
+		const expires = "; expires=" + date.toUTCString();
+		document.cookie = cookieName + "=" + cookieValue + expires + "; path=/";
+	}
 
 	const handleSubmit = () => {
-		sendSurvey();
+		sendSurvey();  // TO DO: check that response is ok!
+		createCookie();
 		setSurveyOpen(false);
 		setThankyouOpen(true);
 	};
@@ -56,7 +113,7 @@ const MuiForm = () => {
 	const sendSurvey = () => {
 		axios.post('http://localhost:8080/api/reviews', {
 			score: score,
-			comment: comment
+			comment: comment,
 		});
 	};
 
@@ -65,7 +122,6 @@ const MuiForm = () => {
 		.catch(err => console.log(err))
 		.then(res => console.log(res.data));
 	};
-		
 
 	return (
 		<div>
@@ -73,8 +129,11 @@ const MuiForm = () => {
 						sx={{position: "absolute", top: "3rem", left: "3rem"}}>
 			Promoter Score Survey test page
 			</Typography>
+			{cookieFound && <Typography variant="h4">
+			You already answered in the last 30 days. Clear your -surveyAnswering- cookie to test again.
+			</Typography>}
 			{/* <Zoom > */}
-			<Dialog open={surveyOpen} 
+			{!cookieFound && <Dialog open={surveyOpen} 
 					onClose={handleCloseSurvey}
 					maxWidth="xl"
 					fullScreen={fullScreen}
@@ -155,7 +214,7 @@ const MuiForm = () => {
 						</Container>
 					</FormControl>
 				</DialogContent>
-			</Dialog>
+			</Dialog>}
 			{/* </Zoom> */}
 			{thankyouOpen &&
 				(<Alert onClose={handleCloseThankyou}>

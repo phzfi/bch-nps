@@ -17,6 +17,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "prestart": "npm run license",
+    "license": "./node_modules/.bin/license-to-fail ./config/license-checker-config.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -39,5 +41,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "license-checker": "^25.0.1",
+    "license-to-fail": "^4.0.0"
   }
 }

@@ -1,9 +1,9 @@
-import "./App.css";
-import Form from "./components/Form/Form";
-import MuiForm from "./components/MUIForm/MuiForm";
 import { useEffect, useState } from "react";
-import "./components/FormRadio/Form.css";
-import FormRadio from "./components/FormRadio/Form";
+import "./App.css";
+// import Form from "./components/Form/Form";
+import MuiForm from "./components/MUIForm/MuiForm";
+// import "./components/FormRadio/Form.css";
+// import FormRadio from "./components/FormRadio/Form";
 
 function App() {
 	const [openModal, setOpenModal] = useState(false);
@@ -14,10 +14,10 @@ function App() {
 
 	return (
 		<div className="App">
-			{/* <Form /> */}
-			{/* <MuiForm /> */}
-			<h1>Promoter Score survey</h1>
-			{openModal && <FormRadio />}
+		{/* <Form /> */}
+			{<MuiForm/>}
+			{/* <h1>Promoter Score survey</h1> 
+			{openModal && <FormRadio />}  */}
 		</div>
 	);
 }

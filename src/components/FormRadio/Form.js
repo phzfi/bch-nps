@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Form = () => {
 	const [score, setScore] = useState("");
@@ -12,12 +13,26 @@ const Form = () => {
 		setComment(e.target.value.trim());
 	};
 
-	// console.log(score);
-	// console.log(comment);
+	// console.log(document.cookie);
+
+	useEffect(() => {
+		axios
+			.get("http://localhost:8080/api/reviews")
+			.then((data) => console.log(data));
+	}, []);
+
+	const submitHandler = () => {
+		axios
+			.post("http://localhost:8080/api/reviews", {
+				score: +score,
+				comment,
+			})
+			.then((res) => console.log(res));
+	};
 
 	return (
 		<div className="form-popup">
-			<form>
+			<form onSubmit={submitHandler}>
 				<h1>How likely are you to recommend us as an employer?</h1>
 				<p>On a scale of 1-10 (1=not likely, 10=very likely)</p>
 				<div className="radio-buttons">

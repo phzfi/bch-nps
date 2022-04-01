@@ -21,7 +21,8 @@ const Form = () => {
 			.then((data) => console.log(data));
 	}, []);
 
-	const submitHandler = () => {
+	const submitHandler = (e) => {
+		e.preventDefault();
 		axios
 			.post("http://localhost:8080/api/reviews", {
 				score: +score,

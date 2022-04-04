@@ -6,6 +6,11 @@
 	align-items: center;
 }
 
+.form-page_header {
+	display: flex;
+	flex-direction: column;
+}
+
 .form-popup {
 	position: absolute;
 	height: 100vh;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import {
 	FormControl,
 	RadioGroup,
@@ -13,19 +13,17 @@ import {
 	DialogTitle,
 	Zoom,
 	Container,
-	Alert
+	Alert,
 } from "@mui/material";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-
-
-
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 function range(start, end) {
-	return Array(end - start + 1).fill().map((_, idx) => start + idx)
+	return Array(end - start + 1)
+		.fill()
+		.map((_, idx) => start + idx);
 }
 const radioArray = range(0, 10);
-
 
 const MuiForm = () => {
 	const [surveyOpen, setSurveyOpen] = useState(true);
@@ -35,53 +33,57 @@ const MuiForm = () => {
 	const [comment, setComment] = useState(undefined);
 	const [thankyouOpen, setThankyouOpen] = useState(false);
 	const theme = useTheme();
-	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
 	useEffect(() => {
 		// info.map(i => console.log(i));
 		const geo = navigator.geolocation;
 		if (geo) {
-			geo.getCurrentPosition(getCountry, error, options)
-		};
+			geo.getCurrentPosition(getCountry, error, options);
+		}
 		checkACookieExists();
 	}, [cookieFound]);
 
-
 	const options = {
-	  enableHighAccuracy: true,
-	  timeout: 5000,
-	  maximumAge: 10000
+		enableHighAccuracy: true,
+		timeout: 5000,
+		maximumAge: 10000,
 	};
 
 	function getCountry(position) {
 		const crd = position.coords;
 		const latitude = crd.latitude;
-		const longitude= crd.longitude;
-		axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
-		.then(res => setCountry(res.data.countryName));
+		const longitude = crd.longitude;
+		axios
+			.get(
+				`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+			)
+			.then((res) => setCountry(res.data.countryName));
 	}
 
 	const info = [
 		navigator.userAgent, // Get the User-agent
 		navigator.cookieEnabled, // Checks whether cookies are enabled in browser
 		navigator.appName, // Get the Name of Browser
-		navigator.language,  // Get the Language of Browser
-		navigator.appVersion,  // Get the Version of Browser
-		navigator.platform,  // Get the platform for which browser is compiled
+		navigator.language, // Get the Language of Browser
+		navigator.appVersion, // Get the Version of Browser
+		navigator.platform, // Get the platform for which browser is compiled
 		document.location,
 		document.referrer,
 		navigator.languages,
 		document.cookie,
-	]
-
+	];
 
 	function error(err) {
 		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
 
-
 	function checkACookieExists() {
-		if (document.cookie.split(';').some((item) => item.trim().startsWith('-surveyAnswering-'))) {
+		if (
+			document.cookie
+				.split(";")
+				.some((item) => item.trim().startsWith("-surveyAnswering-"))
+		) {
 			setCookieFound(true);
 		}
 	}
@@ -96,7 +98,7 @@ const MuiForm = () => {
 	}
 
 	const handleSubmit = () => {
-		sendSurvey();  // TO DO: check that response is ok!
+		sendSurvey(); // TO DO: check that response is ok!
 		createCookie();
 		setSurveyOpen(false);
 		setThankyouOpen(true);
@@ -111,116 +113,131 @@ const MuiForm = () => {
 	};
 
 	const sendSurvey = () => {
-		axios.post('http://localhost:8080/api/reviews', {
+		axios.post("http://localhost:8080/api/reviews", {
 			score: score,
 			comment: comment,
 		});
 	};
 
 	const getResults = () => {
-		axios.get('http://localhost:8080/api/reviews')
-		.catch(err => console.log(err))
-		.then(res => console.log(res.data));
+		axios
+			.get("http://localhost:8080/api/reviews")
+			.catch((err) => console.log(err))
+			.then((res) => console.log(res.data));
 	};
 
 	return (
 		<div>
-			<Typography variant="h3"
-						sx={{position: "absolute", top: "3rem", left: "3rem"}}>
-			Promoter Score Survey test page
+			<Typography
+				variant="h3"
+				sx={{ position: "absolute", top: "3rem", left: "3rem" }}
+			>
+				Promoter Score Survey test page
 			</Typography>
-			{cookieFound && <Typography variant="h4">
-			You already answered in the last 30 days. Clear your -surveyAnswering- cookie to test again.
-			</Typography>}
+			{cookieFound && (
+				<Typography variant="h4">
+					You already answered in the last 30 days. Clear your -surveyAnswering-
+					cookie to test again.
+				</Typography>
+			)}
 			{/* <Zoom > */}
-			{!cookieFound && <Dialog open={surveyOpen} 
+			{!cookieFound && (
+				<Dialog
+					open={surveyOpen}
 					onClose={handleCloseSurvey}
 					maxWidth="xl"
 					fullScreen={fullScreen}
-					>
-				<img
-					style={{ maxWidth: "15%", alignSelf: "center", paddingTop: "2rem" }}
-					src="https://phz.fi/app/uploads/2019/04/cropped-mstile-310x310.png"
-					alt="PHZ logo"
-				/>
-				<DialogTitle align="center">
-					How likely are you to recommend us to a friend or colleague?
-				</DialogTitle>
-				<DialogContent align="center">
-					<Typography
-						variant="subtitle1"
-						align="center"
-						color="textPrimary"
-						gutterBottom
-					>
-						(0 = Not Likely, 10 = Very Likely)
-					</Typography>
-					<FormControl className="centerForm" margin="dense" alignitems="center">
-						<RadioGroup
-							aria-labelledby="demo-radio-buttons-group-label"
-							name="radio-buttons-group"
-							row
-							onChange={(event) => setScore(event.target.value)}
-							sx={{flexWrap: "nowrap"}}
-							>
-							{radioArray.map((radio, i) => (
-								<FormControlLabel key={i}
-								sx={{width: "9%", margin: "0rem", padding: "0rem"}}	
-								value={radio}
-								control={<Radio
-								sx={{ margin: "0rem", padding: "0rem"}}			
-								/>}
-								label={radio}
-								labelPlacement="top"/>
-							))}
-						</RadioGroup>
+				>
+					<img
+						style={{ maxWidth: "15%", alignSelf: "center", paddingTop: "2rem" }}
+						src="https://phz.fi/app/uploads/2019/04/cropped-mstile-310x310.png"
+						alt="PHZ logo"
+					/>
+					<DialogTitle align="center">
+						How likely are you to recommend us to a friend or colleague?
+					</DialogTitle>
+					<DialogContent align="center">
 						<Typography
-							paragraph
-							color="textPrimary"
+							variant="subtitle1"
 							align="center"
-							margin="1rem"
+							color="textPrimary"
+							gutterBottom
 						>
-							Please provide any comments to help explain your selection.
+							(0 = Not Likely, 10 = Very Likely)
 						</Typography>
-						<TextareaAutosize
-							aria-label="empty textarea"
-							minRows={5}
-							onChange={e => setComment(e.target.value)}
-						/>
-						<Container>
-							<Button
-								type="submit"
-								variant="contained"
-								color="primary"
-								sx={{minWidth: '200px',
-									margin: "1rem 1rem"}}
-								onClick={handleSubmit}>
+						<FormControl
+							className="centerForm"
+							margin="dense"
+							alignitems="center"
+						>
+							<RadioGroup
+								aria-labelledby="demo-radio-buttons-group-label"
+								name="radio-buttons-group"
+								row
+								onChange={(event) => setScore(event.target.value)}
+								sx={{ flexWrap: "nowrap" }}
+							>
+								{radioArray.map((radio, i) => (
+									<FormControlLabel
+										key={i}
+										sx={{ width: "9%", margin: "0rem", padding: "0rem" }}
+										value={radio}
+										control={<Radio sx={{ margin: "0rem", padding: "0rem" }} />}
+										label={radio}
+										labelPlacement="top"
+									/>
+								))}
+							</RadioGroup>
+							<Typography
+								paragraph
+								color="textPrimary"
+								align="center"
+								margin="1rem"
+							>
+								Please provide any comments to help explain your selection.
+							</Typography>
+							<TextareaAutosize
+								aria-label="empty textarea"
+								minRows={5}
+								onChange={(e) => setComment(e.target.value)}
+							/>
+							<Container>
+								<Button
+									type="submit"
+									variant="contained"
+									color="primary"
+									sx={{ minWidth: "200px", margin: "1rem 1rem" }}
+									onClick={handleSubmit}
+								>
 									Submit
-							</Button>
-							<Button
-								type="submit"
-								variant="outlined"
-								color="primary"
-								sx={{minWidth: '200px',
-								margin: "1rem 1rem",
-								':hover': {
-									bgcolor: 'primary.main',
-									color: 'white',
-								}
-								}}
-								onClick={handleCloseSurvey}>
+								</Button>
+								<Button
+									type="submit"
+									variant="outlined"
+									color="primary"
+									sx={{
+										minWidth: "200px",
+										margin: "1rem 1rem",
+										":hover": {
+											bgcolor: "primary.main",
+											color: "white",
+										},
+									}}
+									onClick={handleCloseSurvey}
+								>
 									Close
-							</Button>
-						</Container>
-					</FormControl>
-				</DialogContent>
-			</Dialog>}
+								</Button>
+							</Container>
+						</FormControl>
+					</DialogContent>
+				</Dialog>
+			)}
 			{/* </Zoom> */}
-			{thankyouOpen &&
-				(<Alert onClose={handleCloseThankyou}>
+			{thankyouOpen && (
+				<Alert onClose={handleCloseThankyou}>
 					Score <strong>submitted</strong>. Thank you for your feedback!
-				</Alert>)}
-
+				</Alert>
+			)}
 		</div>
 	);
 };

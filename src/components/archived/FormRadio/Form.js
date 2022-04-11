@@ -31,12 +31,12 @@ const Form = () => {
 	}
 
 	function createCookie() {
-		const cookieName = "-surveyAnswering-";
-		const cookieValue = "-surveyWasAnswered-";
+		const cookieName = "-surveyAnsweringRadio-";
+		const cookieValue = "-surveyWasAnsweredRadio-";
 		const date = new Date();
 		date.setDate(date.getDate() + 30);
 		const expires = "; expires=" + date.toUTCString();
-		document.cookie = cookieName + "=" + cookieValue + expires + "; path=/";
+		document.cookie = encodeURIComponent(cookieName) + "=" + encodeURIComponent(cookieValue) + expires + "; path=/";
 	}
 
 	const scoreHandler = (e) => {

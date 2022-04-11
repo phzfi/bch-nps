@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./MUIRating.css";
 import axios from "axios";
 import {
 	Box,
@@ -148,8 +149,11 @@ const MuiForm = () => {
 					<DialogContent align="center">
 						<FormControl
 							margin="dense"
-							alignitems="center"
-							sx={{ display: "flex", justifyContent: "center" }}
+							sx={{
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+							}}
 						>
 							<Box
 								sx={{
@@ -161,12 +165,25 @@ const MuiForm = () => {
 										{labels[hover !== -1 ? hover : score]}
 									</Box>
 								)}
+								<Box align="center" sx={{ display: "flex" }}>
+									<Typography margin={1.6}>1</Typography>
+									<Typography margin={1.6}>2</Typography>
+									<Typography margin={1.6}>3</Typography>
+									<Typography margin={1.6}>4</Typography>
+									<Typography margin={1.6}>5</Typography>
+									<Typography margin={1.6}>6</Typography>
+									<Typography margin={1.6}>7</Typography>
+									<Typography margin={1.6}>8</Typography>
+									<Typography margin={1.6}>9</Typography>
+									<Typography margin={1.6}>10</Typography>
+								</Box>
 								<Rating
+									className="rating"
 									name="hover-feedback"
 									value={score}
 									emptyLabelText="not rate yet"
 									max={10}
-									sx={{ fontSize: "2rem" }}
+									sx={{ fontSize: "2.2rem" }}
 									required
 									onChange={(event, newValue) => {
 										setScore(newValue);
@@ -193,10 +210,8 @@ const MuiForm = () => {
 							<TextareaAutosize
 								aria-label="empty textarea"
 								minRows={5}
-								sx={{
-									marginTop: "0rem",
-									padding: "0rem",
-								}}
+								cols={45}
+								className="textarea"
 								onChange={(e) => setComment(e.target.value)}
 							/>
 							<Container>

@@ -7,7 +7,6 @@ import {
 	Button,
 	TextareaAutosize,
 	Typography,
-	// ButtonGroup,
 	Dialog,
 	DialogContent,
 	DialogTitle,
@@ -16,15 +15,13 @@ import {
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import logo from "../assets/phz.png";
 import StarIcon from "@mui/icons-material/Star";
 
 const MuiForm = () => {
 	const [surveyOpen, setSurveyOpen] = useState(true);
 	const [error, setError] = useState(false);
 	const [score, setScore] = useState(0);
-	// const [country, setCountry] = useState(undefined);
-	const [cookieFound, setCookieFound] = useState(false);
+	const [surveyAnswered, setSurveyAnswered] = useState(false);
 	const [comment, setComment] = useState(undefined);
 	const [thankyouOpen, setThankyouOpen] = useState(false);
 	const [hover, setHover] = useState(-1);
@@ -32,75 +29,36 @@ const MuiForm = () => {
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
 	useEffect(() => {
-		// info.map(i => console.log(i));
-		// const geo = navigator.geolocation;
-		// if (geo) {
-		// 	geo.getCurrentPosition(getCountry, error, options)
-		// };
-		checkACookieExists();
+		checkIsSurveyAnswered();
+	}, [surveyAnswered, surveyOpen, error, score]);
+
+	useEffect(() => {
 		getResults();
-	}, [cookieFound, surveyOpen, error]);
+	}, [surveyOpen]);
 
-	// const options = {
-	//   enableHighAccuracy: true,
-	//   timeout: 5000,
-	//   maximumAge: 10000
-	// };
-
-	// function getCountry(position) {
-	// 	const crd = position.coords;
-	// 	const latitude = crd.latitude;
-	// 	const longitude= crd.longitude;
-	// 	axios.get(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
-	// 	.then(res => setCountry(res.data.countryName));
-	// }
-
-	// const info = [
-	// 	navigator.userAgent, // Get the User-agent
-	// 	navigator.cookieEnabled, // Checks whether cookies are enabled in browser
-	// 	navigator.appName, // Get the Name of Browser
-	// 	navigator.language,  // Get the Language of Browser
-	// 	navigator.appVersion,  // Get the Version of Browser
-	// 	navigator.platform,  // Get the platform for which browser is compiled
-	// 	document.location,
-	// 	document.referrer,
-	// 	navigator.languages,
-	// 	document.cookie,
-	// ]
-
-	// function error(err) {
-	// 	console.warn(`ERROR(${err.code}): ${err.message}`);
-	// }
-
-	function checkACookieExists() {
-		if (navigator.cookieEnabled) {
-			if (
-				document.cookie
-					.split(";")
-					.some((item) => item.trim().startsWith("-surveyAnsweringIcons-"))
-			) {
-				setCookieFound(true);
-			}
+	const checkIsSurveyAnswered = () => {
+		const key = "-surveyAnsweringIn30days-";
+		// const currentDate = new Date();
+		const now = new Date();
+		now.setDate(now.getDate());
+		const itemStr = localStorage.getItem(key);
+		if (now < Date.parse(itemStr)) {
+			setSurveyAnswered(true);
 		}
-	}
+		if (now > Date.parse(itemStr)) {
+			localStorage.removeItem(key);
+		}
+	};
 
-	function createCookie() {
-		const cookieName = "-surveyAnsweringIcons-";
-		const cookieValue = "-surveyWasAnsweredIcons-";
+	const setExpiryForSurvey = () => {
 		const date = new Date();
 		date.setDate(date.getDate() + 30);
-		const expires = "; expires=" + date.toUTCString();
-		document.cookie = cookieName + "=" + cookieValue + expires + "; path=/";
-		setCookieFound(true);
-		console.log("status OK, 30 days cookie set");
-	}
-
-	// const handleClick = (e) => {
-	// 	setScore(e.target.value);
-	// }
+		const key = "-surveyAnsweringIn30days-";
+		localStorage.setItem(key, date);
+	};
 
 	const submitOK = () => {
-		createCookie();
+		setExpiryForSurvey();
 		setSurveyOpen(false);
 		setThankyouOpen(true);
 	};
@@ -128,13 +86,15 @@ const MuiForm = () => {
 	};
 
 	const sendSurvey = () => {
-		axios
-			.post("http://localhost:8080/api/reviews", {
-				score: score,
-				comment: comment,
-			})
-			.catch((err) => errorInSubmit(err))
-			.then((res) => (res.status === 200 ? submitOK() : errorInSubmit()));
+		if (score) {
+			axios
+				.post("http://localhost:8080/api/reviews", {
+					score: score,
+					comment: comment,
+				})
+				.catch((err) => errorInSubmit(err))
+				.then((res) => (res.status === 200 ? submitOK() : errorInSubmit()));
+		}
 	};
 
 	const getResults = () => {
@@ -160,29 +120,19 @@ const MuiForm = () => {
 
 	return (
 		<div>
-			{cookieFound && !thankyouOpen && (
+			{surveyAnswered && !thankyouOpen && (
 				<Typography variant="h6" p={2}>
-					You already answered in the last 30 days. Clear your -surveyAnswering-
-					cookie to test again.
+					You already answered the survey in the last 30 days.
 				</Typography>
 			)}
 			{/* <Zoom > */}
-			{!cookieFound && (
+			{!surveyAnswered && (
 				<Dialog
 					open={surveyOpen}
 					onClose={handleCloseSurvey}
 					maxWidth="xl"
 					fullScreen={fullScreen}
 				>
-					<img
-						style={{
-							maxWidth: "10%",
-							alignSelf: "center",
-							paddingTop: "1.5rem",
-						}}
-						src={logo}
-						alt="PHZ logo"
-					/>
 					<DialogTitle align="center" sx={{ fontSize: "1.8rem" }}>
 						How likely are you to recommend PHZ to a friend or colleague?
 					</DialogTitle>
@@ -193,25 +143,14 @@ const MuiForm = () => {
 						padding="0"
 						margin="0"
 					>
-						(0 = Not Likely, 10 = Very Likely)
+						(1 = Not Likely, 10 = Very Likely)
 					</Typography>
 					<DialogContent align="center">
 						<FormControl
-							className="centerForm"
 							margin="dense"
 							alignitems="center"
 							sx={{ display: "flex", justifyContent: "center" }}
 						>
-							{/* <ButtonGroup variant="outlined" aria-label="outlined button group" fullWidth>
-						{radioArray.map((item, i) => (
-								<Button key={i} onClick={handleClick} value={item.score}>{item.score}</Button>
-							))}
-
-
-						</ButtonGroup> */}
-							{/* {radioArray.map((item, i) => (
-								<Button key={i} onClick={handleClick} value={item.score}>{item.score}</Button>
-							))} */}
 							<Box
 								sx={{
 									"& > legend": { mt: 2 },
@@ -261,15 +200,29 @@ const MuiForm = () => {
 								onChange={(e) => setComment(e.target.value)}
 							/>
 							<Container>
-								<Button
-									type="submit"
-									variant="contained"
-									color="primary"
-									sx={{ minWidth: "100px", m: 1 }}
-									onClick={sendSurvey}
-								>
-									Submit
-								</Button>
+								{score !== 0 && (
+									<Button
+										type="submit"
+										variant="contained"
+										color="primary"
+										sx={{ minWidth: "100px", m: 1 }}
+										onClick={sendSurvey}
+									>
+										Submit
+									</Button>
+								)}
+								{score === 0 && (
+									<Button
+										disabled
+										type="submit"
+										variant="contained"
+										color="primary"
+										sx={{ minWidth: "100px", m: 1 }}
+										onClick={sendSurvey}
+									>
+										Submit
+									</Button>
+								)}
 								<Button
 									type="submit"
 									variant="outlined"
@@ -299,7 +252,7 @@ const MuiForm = () => {
 			)}
 			{error && (
 				<Alert severity="error" onClose={handleCloseError}>
-					Something went wong. Did you forget to give a score?
+					Something went wong.
 				</Alert>
 			)}
 		</div>

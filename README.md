@@ -121,6 +121,29 @@ What kind of monitoring is there in the test environment, if any.
 - If a VPN, SSH tunneling or some other similar way to access the production environment is required,
   describe the steps needed here.
 
+#### 5.1.1. Usage
+
+- Place the below HTML elements anywhere on your page
+- Possibly replace the _src_ attribute to correct url
+
+```html
+<iframe
+	id="ps-form"
+	src="http://localhost:3000"
+	frameborder="0"
+	allowfullscreen
+	style="
+					position: fixed;
+					top: 0;
+					left: 0;
+					height: 100vh;
+					width: 100vw;
+					z-index: 10000;
+				"
+></iframe>
+<script src="your_url" type="text/javascript"></script>
+```
+
 ### 5.2. Deployment
 
 How a production deployment is done.

@@ -68,22 +68,18 @@ const MuiForm = () => {
 		console.log(err);
 		setError(true);
 		setSurveyOpen(false);
-		setTimeout(() => setSurveyOpen(true), 5000);
 	};
 
 	const handleCloseSurvey = () => {
 		setSurveyOpen(false);
-		setTimeout(() => window.location.reload(), 2000);
 	};
 
 	const handleCloseThankyou = () => {
 		setThankyouOpen(false);
-		setTimeout(() => window.location.reload(), 2000);
 	};
 
 	const handleCloseError = () => {
 		setError(false);
-		setTimeout(() => window.location.reload(), 2000);
 	};
 
 	const sendSurvey = () => {
@@ -106,7 +102,7 @@ const MuiForm = () => {
 	};
 
 	const labels = {
-		0: "Not rated yet",
+		0: "No rating given",
 		1: "1 star",
 		2: "2 stars",
 		3: "3 stars",
@@ -119,13 +115,10 @@ const MuiForm = () => {
 		10: "10 stars",
 	};
 
+	const labelsStars = [...Array(10).keys()].map(x => x+1);
+
 	return (
 		<div>
-			{surveyAnswered && !thankyouOpen && (
-				<Typography variant="h6" p={2}>
-					You already answered the survey in the last 30 days.
-				</Typography>
-			)}
 			{/* <Zoom > */}
 			{!surveyAnswered && (
 				<Dialog
@@ -135,7 +128,7 @@ const MuiForm = () => {
 					fullScreen={fullScreen}
 				>
 					<DialogTitle align="center" sx={{ fontSize: "1.8rem" }}>
-						How likely are you to recommend PHZ to a friend or colleague?
+						How likely are you to recommend TIVI to a friend or colleague?
 					</DialogTitle>
 					<Typography
 						variant="subtitle1"
@@ -166,16 +159,9 @@ const MuiForm = () => {
 									</Box>
 								)}
 								<Box align="center" sx={{ display: "flex" }}>
-									<Typography margin={1.6}>1</Typography>
-									<Typography margin={1.6}>2</Typography>
-									<Typography margin={1.6}>3</Typography>
-									<Typography margin={1.6}>4</Typography>
-									<Typography margin={1.6}>5</Typography>
-									<Typography margin={1.6}>6</Typography>
-									<Typography margin={1.6}>7</Typography>
-									<Typography margin={1.6}>8</Typography>
-									<Typography margin={1.6}>9</Typography>
-									<Typography margin={1.6}>10</Typography>
+									{labelsStars.map(label => (
+										<Typography key={label} margin={1.6}>{label}</Typography>
+									))}
 								</Box>
 								<Rating
 									className="rating"

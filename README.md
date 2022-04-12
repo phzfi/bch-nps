@@ -127,6 +127,7 @@ What kind of monitoring is there in the test environment, if any.
 - Possibly replace the _src_ attribute to correct url
 
 ```html
+<!-- EMBEDDABLE PROMOTER SCORE FORM -->
 <iframe
 	id="ps-form"
 	src="http://localhost:3000"
@@ -141,7 +142,11 @@ What kind of monitoring is there in the test environment, if any.
 					z-index: 10000;
 				"
 ></iframe>
-<script src="your_url" type="text/javascript"></script>
+<script
+	src="https://cdn.jsdelivr.net/gh/BCHteam1/ps_form@main/src/embedScript.js"
+	type="text/javascript"
+></script>
+<!-- EMBEDDABLE PROMOTER SCORE FORM -->
 ```
 
 ### 5.2. Deployment
@@ -190,6 +195,6 @@ with these instructions.
 
 ## 9. More useful information, Tips and Tricks
 
-Other important or useful things to know.
+- We used [jsDelivr](https://www.jsdelivr.com/) to use our form embedding script as _src_ attribute in HTML script element
 
 ## 10. Screenshots

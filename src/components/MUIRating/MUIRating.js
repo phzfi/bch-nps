@@ -128,7 +128,7 @@ const MuiForm = () => {
 					fullScreen={fullScreen}
 				>
 					<DialogTitle align="center" sx={{ fontSize: "1.8rem" }}>
-						How likely are you to recommend TIVI to a friend or colleague?
+						How likely are you to recommend PHZ to a friend or colleague?
 					</DialogTitle>
 					<Typography
 						variant="subtitle1"

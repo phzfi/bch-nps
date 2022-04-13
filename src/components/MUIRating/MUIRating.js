@@ -127,7 +127,10 @@ const MuiForm = () => {
 					maxWidth="xl"
 					fullScreen={fullScreen}
 				>
-					<DialogTitle align="center" sx={{ fontSize: "1.8rem" }}>
+					<DialogTitle
+						align="center"
+						sx={{ fontSize: "1.8rem", padding: "3rem" }}
+					>
 						How likely are you to recommend PHZ to a friend or colleague?
 					</DialogTitle>
 					<Typography

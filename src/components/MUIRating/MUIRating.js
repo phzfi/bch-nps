@@ -127,7 +127,10 @@ const MuiForm = () => {
 					maxWidth="xl"
 					fullScreen={fullScreen}
 				>
-					<DialogTitle align="center" sx={{ fontSize: "1.8rem" }}>
+					<DialogTitle
+						align="center"
+						sx={{ fontSize: "1.8rem", color: "black" }}
+					>
 						How likely are you to recommend PHZ to a friend or colleague?
 					</DialogTitle>
 					<Typography
@@ -160,7 +163,11 @@ const MuiForm = () => {
 								)}
 								<Box align="center" sx={{ display: "flex" }}>
 									{labelsStars.map((label) => (
-										<Typography key={label} margin={1.6}>
+										<Typography
+											key={label}
+											margin={1.6}
+											sx={{ color: "black" }}
+										>
 											{label}
 										</Typography>
 									))}
@@ -171,7 +178,7 @@ const MuiForm = () => {
 									value={score}
 									emptyLabelText="not rate yet"
 									max={10}
-									sx={{ fontSize: "2.2rem" }}
+									sx={{ fontSize: "2.2rem", color: "#f0ad3a" }}
 									required
 									onChange={(event, newValue) => {
 										setScore(newValue);
@@ -201,6 +208,7 @@ const MuiForm = () => {
 								cols={45}
 								className="textarea"
 								onChange={(e) => setComment(e.target.value)}
+								sx={{ fontFamily: "Roboto" }}
 							/>
 							<Container>
 								{score !== 0 && (

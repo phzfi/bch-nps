@@ -124,29 +124,15 @@ What kind of monitoring is there in the test environment, if any.
 #### 5.1.1. Usage
 
 - Place the below HTML elements anywhere on your page
-- Possibly replace the _src_ attribute to correct url
 
 ```html
-<!-- EMBEDDABLE PROMOTER SCORE FORM -->
-<iframe
-	id="ps-form"
-	src="http://localhost:3000"
-	frameborder="0"
-	allowfullscreen
-	style="
-					position: fixed;
-					top: 0;
-					left: 0;
-					height: 100vh;
-					width: 100vw;
-					z-index: 10000;
-				"
-></iframe>
+<!-- EMBEDDABLE PROMOTER SCORE SURVEY -->
+<div id="psForm"></div>
 <script
-	src="https://cdn.jsdelivr.net/gh/BCHteam1/ps_form@main/src/embedScript.js"
+	src="https://prismatic-stardust-51d9cb.netlify.app/static/js/main.7ca4dfcf.js"
 	type="text/javascript"
 ></script>
-<!-- EMBEDDABLE PROMOTER SCORE FORM -->
+<!-- EMBEDDABLE PROMOTER SCORE SURVEY -->
 ```
 
 ### 5.2. Deployment

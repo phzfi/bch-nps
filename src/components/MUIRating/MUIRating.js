@@ -72,12 +72,10 @@ const MuiForm = () => {
 
 	const handleCloseSurvey = () => {
 		setSurveyOpen(false);
-		closeSelf();
 	};
 
 	const handleCloseThankyou = () => {
 		setThankyouOpen(false);
-		closeSelf();
 	};
 
 	const handleCloseError = () => {
@@ -118,11 +116,6 @@ const MuiForm = () => {
 	};
 
 	const labelsStars = [...Array(10).keys()].map((x) => x + 1);
-
-	// send message to parent (i.e. HTML page where you embed this form)
-	const closeSelf = () => {
-		window.parent.postMessage("removetheiframe", "*");
-	};
 
 	return (
 		<div>

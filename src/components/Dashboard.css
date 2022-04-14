@@ -1,0 +1,15 @@
+.score-box {
+    margin: 3rem;
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(16, 25, 40);
+    border-radius: 50%;
+    height: 10rem;
+    width: 10rem;
+    padding: 3rem;
+    color: white;
+}

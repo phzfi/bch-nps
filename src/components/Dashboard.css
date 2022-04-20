@@ -1,15 +1,31 @@
 .score-box {
-    margin: 3rem;
+	margin: 3rem;
 }
 
 .score {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(16, 25, 40);
-    border-radius: 50%;
-    height: 10rem;
-    width: 10rem;
-    padding: 3rem;
-    color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: rgb(16, 25, 40);
+	border-radius: 50%;
+	height: 10rem;
+	width: 10rem;
+	padding: 3rem;
+	color: white;
+}
+
+.pie-wrapper {
+	text-align: center;
+	margin: 1rem;
+	padding: 1rem;
+	background-color: #142236;
+	height: 400px;
+	width: 500px;
+	border: 2px solid black;
+	border-radius: 1rem;
+	box-shadow: 0 0 5px black;
+}
+
+.pie-wrapper h2 {
+	color: #fff;
 }

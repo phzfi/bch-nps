@@ -1,31 +1,23 @@
-.score-box {
-	margin: 3rem;
-}
-
-.score {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: rgb(16, 25, 40);
-	border-radius: 50%;
-	height: 10rem;
-	width: 10rem;
-	padding: 3rem;
-	color: white;
-}
-
 .pie-wrapper {
-	text-align: center;
 	margin: 1rem;
 	padding: 1rem;
 	background-color: #142236;
-	height: 400px;
-	width: 500px;
+	height: 500px;
+	width: 450px;
 	border: 2px solid black;
 	border-radius: 1rem;
-	box-shadow: 0 0 5px black;
+	box-shadow: 0 5px 5px #142236;
 }
 
 .pie-wrapper h2 {
+	color: #fff;
+}
+
+.pie-wrapper select {
+	margin-top: 1rem;
+	padding: 0.5rem;
+	border: 2px solid #fff;
+	border-radius: 1rem;
+	background-color: transparent;
 	color: #fff;
 }

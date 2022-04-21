@@ -1,30 +1,3 @@
-.pie-wrapper {
-	margin: 1rem;
-	padding: 1rem;
-	background-color: #142236;
-	height: 500px;
-	width: 450px;
-	border: 2px solid black;
-	border-radius: 1rem;
-	box-shadow: 0 5px 5px #142236;
-}
-
-.pie-wrapper h2 {
-	color: #fff;
-}
-
-.pie-wrapper select {
-	margin-top: 1rem;
-	padding: 0.5rem;
-	border: 2px solid #fff;
-	border-radius: 1rem;
-	background-color: transparent;
-	color: #fff;
-}
-
-
-/* REVIEWS */
-
 h2 {
     color: white;
     margin-bottom: 15px;
@@ -60,15 +33,4 @@ h2 {
 
 .rate-group {
     display: flex;
-}
-
-
-.reviews {
-    max-width: 675px;
-    background-color: #142236;
-    border-radius: 30px;
-    margin: 20px;
-    padding: 20px;
-	max-height: 300px;
-	overflow: scroll;
 }

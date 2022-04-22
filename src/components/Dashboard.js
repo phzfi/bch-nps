@@ -13,28 +13,10 @@ const Dashboard = () => {
 		passives: 0,
 		detractors: 0,
 	});
-	// const [sixMonthsReviews, setSixMonthsReviews] = useState([]);
-	// const [sevenDayReviews, setSevenDaysReviews] = useState([]);
-	// const [psSixMonths, setPsSixMonths] = useState(undefined);
-	// const [psSevenDays, setPsSevenDays] = useState(undefined);
 
 	useEffect(() => {
 		getReviews();
 	}, []);
-
-	// useEffect(() => {
-	// 	getSixMonthsReviews();
-	// 	getSevenDaysReviews();
-	// 	getPsSevenDays();
-	// 	getPsSixMonths();
-	// }, [
-	// 	loading,
-	// 	reviews,
-	// 	sixMonthsReviews,
-	// 	sevenDayReviews,
-	// 	psSevenDays,
-	// 	psSixMonths,
-	// ]);
 
 	const getReviews = () => {
 		axios
@@ -47,65 +29,7 @@ const Dashboard = () => {
 			.catch((err) => console.log(err));
 	};
 
-	// const getSixMonthsReviews = () => {
-	// 	const sixMonthsAgo = new Date();
-	// 	sixMonthsAgo.setDate(sixMonthsAgo.getDate() - 120);
-	// 	setSixMonthsReviews(
-	// 		reviews?.filter((review) => Date.parse(review.createdAt) > sixMonthsAgo)
-	// 	);
-	// };
-
-	// const getSevenDaysReviews = () => {
-	// 	const sevenDaysAgo = new Date();
-	// 	sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-	// 	setSevenDaysReviews(
-	// 		reviews?.filter((review) => Date.parse(review.createdAt) > sevenDaysAgo)
-	// 	);
-	// };
-
-	// const getPsSevenDays = () => {
-	// 	let respondants = sevenDayReviews.length;
-	// 	let promoters = 0;
-	// 	let detractors = 0;
-	// 	for (let review of reviews) {
-	// 		if (review.score > 8) {
-	// 			promoters += 1;
-	// 		}
-	// 		if (review.score < 7) {
-	// 			detractors += 1;
-	// 		}
-	// 	}
-	// 	if (respondants) {
-	// 		setPsSevenDays(((promoters - detractors) / respondants) * 100);
-	// 	}
-	// };
-
-	// const getPsSixMonths = () => {
-	// 	let respondants = sixMonthsReviews.length;
-	// 	let promoters = 0;
-	// 	let passives = 0;
-	// 	let detractors = 0;
-	// 	for (let review of reviews) {
-	// 		if (review.score > 8) {
-	// 			promoters += 1;
-	// 		}
-	// 		if (review.score < 7) {
-	// 			detractors += 1;
-	// 		} else {
-	// 			passives += 1;
-	// 		}
-	// 	}
-	// 	if (respondants) {
-	// 		setPsSixMonths(((promoters - detractors) / respondants) * 100);
-	// 		setPsGroups({
-	// 			promoters: promoters,
-	// 			passives: passives,
-	// 			detractors: detractors,
-	// 		});
-	// 	}
-	// };
-
-	function calcPromoterScore(data) {
+	const calcPromoterScore = (data) => {
 		let respondants = data.length;
 		let promoters = 0;
 		let passives = 0;
@@ -128,9 +52,9 @@ const Dashboard = () => {
 				detractors: detractors,
 			};
 		}
-	}
+	};
 
-	const getPsByTimeSelection = (e) => {
+	const handleTimeSelection = (e) => {
 		const date = new Date();
 		date.setMonth(date.getMonth() - e.target.value);
 		const filteredReviews = reviews?.filter(
@@ -182,68 +106,61 @@ const Dashboard = () => {
 	};
 
 	return (
-		<div>
-		<div className="pie-wrapper">
-			<h2>Promoter Score</h2>
-			<select defaultValue="6" onChange={getPsByTimeSelection}>
-				<option value="1">Rolling 1 month</option>
-				<option value="2">Rolling 2 months</option>
-				<option value="3">Rolling 3 months</option>
-				<option value="4">Rolling 4 months</option>
-				<option value="5">Rolling 5 months</option>
-				<option value="6">Rolling 6 months</option>
-			</select>
-			{!loading && (
-				<ResponsivePie
-					data={data}
-					margin={{ top: 20, right: 80, bottom: 160, left: 80 }}
-					innerRadius={0.7}
-					padAngle={2}
-					cornerRadius={3}
-					activeOuterRadiusOffset={8}
-					borderWidth={1}
-					colors={{ datum: "data.color" }}
-					borderColor={{ from: "color", modifiers: [["darker", 2]] }}
-					enableArcLabels={false}
-					arcLinkLabel={(d) => `${d.value}`}
-					arcLinkLabelsSkipAngle={15}
-					arcLinkLabelsTextColor="#FFF"
-					arcLinkLabelsThickness={2}
-					arcLinkLabelsColor={{ from: "color" }}
-					arcLabelsSkipAngle={10}
-					arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
-					layers={[
-						"arcs",
-						"arcLabels",
-						"arcLinkLabels",
-						"legends",
-						CenteredMetric,
-					]}
-					legends={[
-						{
-							anchor: "bottom",
-							direction: "row",
-							justify: false,
-							translateX: 0,
-							translateY: 50,
-							itemsSpacing: 4,
-							itemWidth: 100,
-							itemHeight: 28,
-							itemTextColor: "#FFF",
-							itemDirection: "top-to-bottom",
-							itemOpacity: 1,
-							symbolSize: 20,
-							symbolShape: "circle",
-						},
-					]}
-				/>
-			)}
-	
+  <div>
+		<div className="charts">
+			<div className="pie-wrapper">
+				<h2>Promoter Score</h2>
+				<select defaultValue="6" onChange={handleTimeSelection}>
+					<option value="1">Rolling 1 month</option>
+					<option value="3">Rolling 3 months</option>
+					<option value="6">Rolling 6 months</option>
+					<option value="12">Rolling 1 year</option>
+				</select>
+				{!loading && (
+					<ResponsivePie
+						data={data}
+						margin={{ top: 20, right: 50, bottom: 160, left: 50 }}
+						innerRadius={0.7}
+						padAngle={2}
+						cornerRadius={3}
+						activeOuterRadiusOffset={10}
+						borderWidth={1}
+						theme={{ fontSize: "1rem" }}
+						colors={{ datum: "data.color" }}
+						borderColor={{ from: "color", modifiers: [["darker", 10]] }}
+						enableArcLinkLabels={false}
+						arcLabelsSkipAngle={10}
+						arcLabelsTextColor={{
+							from: "color",
+							modifiers: [["brighter", 10]],
+						}}
+						layers={["arcs", "arcLabels", "legends", CenteredMetric]}
+						legends={[
+							{
+								anchor: "bottom",
+								direction: "row",
+								justify: false,
+								translateX: 0,
+								translateY: 60,
+								itemsSpacing: 1,
+								itemWidth: 100,
+								itemHeight: 28,
+								itemTextColor: "#FFF",
+								itemDirection: "top-to-bottom",
+								itemOpacity: 1,
+								symbolSize: 20,
+								symbolShape: "circle",
+							},
+						]}
+					/>
+				)}
+			</div>
+			<div className="line-wrapper"></div>
 		</div>
 		<div className="reviews">
             <h2>Reviews</h2>
             <Review />
-        </div>
+    </div>
 		</div>
 	);
 };

@@ -24,6 +24,19 @@ Are other changes - such as /etc/hosts, port-forwardings - needed?
 How to run all tests locally. If there are separate unit, integration and acceptance/e2e tests, remember to
 describe here how to run any/all of them.
 
+- Cypress e2e form test:
+
+```sh
+npm run cypress:open
+```
+
+To run cypress tests on browserstack:
+
+```sh
+browserstack-cypress run --sync
+```
+
+
 ### 3.3. Migrations
 
 How to run database migrations locally (if necessary). Sometimes the migrations are run as part of the test suite,
@@ -148,6 +161,10 @@ The steps needed to verify that a new version is running in production successfu
 Tests (scripts or otherwise) that you have to run in order to ensure that a deployment was successful.
 
 #### 5.3.2. Manual test cases
+
+
+
+
 
 Things that you have to test manually in order to ensure that a deployment was successful.
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./MUIRating.css";
 import axios from "axios";
 import {
@@ -12,6 +12,7 @@ import {
 	DialogContent,
 	DialogTitle,
 	Container,
+	Snackbar,
 	Alert,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -28,6 +29,7 @@ const MuiForm = () => {
 	const [hover, setHover] = useState(-1);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+	const [errorMessage, setErrorMessage] = useState("");
 
 	useEffect(() => {
 		checkIsSurveyAnswered();
@@ -39,7 +41,6 @@ const MuiForm = () => {
 
 	const checkIsSurveyAnswered = () => {
 		const key = "-surveyAnsweringIn30days-";
-		// const currentDate = new Date();
 		const now = new Date();
 		now.setDate(now.getDate());
 		const itemStr = localStorage.getItem(key);
@@ -66,6 +67,7 @@ const MuiForm = () => {
 
 	const errorInSubmit = (err) => {
 		console.log(err);
+		setErrorMessage(err);
 		setError(true);
 		setSurveyOpen(false);
 	};
@@ -116,6 +118,8 @@ const MuiForm = () => {
 	};
 
 	const labelsStars = [...Array(10).keys()].map((x) => x + 1);
+
+	const { vertical, horizontal } = { open: false, vertical: "bottom", horizontal: "left"};
 
 	return (
 		<div>
@@ -252,14 +256,30 @@ const MuiForm = () => {
 			)}
 			{/* </Zoom> */}
 			{thankyouOpen && (
-				<Alert onClose={handleCloseThankyou}>
-					Score <strong>submitted</strong>. Thank you for your feedback!
-				</Alert>
+				<Snackbar open={thankyouOpen}
+						autoHideDuration={5000}
+						anchorOrigin={{vertical, horizontal}}
+						onClose={handleCloseThankyou}
+				>
+					<Alert onClose={handleCloseThankyou}
+						severity="success"
+						sx={{ width: '100%' }}
+					>
+						Score <strong>submitted</strong>. Thank you for your feedback!
+					</Alert>
+				</Snackbar>
 			)}
 			{error && (
-				<Alert severity="error" onClose={handleCloseError}>
-					Something went wong.
-				</Alert>
+				<Snackbar open={error}
+						autoHideDuration={5000}
+						onClose={handleCloseError}
+				>
+					<Alert severity="error"
+						onClose={handleCloseError}
+					>
+						{`${errorMessage}`}
+					</Alert>
+				</Snackbar>
 			)}
 		</div>
 	);

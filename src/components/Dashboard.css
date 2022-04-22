@@ -1,3 +1,8 @@
+.dashboard {
+	display: flex;
+	justify-content: space-evenly;
+}
+
 .pie-wrapper {
 	margin: 1rem;
 	padding: 1rem;
@@ -11,6 +16,7 @@
 
 .pie-wrapper h2 {
 	color: #fff;
+	margin-bottom: 0;
 }
 
 .pie-wrapper select {
@@ -20,55 +26,4 @@
 	border-radius: 1rem;
 	background-color: transparent;
 	color: #fff;
-}
-
-
-/* REVIEWS */
-
-h2 {
-    color: white;
-    margin-bottom: 15px;
-}
-
-.comment, .rate, .date {
-    color: #142236;
-}
-
-.review-single {
-    background: #F6F6F8;
-    border: 1px solid #142236;
-    box-sizing: border-box;
-    border-radius: 10px;
-    max-width: 295px;
-    padding: 10px;
-    margin: 0 10px 10px 0;
-}
-
-.container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.star {
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background: cover;
-    background-image: url(../images/Star.png);
-}
-
-.rate-group {
-    display: flex;
-}
-
-
-.reviews {
-    max-width: 675px;
-    background-color: #142236;
-    border-radius: 30px;
-    margin: 20px;
-    padding: 20px;
-	max-height: 300px;
-	overflow: scroll;
 }

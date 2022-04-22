@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import axios from "axios";
 import "./Dashboard.css";
-import Review from "./Reviews";
+import Reviews from "./Reviews";
 
 const Dashboard = () => {
 	const [loading, setLoading] = useState(true);
@@ -106,61 +106,58 @@ const Dashboard = () => {
 	};
 
 	return (
-  <div>
-		<div className="charts">
-			<div className="pie-wrapper">
-				<h2>Promoter Score</h2>
-				<select defaultValue="6" onChange={handleTimeSelection}>
-					<option value="1">Rolling 1 month</option>
-					<option value="3">Rolling 3 months</option>
-					<option value="6">Rolling 6 months</option>
-					<option value="12">Rolling 1 year</option>
-				</select>
-				{!loading && (
-					<ResponsivePie
-						data={data}
-						margin={{ top: 20, right: 50, bottom: 160, left: 50 }}
-						innerRadius={0.7}
-						padAngle={2}
-						cornerRadius={3}
-						activeOuterRadiusOffset={10}
-						borderWidth={1}
-						theme={{ fontSize: "1rem" }}
-						colors={{ datum: "data.color" }}
-						borderColor={{ from: "color", modifiers: [["darker", 10]] }}
-						enableArcLinkLabels={false}
-						arcLabelsSkipAngle={10}
-						arcLabelsTextColor={{
-							from: "color",
-							modifiers: [["brighter", 10]],
-						}}
-						layers={["arcs", "arcLabels", "legends", CenteredMetric]}
-						legends={[
-							{
-								anchor: "bottom",
-								direction: "row",
-								justify: false,
-								translateX: 0,
-								translateY: 60,
-								itemsSpacing: 1,
-								itemWidth: 100,
-								itemHeight: 28,
-								itemTextColor: "#FFF",
-								itemDirection: "top-to-bottom",
-								itemOpacity: 1,
-								symbolSize: 20,
-								symbolShape: "circle",
-							},
-						]}
-					/>
-				)}
+		<div className="dashboard">
+			<div className="charts">
+				<div className="pie-wrapper">
+					<h2>Promoter Score</h2>
+					<select defaultValue="6" onChange={handleTimeSelection}>
+						<option value="1">Rolling 1 month</option>
+						<option value="3">Rolling 3 months</option>
+						<option value="6">Rolling 6 months</option>
+						<option value="12">Rolling 1 year</option>
+					</select>
+					{!loading && (
+						<ResponsivePie
+							data={data}
+							margin={{ top: 20, right: 50, bottom: 160, left: 50 }}
+							innerRadius={0.7}
+							padAngle={2}
+							cornerRadius={3}
+							activeOuterRadiusOffset={10}
+							borderWidth={1}
+							theme={{ fontSize: "1rem" }}
+							colors={{ datum: "data.color" }}
+							borderColor={{ from: "color", modifiers: [["darker", 10]] }}
+							enableArcLinkLabels={false}
+							arcLabelsSkipAngle={10}
+							arcLabelsTextColor={{
+								from: "color",
+								modifiers: [["brighter", 10]],
+							}}
+							layers={["arcs", "arcLabels", "legends", CenteredMetric]}
+							legends={[
+								{
+									anchor: "bottom",
+									direction: "row",
+									justify: false,
+									translateX: 0,
+									translateY: 60,
+									itemsSpacing: 1,
+									itemWidth: 100,
+									itemHeight: 28,
+									itemTextColor: "#FFF",
+									itemDirection: "top-to-bottom",
+									itemOpacity: 1,
+									symbolSize: 20,
+									symbolShape: "circle",
+								},
+							]}
+						/>
+					)}
+				</div>
+				<div className="line-wrapper"></div>
 			</div>
-			<div className="line-wrapper"></div>
-		</div>
-		<div className="reviews">
-            <h2>Reviews</h2>
-            <Review />
-    </div>
+			<Reviews reviews={reviews} />
 		</div>
 	);
 };

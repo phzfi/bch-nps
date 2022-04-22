@@ -1,36 +1,57 @@
-h2 {
-    color: white;
-    margin-bottom: 15px;
+.reviews h2 {
+	color: white;
 }
 
-.comment, .rate, .date {
-    color: #142236;
+.comment,
+.rate,
+.date {
+	color: #142236;
 }
 
 .review-single {
-    background: #F6F6F8;
-    border: 1px solid #142236;
-    box-sizing: border-box;
-    border-radius: 10px;
-    max-width: 295px;
-    padding: 10px;
-    margin: 0 10px 10px 0;
+	background: #f6f6f8;
+	border: 1px solid #142236;
+	box-sizing: border-box;
+	border-radius: 10px;
+	width: 90%;
+	padding: 10px;
+	margin: 0 10px 10px 0;
+}
+
+.review-single p {
+	padding: 0.2rem 0;
 }
 
 .container {
-    display: flex;
-    flex-wrap: wrap;
+	margin-top: 1.5rem;
 }
 
 .star {
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background: cover;
-    background-image: url(../images/Star.png);
+	width: 25px;
+	height: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background: cover;
+	background-image: url(../images/Star.png);
 }
 
 .rate-group {
-    display: flex;
+	display: flex;
+}
+
+.rate {
+	font-weight: 700;
+}
+
+.reviews {
+	width: 100%;
+	background-color: #142236;
+	border-radius: 30px;
+	margin: 1rem;
+	padding: 20px;
+	height: 400px;
+	overflow: scroll;
+	border: 2px solid black;
+	border-radius: 1rem;
+	box-shadow: 5px 5px 5px #142236;
 }

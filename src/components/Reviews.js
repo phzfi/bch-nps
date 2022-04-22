@@ -1,63 +1,29 @@
-import React, { useState } from 'react';
-import reviews from './data';
-import './Review.css';
+import React from "react";
+import "./Review.css";
 
-
-const Review = () => {
-    const [index,setIndex] = useState(0)
-    const {comment,score,createdAt} = reviews[index] 
-
-    return (
-        <div className='container'>
-            <div className='review-single'>
-                <div className='rate-group'>
-                <p className='rate'>{score}
-                </p>
-                <div className='star'></div>
-                </div>
-                <p className='comment'>{comment}</p>
-                <p className='date'>{createdAt}</p>
-            </div>
-            <div className='review-single'>
-                <p className='rate'>{score}</p>
-                <p className='comment'>{comment}</p>
-                <p className='date'>{createdAt}</p>
-            </div>
-            <div className='review-single'>
-                <p className='rate'>{score}</p>
-                <p className='comment'>{comment}</p>
-                <p className='date'>{createdAt}</p>
-            </div>
-            <div className='review-single'>
-                <p className='rate'>{score}</p>
-                <p className='comment'>{comment}</p>
-                <p className='date'>{createdAt}</p>
-            </div>
-            <div className='review-single'>
-                <p className='rate'>{score}</p>
-                <p className='comment'>{comment}</p>
-                <p className='date'>{createdAt}</p>
-            </div>
-
-            <div className='review-single'>
-                <p className='rate'>{score}</p>
-                <p className='comment'>{comment}</p>
-                <p className='date'>{createdAt}</p>
-            </div>
-
-            <div className='review-single'>
-                <p className='rate'>{score}</p>
-                <p className='comment'>{comment}</p>
-                <p className='date'>{createdAt}</p>
-            </div>
-
-            <div className='review-single'>
-                <p className='rate'>{score}</p>
-                <p className='comment'>{comment}</p>
-                <p className='date'>{createdAt}</p>
-            </div>
-        </div>
-    );
+const Review = ({ reviews }) => {
+	return (
+		<div className="reviews">
+			<h2>Reviews</h2>
+			<div className="container">
+				{reviews
+					.filter((review) => review.comment)
+					.map((review) => {
+						const reviewDate = new Date(review.createdAt).toLocaleDateString();
+						return (
+							<div key={review.id} className="review-single">
+								<div className="rate-group">
+									<p className="rate">{review.score}</p>
+									<div className="star"></div>
+								</div>
+								<p className="comment">{review.comment}</p>
+								<p className="date">{reviewDate}</p>
+							</div>
+						);
+					})}
+			</div>
+		</div>
+	);
 };
 
 export default Review;

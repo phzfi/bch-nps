@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import axios from "axios";
 import "./Dashboard.css";
+import Review from "./Reviews";
 
 const Dashboard = () => {
 	const [loading, setLoading] = useState(true);
@@ -181,6 +182,7 @@ const Dashboard = () => {
 	};
 
 	return (
+		<div>
 		<div className="pie-wrapper">
 			<h2>Promoter Score</h2>
 			<select defaultValue="6" onChange={getPsByTimeSelection}>
@@ -236,6 +238,12 @@ const Dashboard = () => {
 					]}
 				/>
 			)}
+	
+		</div>
+		<div className="reviews">
+            <h2>Reviews</h2>
+            <Review />
+        </div>
 		</div>
 	);
 };

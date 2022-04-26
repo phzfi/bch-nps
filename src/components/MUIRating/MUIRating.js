@@ -87,7 +87,7 @@ const MuiForm = () => {
 	const sendSurvey = () => {
 		if (score) {
 			axios
-				.post("http://localhost:8080/api/reviews", {
+				.post("ec2-63-32-248-14.eu-west-1.compute.amazonaws.com/api/reviews", {
 					score: score,
 					comment: comment,
 				})
@@ -98,7 +98,7 @@ const MuiForm = () => {
 
 	const getResults = () => {
 		axios
-			.get("http://localhost:8080/api/reviews")
+			.get("ec2-63-32-248-14.eu-west-1.compute.amazonaws.com/api/reviews")
 			.then((res) => console.log(res.data))
 			.catch((err) => console.log(err));
 	};
@@ -119,7 +119,11 @@ const MuiForm = () => {
 
 	const labelsStars = [...Array(10).keys()].map((x) => x + 1);
 
-	const { vertical, horizontal } = { open: false, vertical: "bottom", horizontal: "left"};
+	const { vertical, horizontal } = {
+		open: false,
+		vertical: "bottom",
+		horizontal: "left",
+	};
 
 	return (
 		<div>
@@ -256,27 +260,28 @@ const MuiForm = () => {
 			)}
 			{/* </Zoom> */}
 			{thankyouOpen && (
-				<Snackbar open={thankyouOpen}
-						autoHideDuration={5000}
-						anchorOrigin={{vertical, horizontal}}
-						onClose={handleCloseThankyou}
+				<Snackbar
+					open={thankyouOpen}
+					autoHideDuration={5000}
+					anchorOrigin={{ vertical, horizontal }}
+					onClose={handleCloseThankyou}
 				>
-					<Alert onClose={handleCloseThankyou}
+					<Alert
+						onClose={handleCloseThankyou}
 						severity="success"
-						sx={{ width: '100%' }}
+						sx={{ width: "100%" }}
 					>
 						Score <strong>submitted</strong>. Thank you for your feedback!
 					</Alert>
 				</Snackbar>
 			)}
 			{error && (
-				<Snackbar open={error}
-						autoHideDuration={5000}
-						onClose={handleCloseError}
+				<Snackbar
+					open={error}
+					autoHideDuration={5000}
+					onClose={handleCloseError}
 				>
-					<Alert severity="error"
-						onClose={handleCloseError}
-					>
+					<Alert severity="error" onClose={handleCloseError}>
 						{`${errorMessage}`}
 					</Alert>
 				</Snackbar>

@@ -14,22 +14,17 @@ const Dashboard = () => {
 		passives: 0,
 		detractors: 0,
 	});
-    const [oneYearVolume, setOneYearVolume] = useState([]);
-    const [oneYear, setOneYear] = useState([]);
+    const [volume, setVolume] = useState([]);
+    const [months, setMonths] = useState(1);
 
 	useEffect(() => {
 		getReviews();
 	}, []);  
 
-    useEffect(() => {
-        yearBack();
-    }, [])
-
 
     useEffect(() => {
-        getYearVolume();
-    }, [])
-
+        getVolume();
+    }, [volume]);
 
 	const getReviews = () => {
 		axios
@@ -67,7 +62,9 @@ const Dashboard = () => {
 		}
 	};
 
+
 	const handleTimeSelection = (e) => {
+        setMonths(e.target.value);
 		const date = new Date();
 		date.setMonth(date.getMonth() - e.target.value);
 		const filteredReviews = reviews?.filter(
@@ -120,85 +117,55 @@ const Dashboard = () => {
 
     // VOLUME
 
-    const yearBack = () => {
-        const yearDates = [];
+    const getVolume = () => {
+        const dates = [];
         let date = new Date();
-        // 52 whole weeks in a year
-        for (let i=52; i > 0; i--){
+        // consider month as 31 days
+        for (let i=31*months; i > 0; i--){
             const curdate = date;
             // toDateString() taking only the date, no time --> "Thu Apr 19 2022"
-            yearDates.push({date: curdate.toDateString(), promoters: 0, passives: 0, detractors: 0});
-            date.setDate(date.getDate() - 7);
+            dates.push({date: curdate.toDateString(), promoters: 0, passives: 0, detractors: 0});
+            date.setDate(date.getDate() - 1);
         }
-        setOneYear(yearDates)
-    };
 
-
-    
-
-    const getYearVolume = () => {
-        const yearBack = oneYear;
-        for (let weekStart of yearBack.reverse()) {
+        for (let day of dates.reverse()) {
             // look for reviews of the given day
             for (let review of reviews) {
-                // get the review's date with no time
                 const reviewDay = new Date(review.createdAt).toDateString();
-
-                // get ending day for the week, PROBLEM 
-                const weekEnd = new Date(Date.parse(weekStart.date));
-                weekEnd.setDate(weekEnd.getDate() - 6)
-                // console.log('START', weekStart.date);
-                // console.log('END', weekEnd.toDateString());
-                // console.log(weekStart.date > weekEnd.toDateString());  // true
-
-                console.log("review:", reviewDay.valueOf())
-                console.log('START of week', weekStart.date.valueOf());
-                console.log('END of week', weekEnd.toDateString().valueOf());
-                console.log("Belongs to week:", (reviewDay <= weekStart.date &&
-                    reviewDay >= weekEnd.toDateString()));
-                    console.log('review less then START', reviewDay.valueOf() <= weekStart.date.valueOf());
-                    console.log('review grater then END', reviewDay.valueOf() >= weekEnd.toDateString().valueOf());
-                console.log('*******');
-                if (reviewDay.valueOf() <= weekStart.date.valueOf() &&
-                    reviewDay.valueOf() >= weekEnd.toDateString().valueOf()) {
-                    // console.log('jeeee, reviewday:', reviewDay);
-                    // check if promoter passive or detractor and adjust count for the week
+                if (reviewDay === day.date) {
                     if (review.score > 8) {
-                        weekStart.promoters += 1;
+                        day.promoters += 1;
                     }
-                    if (review.score < 7) {
-                        weekStart.detractors += 1;
+                    else if (review.score < 7) {
+                        day.detractors += 1;
                     }
-                    // if (review.score >= 7 && review.score <= 8) {
                     else {
-                        weekStart.passives += 1;
+                        day.passives += 1;
                     }
                 }
-
-
             }
         }
-        setOneYearVolume(yearBack)
+        setVolume(dates)
     }
 
     // VOLUME DATA
 
-    const volumeData = oneYearVolume.map(week => {
-    return (
-        {
-            "week": `${week.date}`,
-            "detractors": `${week.detractors}`,
-            "detractorsColor": "#ED6930",
-            "passives": `${week.passives}`,
-            "passivesColor": "#F7B055",
-            "promoters": `${week.promoters}`,
-            "promotersColor": "#3AC92E"
-        })
-    })
+    const volumeData = volume.map(day=> {
+        const week =  `${day.date}`.replace(/\D+\s(\D+)\s(\d+)\s\d+/g, '$1 $2'); // "Thu Apr 19 2022"
+        return (
+            {
+                "week": `${week}`,
+                "detractors": `${day.detractors}`,
+                "detractorsColor": "#ED6930",
+                "passives": `${day.passives}`,
+                "passivesColor": "#F7B055",
+                "promoters": `${day.promoters}`,
+                "promotersColor": "#3AC92E"
+            })
+        }
+    )
 
 
-
-    
     return (
 		<div className="dashboard">
 			<div className="charts">

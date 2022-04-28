@@ -14,40 +14,6 @@ const MyResponsiveBar = ({ data }) => (
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
         colors={({id, data}) => data[`${id}Color`]}
-        defs={[
-            // {
-            //     id: 'dots',
-            //     type: 'patternDots',
-            //     background: "#F7B055",
-            //     color: "#F7B055",
-            //     size: 4,
-            //     padding: 1,
-            //     stagger: true
-            // },
-            // {
-            //     id: 'dots',
-            //     type: 'patternDots',
-            //     background: "#3AC92E",
-            //     color: "#3AC92E",
-            //     size: 4,
-            //     padding: 1,
-            //     stagger: true
-            // }
-        ]}
-        fill={[
-            // {
-            //     match: {
-            //         id: 'passives'
-            //     },
-            //     id: 'dots'
-            // },
-            // {
-            //     match: {
-            //         id: 'detractors'
-            //     },
-            //     id: 'lines'
-            // }
-        ]}
         borderColor={{
             from: 'color',
             modifiers: [
@@ -62,7 +28,7 @@ const MyResponsiveBar = ({ data }) => (
         axisBottom={{
             tickSize: 5,
             tickPadding: 5,
-            tickRotation: 0,
+            tickRotation: -75,
             legend: 'time',
             legendPosition: 'middle',
             legendOffset: 32

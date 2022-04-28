@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 import Dashboard from "./components/Dashboard";
-import Account from "./components/Account";
+import Instructions from "./components/Instructions";
 import "./App.css";
 
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
 			<Routes>
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Dashboard />} />
-					<Route path="/account" element={<Account />} />
+					<Route path="/embedform" element={<Instructions />} />
 				</Route>
 			</Routes>
 		</Router>

@@ -3,6 +3,7 @@ import { ResponsivePie } from "@nivo/pie";
 import axios from "axios";
 import "./Dashboard.css";
 import Reviews from "./Reviews";
+import Volume from './Volume';
 
 const Dashboard = () => {
 	const [loading, setLoading] = useState(true);
@@ -13,10 +14,17 @@ const Dashboard = () => {
 		passives: 0,
 		detractors: 0,
 	});
+    const [volume, setVolume] = useState([]);
+    const [months, setMonths] = useState(1);
 
 	useEffect(() => {
 		getReviews();
-	}, []);
+	}, []);  
+
+
+    useEffect(() => {
+        getVolume();
+    }, [volume]);
 
 	const getReviews = () => {
 		axios
@@ -54,14 +62,15 @@ const Dashboard = () => {
 		}
 	};
 
+
 	const handleTimeSelection = (e) => {
+        setMonths(e.target.value);
 		const date = new Date();
 		date.setMonth(date.getMonth() - e.target.value);
 		const filteredReviews = reviews?.filter(
 			(review) => Date.parse(review.createdAt) > date
 		);
 		setPromoterScore(calcPromoterScore(filteredReviews));
-		console.log(date);
 	};
 
 	// CHART DATA
@@ -105,7 +114,59 @@ const Dashboard = () => {
 		);
 	};
 
-	return (
+
+    // VOLUME
+
+    const getVolume = () => {
+        const dates = [];
+        let date = new Date();
+        // consider month as 31 days
+        for (let i=31*months; i > 0; i--){
+            const curdate = date;
+            // toDateString() taking only the date, no time --> "Thu Apr 19 2022"
+            dates.push({date: curdate.toDateString(), promoters: 0, passives: 0, detractors: 0});
+            date.setDate(date.getDate() - 1);
+        }
+
+        for (let day of dates.reverse()) {
+            // look for reviews of the given day
+            for (let review of reviews) {
+                const reviewDay = new Date(review.createdAt).toDateString();
+                if (reviewDay === day.date) {
+                    if (review.score > 8) {
+                        day.promoters += 1;
+                    }
+                    else if (review.score < 7) {
+                        day.detractors += 1;
+                    }
+                    else {
+                        day.passives += 1;
+                    }
+                }
+            }
+        }
+        setVolume(dates)
+    }
+
+    // VOLUME DATA
+
+    const volumeData = volume.map(day=> {
+        const week =  `${day.date}`.replace(/\D+\s(\D+)\s(\d+)\s\d+/g, '$1 $2'); // "Thu Apr 19 2022"
+        return (
+            {
+                "week": `${week}`,
+                "detractors": `${day.detractors}`,
+                "detractorsColor": "#ED6930",
+                "passives": `${day.passives}`,
+                "passivesColor": "#F7B055",
+                "promoters": `${day.promoters}`,
+                "promotersColor": "#3AC92E"
+            })
+        }
+    )
+
+
+    return (
 		<div className="dashboard">
 			<div className="charts">
 				<div className="pie-wrapper">
@@ -156,8 +217,11 @@ const Dashboard = () => {
 					)}
 				</div>
 				<div className="line-wrapper"></div>
+                <Reviews reviews={reviews} />
+                <div className="volume-wrapper">
+                <Volume data={volumeData} />
+            </div>
 			</div>
-			<Reviews reviews={reviews} />
 		</div>
 	);
 };

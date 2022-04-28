@@ -2,11 +2,21 @@ import React from "react";
 import "./Review.css";
 
 const Review = ({ reviews }) => {
+	const sortedReviews = () => {
+		return reviews.sort((a, b) => {
+			const bDate = new Date(b.createdAt);
+			const aDate = new Date(a.createdAt);
+			return bDate - aDate;
+		});
+	};
+
 	return (
 		<div className="reviews">
-			<h2>Reviews</h2>
+			<h2>
+				Reviews <span>({reviews.length})</span>
+			</h2>
 			<div className="container">
-				{reviews
+				{sortedReviews()
 					.filter((review) => review.comment)
 					.map((review) => {
 						const reviewDate = new Date(review.createdAt).toLocaleDateString();

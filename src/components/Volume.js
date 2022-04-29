@@ -34,7 +34,7 @@ const MyResponsiveBar = ({ data }) => (
 		axisBottom={{
 			tickSize: 5,
 			tickPadding: 5,
-			tickRotation: -75,
+			tickRotation: 55,
 			legend: "Time",
 			legendPosition: "middle",
 			legendOffset: 72,

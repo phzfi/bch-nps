@@ -13,7 +13,7 @@ const Review = ({ reviews }) => {
 	return (
 		<div className="reviews">
 			<h2>
-				Reviews <span>({reviews.length})</span>
+				Comments <span>({reviews.length})</span>
 			</h2>
 			<div className="container">
 				{sortedReviews()

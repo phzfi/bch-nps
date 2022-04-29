@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { ResponsivePie } from "@nivo/pie";
-import { ResponsiveLine } from "@nivo/line";
 import axios from "axios";
 import "./Dashboard.css";
 import Reviews from "./Reviews";
 import Volume from "./Volume";
 import Pie from "./Pie";
+import Trend from "./Trend";
 
 const Dashboard = () => {
 	const [loading, setLoading] = useState(true);
@@ -18,10 +17,11 @@ const Dashboard = () => {
 	});
 	const [volume, setVolume] = useState([]);
 	const [months, setMonths] = useState(1);
+	const [trend, setTrend] = useState([]);
 
 	useEffect(() => {
 		getReviews();
-	}, []);
+	}, [months]);
 
 	const getReviews = () => {
 		axios
@@ -31,6 +31,7 @@ const Dashboard = () => {
 				setPromoterScore(calcPromoterScore(res.data));
 				setLoading(false);
 				setVolume(getVolume(res.data));
+				setTrend(calcTrendData(res.data));
 			})
 			.catch((err) => console.log(err));
 	};
@@ -107,8 +108,6 @@ const Dashboard = () => {
 				promoters: 0,
 				passives: 0,
 				detractors: 0,
-				responses: 0,
-				score: 0,
 			});
 			date.setDate(date.getDate() - 1);
 		}
@@ -146,6 +145,60 @@ const Dashboard = () => {
 		};
 	});
 
+	// TREND DATA
+
+	const calcTrendData = (data) => {
+		const trendData = [];
+		const dates = [];
+		let date = new Date();
+		// consider month as 31 days
+		for (let i = 31 * months; i > 0; i--) {
+			const curdate = date;
+			// toDateString() taking only the date, no time --> "Thu Apr 19 2022"
+			dates.push({
+				date: curdate.toDateString(),
+				promoters: 0,
+				passives: 0,
+				detractors: 0,
+				trendTilDay: -100,
+			});
+			date.setDate(date.getDate() - 1);
+		}
+
+		for (let trend of dates.reverse()) {
+			for (let review of data) {
+				const reviewDay = new Date(review.createdAt).getTime();
+				if (+reviewDay <= new Date(trend.date).getTime()) {
+					if (review.score > 8) {
+						trend.promoters += 1;
+					} else if (review.score < 7) {
+						trend.detractors += 1;
+					} else {
+						trend.passives += 1;
+					}
+				}
+			}
+			let total = trend.promoters + trend.passives + trend.detractors;
+			trend.trendTilDay = ((trend.promoters - trend.detractors) / total) * 100;
+			// console.log(`trend until ${trend.date}: ${trend.trendTilDay}`);
+		}
+		dates.map((item) => {
+			trendData.push({
+				x: `${item.date}`,
+				y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
+			});
+		});
+		return trendData;
+	};
+
+	const trendData = [
+		{
+			id: "Score",
+			color: "#2765E3",
+			data: trend,
+		},
+	];
+
 	return (
 		<div className="dashboard">
 			<div className="pie-wrapper">
@@ -159,9 +212,10 @@ const Dashboard = () => {
 				{!loading && <Pie data={pieData} promoterScore={promoterScore} />}
 			</div>
 			<Reviews reviews={reviews} />
-			<div className="volume-wrapper">
-				{!loading && <Volume data={volumeData} />}
+			<div className="trend-wrapper">
+				<Trend data={trendData} />
 			</div>
+			<div className="volume-wrapper">{<Volume data={volumeData} />}</div>
 		</div>
 	);
 };

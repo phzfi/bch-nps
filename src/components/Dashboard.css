@@ -38,4 +38,11 @@
 	border: 2px solid black;
 	border-radius: 1rem;
 	box-shadow: 5px 5px 5px #142236;
+	text-align: center;
+}
+
+.trend-wrapper h2,
+.volume-wrapper h2 {
+	padding-top: 1rem;
+	color: #fff;
 }

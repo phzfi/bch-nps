@@ -1,5 +1,6 @@
 import React from "react";
 import "./Review.css";
+import classNames from "classnames";
 
 const Review = ({ reviews }) => {
 	const sortedReviews = () => {
@@ -20,11 +21,17 @@ const Review = ({ reviews }) => {
 					.filter((review) => review.comment)
 					.map((review) => {
 						const reviewDate = new Date(review.createdAt).toLocaleDateString();
+                        const starColor = review.score
+					    const wrapperClasses = classNames('star', {
+                            'green': starColor >= 8,
+                            'orange': starColor <= 7,
+                            'yellow': starColor <= 5,
+					})
 						return (
 							<div key={review.id} className="review-single">
 								<div className="rate-group">
 									<p className="rate">{review.score}</p>
-									<div className="star"></div>
+									<div className={wrapperClasses}></div>
 								</div>
 								<p className="comment">{review.comment}</p>
 								<p className="date">{reviewDate}</p>

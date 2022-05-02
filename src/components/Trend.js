@@ -20,7 +20,7 @@ const MyResponsiveLine = ({ data }) => {
 					},
 				},
 			}}
-			margin={{ top: 50, right: 110, bottom: 150, left: 90 }}
+			margin={{ top: 50, right: 150, bottom: 150, left: 90 }}
 			xScale={{ type: "point" }}
 			yScale={{
 				type: "linear",
@@ -36,9 +36,9 @@ const MyResponsiveLine = ({ data }) => {
 				orient: "bottom",
 				tickSize: 5,
 				tickPadding: 5,
-				tickRotation: 40,
+				tickRotation: 50,
 				legend: "Date",
-				legendOffset: 110,
+				legendOffset: 72,
 				legendPosition: "middle",
 			}}
 			axisLeft={{
@@ -52,7 +52,7 @@ const MyResponsiveLine = ({ data }) => {
 			}}
 			enableGridX={false}
 			colors={{ datum: "color" }}
-			pointSize={5}
+			pointSize={10}
 			pointColor={{ from: "color" }}
 			pointBorderWidth={5}
 			pointBorderColor={{ from: "serieColor" }}

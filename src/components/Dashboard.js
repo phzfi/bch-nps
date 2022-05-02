@@ -183,8 +183,12 @@ const Dashboard = () => {
 			// console.log(`trend until ${trend.date}: ${trend.trendTilDay}`);
 		}
 		dates.map((item) => {
+			const trimmedDate = `${item.date}`.replace(
+				/\D+\s(\D+)\s(\d+)\s\d+/g,
+				"$1 $2"
+			);
 			trendData.push({
-				x: `${item.date}`,
+				x: `${trimmedDate}`,
 				y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
 			});
 		});
@@ -213,9 +217,13 @@ const Dashboard = () => {
 			</div>
 			<Reviews reviews={reviews} />
 			<div className="trend-wrapper">
+				<h2>Promoter Score Trend</h2>
 				<Trend data={trendData} />
 			</div>
-			<div className="volume-wrapper">{<Volume data={volumeData} />}</div>
+			<div className="volume-wrapper">
+				<h2>Response Volume</h2>
+				<Volume data={volumeData} />
+			</div>
 		</div>
 	);
 };

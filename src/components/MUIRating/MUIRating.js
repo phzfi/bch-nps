@@ -87,7 +87,7 @@ const MuiForm = () => {
 	const sendSurvey = () => {
 		if (score) {
 			axios
-				.post("ec2-63-32-248-14.eu-west-1.compute.amazonaws.com/api/reviews", {
+				.post("http://localhost:8080/api/reviews", {
 					score: score,
 					comment: comment,
 				})
@@ -98,7 +98,7 @@ const MuiForm = () => {
 
 	const getResults = () => {
 		axios
-			.get("ec2-63-32-248-14.eu-west-1.compute.amazonaws.com/api/reviews")
+			.get("http://localhost:8080/api/reviews")
 			.then((res) => console.log(res.data))
 			.catch((err) => console.log(err));
 	};

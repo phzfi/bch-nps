@@ -29,14 +29,8 @@ describe('test form', () => {
         cy.get(".css-dqr9h-MuiRating-label").should('have.length', 11)
     })
 
-    it('title should exist', () => {
-        cy.contains('How likely are you to recommend PHZ to a friend or colleague?')
-      }) 
-
-    it('there should be 2 buttons, first shoulb be disabled', () => {
+    it('there should be 2 buttons', () => {
         cy.get('.MuiButton-root').should('have.length', 2)
-
-        cy.get('.MuiButton-root').first().should('be.disabled')
     })
 
     it('first button shoulb be disabled', () => {

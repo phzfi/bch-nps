@@ -16,6 +16,7 @@ import {
 	Alert,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Slide from '@mui/material/Slide';
 import { useTheme } from "@mui/material/styles";
 import StarIcon from "@mui/icons-material/Star";
 
@@ -25,7 +26,10 @@ const MuiForm = () => {
 	const [score, setScore] = useState(0);
 	const [surveyAnswered, setSurveyAnswered] = useState(false);
 	const [comment, setComment] = useState(undefined);
-	const [thankyouOpen, setThankyouOpen] = useState(false);
+	const [thankyouOpen, setThankyouOpen] = useState({
+		open: false,
+		Transition: SlideTransition
+	});
 	const [hover, setHover] = useState(-1);
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -40,29 +44,44 @@ const MuiForm = () => {
 	}, [surveyOpen]);
 
 	const checkIsSurveyAnswered = () => {
-		const key = "-surveyAnsweringIn30days-";
-		const now = new Date();
-		now.setDate(now.getDate());
-		const itemStr = localStorage.getItem(key);
-		if (now < Date.parse(itemStr)) {
+		const answered = "-surveyAnsweredInLast30days-";
+		const closed = "-surveyClosedInLast7days-";
+		const date = new Date();
+		date.setDate(date.getDate());
+		const expires = localStorage.getItem(answered) ? localStorage.getItem(answered) : localStorage.getItem(closed);
+		const now = date.getTime();
+		if (now < Date.parse(expires) || now < Date.parse(closed)) {
 			setSurveyAnswered(true);
 		}
-		if (now > Date.parse(itemStr)) {
-			localStorage.removeItem(key);
+		if (now > Date.parse(expires)) {
+			localStorage.removeItem(answered);
+		}
+		if (now > Date.parse(expires)) {
+			localStorage.removeItem(closed);
 		}
 	};
 
 	const setExpiryForSurvey = () => {
 		const date = new Date();
 		date.setDate(date.getDate() + 30);
-		const key = "-surveyAnsweringIn30days-";
-		localStorage.setItem(key, date);
+		const answered = "-surveyAnsweredInLast30days-";
+		localStorage.setItem(answered, date);
+	};
+
+	const setExpiryForClosedSurvey = () => {
+		const date = new Date();
+		date.setDate(date.getDate() + 7);
+		const closed= "-surveyClosedInLast7days-";
+		localStorage.setItem(closed, date);
 	};
 
 	const submitOK = () => {
 		setExpiryForSurvey();
 		setSurveyOpen(false);
-		setThankyouOpen(true);
+		setThankyouOpen({
+			...thankyouOpen,
+			open: true
+		});
 	};
 
 	const errorInSubmit = (err) => {
@@ -74,10 +93,14 @@ const MuiForm = () => {
 
 	const handleCloseSurvey = () => {
 		setSurveyOpen(false);
+		setExpiryForClosedSurvey();
 	};
 
 	const handleCloseThankyou = () => {
-		setThankyouOpen(false);
+		setThankyouOpen({
+			...thankyouOpen,
+			open: false
+		});
 	};
 
 	const handleCloseError = () => {
@@ -99,7 +122,7 @@ const MuiForm = () => {
 	const getResults = () => {
 		axios
 			.get("http://localhost:8080/api/reviews")
-			.then((res) => console.log(res.data))
+			// .then((res) => console.log(res.data))
 			.catch((err) => console.log(err));
 	};
 
@@ -121,15 +144,21 @@ const MuiForm = () => {
 
 	const { vertical, horizontal } = { open: false, vertical: "bottom", horizontal: "left"};
 
+	// snackbar transition
+	function SlideTransition(props) {
+		return <Slide {...props} direction="up" />;
+	}
+
 	return (
 		<div>
-			{/* <Zoom > */}
 			{!surveyAnswered && (
 				<Dialog
 					open={surveyOpen}
 					onClose={handleCloseSurvey}
 					maxWidth="xl"
 					fullScreen={fullScreen}
+					TransitionComponent={Slide}
+					aria-describedby="alert-dialog-slide-description"
 				>
 					<DialogTitle
 						align="center"
@@ -200,7 +229,7 @@ const MuiForm = () => {
 								marginBottom="0rem"
 								paddingBottom="0rem"
 							>
-								Any comments? Ideas?
+								Why/Why not?
 							</Typography>
 							<TextareaAutosize
 								aria-label="empty textarea"
@@ -210,29 +239,16 @@ const MuiForm = () => {
 								onChange={(e) => setComment(e.target.value)}
 							/>
 							<Container>
-								{score !== 0 && (
-									<Button
-										type="submit"
-										variant="contained"
-										color="primary"
-										sx={{ minWidth: "100px", m: 1 }}
-										onClick={sendSurvey}
-									>
-										Submit
-									</Button>
-								)}
-								{score === 0 && (
-									<Button
-										disabled
-										type="submit"
-										variant="contained"
-										color="primary"
-										sx={{ minWidth: "100px", m: 1 }}
-										onClick={sendSurvey}
-									>
-										Submit
-									</Button>
-								)}
+								<Button
+									disabled={score === 0 ? true : false}
+									type="submit"
+									variant="contained"
+									color="primary"
+									sx={{ minWidth: "100px", m: 1 }}
+									onClick={sendSurvey}
+								>
+									Submit
+								</Button>
 								<Button
 									type="submit"
 									variant="outlined"
@@ -254,12 +270,13 @@ const MuiForm = () => {
 					</DialogContent>
 				</Dialog>
 			)}
-			{/* </Zoom> */}
 			{thankyouOpen && (
-				<Snackbar open={thankyouOpen}
+				<Snackbar open={thankyouOpen.open}
 						autoHideDuration={5000}
 						anchorOrigin={{vertical, horizontal}}
 						onClose={handleCloseThankyou}
+						TransitionComponent={thankyouOpen.Transition}
+						key={thankyouOpen.Transition.name}
 				>
 					<Alert onClose={handleCloseThankyou}
 						severity="success"

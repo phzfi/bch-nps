@@ -26,7 +26,6 @@ const Dashboard = () => {
 		getReviews();
 	}, [months]);
 
-
 	const getReviews = () => {
 		axios
 			.get("http://localhost:8080/api/reviews")
@@ -104,7 +103,11 @@ const Dashboard = () => {
 		const dates = [];
 		let date = new Date();
 		// if selected time span < 3 months --> use days, else use weeks
-		for (let i= ((months < 3) ? daysAverageInMonth :  weeksAverageInMonth) * months; i > 0; i--) {
+		for (
+			let i = (months < 3 ? daysAverageInMonth : weeksAverageInMonth) * months;
+			i > 0;
+			i--
+		) {
 			const curdate = date;
 			dates.push({
 				date: curdate.toDateString(),
@@ -113,9 +116,9 @@ const Dashboard = () => {
 				passives: 0,
 				detractors: 0,
 				responses: 0,
-				score: 0
+				score: 0,
 			});
-			date.setDate(date.getDate() - ((months < 3) ? 1 : 6));
+			date.setDate(date.getDate() - (months < 3 ? 1 : 6));
 		}
 
 		if (dates.length === 31) {
@@ -139,7 +142,7 @@ const Dashboard = () => {
 			for (let weekEnd of dates) {
 				// look for reviews of the week starting from given day
 				for (let review of data) {
-					const weekStart = new Date((weekEnd.date));
+					const weekStart = new Date(weekEnd.date);
 					weekStart.setDate(weekStart.getDate() - 6);
 					weekEnd.weekStart = weekStart.toDateString();
 					const start = weekStart.getTime();
@@ -162,12 +165,19 @@ const Dashboard = () => {
 
 	// VOLUME DATA
 
-	const volumeData = volume.map(timeSpan => {
+	const volumeData = volume.map((timeSpan) => {
 		// if days -> "Thu Apr 19 2022" -> "Apr 19 22"
 		// if weeks -> "Thu Apr 19 2022Mon Apr 26 2022" ->"Apr 19 - Apr 26"
-		const timeLabel = months < 3 ? 
-							`${timeSpan.date}`.replace(/^\D+\s(\D+)\s(\d+)\s\d{2}(\d{2})/g, "$1 $2") :
-							`${timeSpan.weekStart}${timeSpan.date}`.replace(/^\D+\s(\D+)\s(\d+)\s\d{2}(\d{2})\D+\s(\D+)\s(\d+)\s\d{2}(\d{2})$/, "$1 $2 - $4 $5"); 
+		const timeLabel =
+			months < 3
+				? `${timeSpan.date}`.replace(
+						/^\D+\s(\D+)\s(\d+)\s\d{2}(\d{2})/g,
+						"$1 $2"
+				  )
+				: `${timeSpan.weekStart}${timeSpan.date}`.replace(
+						/^\D+\s(\D+)\s(\d+)\s\d{2}(\d{2})\D+\s(\D+)\s(\d+)\s\d{2}(\d{2})$/,
+						"$1 $2 - $4 $5"
+				  );
 		return {
 			timeSpan: `${timeLabel}`,
 			detractors: `${timeSpan.detractors}`,
@@ -186,7 +196,11 @@ const Dashboard = () => {
 		const dates = [];
 		let date = new Date();
 		// if selected time span < 3 months --> use days, else use weeks
-		for (let i= ((months < 3) ? daysAverageInMonth :  weeksAverageInMonth) * months; i > 0; i--) {
+		for (
+			let i = (months < 3 ? daysAverageInMonth : weeksAverageInMonth) * months;
+			i > 0;
+			i--
+		) {
 			const curdate = date;
 			dates.push({
 				date: curdate.toDateString(),
@@ -195,9 +209,9 @@ const Dashboard = () => {
 				detractors: 0,
 				trendTilDay: -100,
 			});
-			date.setDate(date.getDate() - ((months < 3) ? 1 : 6));
+			date.setDate(date.getDate() - (months < 3 ? 1 : 6));
 		}
-		console.log(dates.length);
+		// console.log(dates.length);
 		if (dates.length === 31) {
 			for (let day of dates) {
 				for (let review of data) {
@@ -214,21 +228,24 @@ const Dashboard = () => {
 				}
 
 				let total = day.promoters + day.passives + day.detractors;
-				day.trendTilDay = isNaN(((day.promoters - day.detractors) / total) * 100) ? -100  : (((day.promoters - day.detractors) / total) * 100);
+				day.trendTilDay = isNaN(
+					((day.promoters - day.detractors) / total) * 100
+				)
+					? -100
+					: ((day.promoters - day.detractors) / total) * 100;
 			}
-			dates.reverse().map(item => {
-					const trimmedDate = `${item.date}`.replace(
-						/\D+\s(\D+)\s(\d+)\s\d+/g,
-						"$1 $2"
-					);
-					
-					trendData.push({
-						x: `${trimmedDate}`,
-						y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
-					});
+			dates.reverse().map((item) => {
+				const trimmedDate = `${item.date}`.replace(
+					/\D+\s(\D+)\s(\d+)\s\d+/g,
+					"$1 $2"
+				);
+
+				trendData.push({
+					x: `${trimmedDate}`,
+					y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
+				});
 			});
 			return trendData;
-
 		} else {
 			for (let weekEnd of dates) {
 				for (let review of data) {
@@ -245,21 +262,25 @@ const Dashboard = () => {
 					}
 				}
 				let total = weekEnd.promoters + weekEnd.passives + weekEnd.detractors;
-				weekEnd.trendTilDay = isNaN(((weekEnd.promoters - weekEnd.detractors) / total) * 100) ? -100 : (((weekEnd.promoters - weekEnd.detractors) / total) * 100);
+				weekEnd.trendTilDay = isNaN(
+					((weekEnd.promoters - weekEnd.detractors) / total) * 100
+				)
+					? -100
+					: ((weekEnd.promoters - weekEnd.detractors) / total) * 100;
 			}
 			dates.reverse().map((item) => {
-					const trimmedDate = `${item.date}`.replace(
-						/\D+\s(\D+)\s(\d+)\s\d+/g,
-						"$1 $2"
-					);
-					trendData.push({
-						x: `${trimmedDate}`,
-						y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
-					});
+				const trimmedDate = `${item.date}`.replace(
+					/\D+\s(\D+)\s(\d+)\s\d+/g,
+					"$1 $2"
+				);
+				trendData.push({
+					x: `${trimmedDate}`,
+					y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
+				});
 			});
 			return trendData;
-		};
-	}
+		}
+	};
 
 	const trendData = [
 		{

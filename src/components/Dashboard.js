@@ -6,6 +6,9 @@ import Volume from "./Volume";
 import Pie from "./Pie";
 import Trend from "./Trend";
 
+const daysAverageInMonth = 30.4;
+const weeksAverageInMonth = 5;
+
 const Dashboard = () => {
 	const [loading, setLoading] = useState(true);
 	const [reviews, setReviews] = useState([]);
@@ -16,12 +19,13 @@ const Dashboard = () => {
 		detractors: 0,
 	});
 	const [volume, setVolume] = useState([]);
-	const [months, setMonths] = useState(1);
+	const [months, setMonths] = useState(6);
 	const [trend, setTrend] = useState([]);
 
 	useEffect(() => {
 		getReviews();
 	}, [months]);
+
 
 	const getReviews = () => {
 		axios
@@ -99,48 +103,78 @@ const Dashboard = () => {
 	const getVolume = (data) => {
 		const dates = [];
 		let date = new Date();
-		// consider month as 31 days
-		for (let i = 31 * months; i > 0; i--) {
+		// if selected time span < 3 months --> use days, else use weeks
+		for (let i= ((months < 3) ? daysAverageInMonth :  weeksAverageInMonth) * months; i > 0; i--) {
 			const curdate = date;
-			// toDateString() taking only the date, no time --> "Thu Apr 19 2022"
 			dates.push({
 				date: curdate.toDateString(),
+				weekStart: 0,
 				promoters: 0,
 				passives: 0,
 				detractors: 0,
+				responses: 0,
+				score: 0
 			});
-			date.setDate(date.getDate() - 1);
+			date.setDate(date.getDate() - ((months < 3) ? 1 : 6));
 		}
 
-		for (let day of dates.reverse()) {
-			// look for reviews of the given day
-			for (let review of data) {
-				const reviewDay = new Date(review.createdAt).toDateString();
-				if (reviewDay === day.date) {
-					if (review.score > 8) {
-						day.promoters += 1;
-					} else if (review.score < 7) {
-						day.detractors += 1;
-					} else {
-						day.passives += 1;
+		if (dates.length === 31) {
+			for (let day of dates) {
+				// look for reviews of the given day
+				for (let review of data) {
+					const reviewDay = new Date(review.createdAt).toDateString();
+					if (reviewDay === day.date) {
+						if (review.score > 8) {
+							day.promoters += 1;
+						} else if (review.score < 7) {
+							day.detractors += 1;
+						} else {
+							day.passives += 1;
+						}
 					}
 				}
 			}
+			return dates.reverse();
+		} else {
+			for (let weekEnd of dates) {
+				// look for reviews of the week starting from given day
+				for (let review of data) {
+					const weekStart = new Date((weekEnd.date));
+					weekStart.setDate(weekStart.getDate() - 6);
+					weekEnd.weekStart = weekStart.toDateString();
+					const start = weekStart.getTime();
+					const end = new Date(weekEnd.date).getTime();
+					const reviewTime = new Date(review.createdAt).getTime();
+					if (reviewTime <= end && reviewTime >= start) {
+						if (review.score > 8) {
+							weekEnd.promoters += 1;
+						} else if (review.score < 7) {
+							weekEnd.detractors += 1;
+						} else {
+							weekEnd.passives += 1;
+						}
+					}
+				}
+			}
+			return dates.reverse();
 		}
-		return dates;
 	};
 
 	// VOLUME DATA
 
-	const volumeData = volume.map((day) => {
-		const week = `${day.date}`.replace(/\D+\s(\D+)\s(\d+)\s\d+/g, "$1 $2"); // "Thu Apr 19 2022"
+	const volumeData = volume.map(timeSpan => {
+		// if days -> "Thu Apr 19 2022" -> "Apr 19 22"
+		// if weeks -> "Thu Apr 19 2022Mon Apr 26 2022" ->"Apr 19 - Apr 26"
+		const timeLabel = months < 3 ? 
+							`${timeSpan.date}`.replace(/^\D+\s(\D+)\s(\d+)\s\d{2}(\d{2})/g, "$1 $2") :
+							`${timeSpan.weekStart}${timeSpan.date}`.replace(/^\D+\s(\D+)\s(\d+)\s\d{2}(\d{2})\D+\s(\D+)\s(\d+)\s\d{2}(\d{2})$/, "$1 $2 - $4 $5"); 
 		return {
-			week: `${week}`,
-			detractors: `${day.detractors}`,
+			timeSpan: `${timeLabel}`,
+			detractors: `${timeSpan.detractors}`,
 			detractorsColor: "#ED6930",
-			passives: `${day.passives}`,
+			passives: `${timeSpan.passives}`,
 			passivesColor: "#F7B055",
-			promoters: `${day.promoters}`,
+			promoters: `${timeSpan.promoters}`,
 			promotersColor: "#3AC92E",
 		};
 	});
@@ -151,10 +185,9 @@ const Dashboard = () => {
 		const trendData = [];
 		const dates = [];
 		let date = new Date();
-		// consider month as 31 days
-		for (let i = 31 * months; i > 0; i--) {
+		// if selected time span < 3 months --> use days, else use weeks
+		for (let i= ((months < 3) ? daysAverageInMonth :  weeksAverageInMonth) * months; i > 0; i--) {
 			const curdate = date;
-			// toDateString() taking only the date, no time --> "Thu Apr 19 2022"
 			dates.push({
 				date: curdate.toDateString(),
 				promoters: 0,
@@ -162,38 +195,71 @@ const Dashboard = () => {
 				detractors: 0,
 				trendTilDay: -100,
 			});
-			date.setDate(date.getDate() - 1);
+			date.setDate(date.getDate() - ((months < 3) ? 1 : 6));
 		}
-
-		for (let trend of dates.reverse()) {
-			for (let review of data) {
-				const reviewDay = new Date(review.createdAt).getTime();
-				if (+reviewDay <= new Date(trend.date).getTime()) {
-					if (review.score > 8) {
-						trend.promoters += 1;
-					} else if (review.score < 7) {
-						trend.detractors += 1;
-					} else {
-						trend.passives += 1;
+		console.log(dates.length);
+		if (dates.length === 31) {
+			for (let day of dates) {
+				for (let review of data) {
+					const reviewDay = new Date(review.createdAt).getTime();
+					if (+reviewDay <= new Date(day.date).getTime()) {
+						if (review.score > 8) {
+							day.promoters += 1;
+						} else if (review.score < 7) {
+							day.detractors += 1;
+						} else {
+							day.passives += 1;
+						}
 					}
 				}
+
+				let total = day.promoters + day.passives + day.detractors;
+				day.trendTilDay = isNaN(((day.promoters - day.detractors) / total) * 100) ? -100  : (((day.promoters - day.detractors) / total) * 100);
 			}
-			let total = trend.promoters + trend.passives + trend.detractors;
-			trend.trendTilDay = ((trend.promoters - trend.detractors) / total) * 100;
-			// console.log(`trend until ${trend.date}: ${trend.trendTilDay}`);
-		}
-		dates.map((item) => {
-			const trimmedDate = `${item.date}`.replace(
-				/\D+\s(\D+)\s(\d+)\s\d+/g,
-				"$1 $2"
-			);
-			trendData.push({
-				x: `${trimmedDate}`,
-				y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
+			dates.reverse().map(item => {
+					const trimmedDate = `${item.date}`.replace(
+						/\D+\s(\D+)\s(\d+)\s\d+/g,
+						"$1 $2"
+					);
+					
+					trendData.push({
+						x: `${trimmedDate}`,
+						y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
+					});
 			});
-		});
-		return trendData;
-	};
+			return trendData;
+
+		} else {
+			for (let weekEnd of dates) {
+				for (let review of data) {
+					const end = new Date(weekEnd.date).getTime();
+					const reviewTime = new Date(review.createdAt).getTime();
+					if (+reviewTime <= end) {
+						if (review.score > 8) {
+							weekEnd.promoters += 1;
+						} else if (review.score < 7) {
+							weekEnd.detractors += 1;
+						} else {
+							weekEnd.passives += 1;
+						}
+					}
+				}
+				let total = weekEnd.promoters + weekEnd.passives + weekEnd.detractors;
+				weekEnd.trendTilDay = isNaN(((weekEnd.promoters - weekEnd.detractors) / total) * 100) ? -100 : (((weekEnd.promoters - weekEnd.detractors) / total) * 100);
+			}
+			dates.reverse().map((item) => {
+					const trimmedDate = `${item.date}`.replace(
+						/\D+\s(\D+)\s(\d+)\s\d+/g,
+						"$1 $2"
+					);
+					trendData.push({
+						x: `${trimmedDate}`,
+						y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
+					});
+			});
+			return trendData;
+		};
+	}
 
 	const trendData = [
 		{

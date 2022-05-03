@@ -18,21 +18,22 @@
 
 14. - [ ] Testing of dashboard?
 15. - [ ] Last selected time span is remembered in browser
+16. - [ ] Fill in the excel with info
 
 ### Feedback/ TO DO for Team-1:
 
-1. - [ ] If user does not want to anwer the survey and clicks CLOSE, offer the survey again in 1 week (this question may have been misunderstood but it's ok)
+1. - [x] If user does not want to anwer the survey and clicks CLOSE, offer the survey again in 1 week (this question may have been misunderstood but it's ok)
 2. - [ ] Postpone login --> or use apache openId login, in other words Facebook login. It's also possible to have no login at all so that the Dashboard is only shown internally. It's a burden fpr HR to have yet another registration to handle. They're moving towards diminishing them. Google authentication is still ok. Or what Tero is using --> keywhatlog?
 3. - [x] sorting of comments could be done by date so that the most recent is shown on top
 4. - [x] required time period is 6 months
 5. - [ ] All data can also be one option to show but with low priority
 
 ### Still to do from previous sprint:
-1. - [ ] check font for textarea
-2. - [ ] fix stars' labels position in form
-3. - [ ] continue documentation
-4. - [ ] snackbar transition
-5. - [ ] form transition
+1. - [ ] ~~check font for textarea~~ --> dropped
+2. - [ ] ~~fix stars' labels position in form~~ --> dropped --> keeps labels?
+3. - [x] continue documentation
+4. - [x] snackbar transition --> slide
+5. - [x] form transition --> slide
 
 ### Feedback to specific questions/groups:
 1. - [x] To Abel: Maj suggested the text "Why/why not" to ask the reason of the given score

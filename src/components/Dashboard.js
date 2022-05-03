@@ -4,6 +4,7 @@ import "./Dashboard.css";
 import Reviews from "./Reviews";
 import Volume from "./Volume";
 import Pie from "./Pie";
+import Trend from "./Trend";
 
 const daysAverageInMonth = 30.4;
 const weeksAverageInMonth = 5;
@@ -23,7 +24,7 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		getReviews();
-	}, []);
+	}, [months]);
 
 
 	const getReviews = () => {
@@ -34,6 +35,7 @@ const Dashboard = () => {
 				setPromoterScore(calcPromoterScore(res.data));
 				setLoading(false);
 				setVolume(getVolume(res.data));
+				setTrend(calcTrendData(res.data));
 			})
 			.catch((err) => console.log(err));
 	};
@@ -230,8 +232,6 @@ const Dashboard = () => {
 		} else {
 			for (let weekEnd of dates) {
 				for (let review of data) {
-					// const weekStart = new Date((weekEnd.date));
-					// weekStart.setDate(weekStart.getDate() - 6);
 					const end = new Date(weekEnd.date).getTime();
 					const reviewTime = new Date(review.createdAt).getTime();
 					if (+reviewTime <= end) {
@@ -282,8 +282,13 @@ const Dashboard = () => {
 				{!loading && <Pie data={pieData} promoterScore={promoterScore} />}
 			</div>
 			<Reviews reviews={reviews} />
+			<div className="trend-wrapper">
+				<h2>Promoter Score Trend</h2>
+				<Trend data={trendData} />
+			</div>
 			<div className="volume-wrapper">
-				{!loading && <Volume data={volumeData} />}
+				<h2>Response Volume</h2>
+				<Volume data={volumeData} />
 			</div>
 		</div>
 	);

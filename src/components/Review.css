@@ -32,7 +32,18 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	background: cover;
-	background-image: url(../images/Star.png);
+}
+
+.green {
+	background-image: url(../images/greenStar.png);
+}
+
+.orange {
+	background-image: url(../images/orangeStar.png);
+}
+
+.yellow {
+	background-image: url(../images/yellowStar.png);
 }
 
 .rate-group {

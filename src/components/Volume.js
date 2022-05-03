@@ -5,7 +5,7 @@ const MyResponsiveBar = ({ data }) => (
 		data={data}
 		keys={["promoters", "passives", "detractors"]}
 		indexBy="timeSpan"
-		margin={{ top: 50, right: 150, bottom: 150, left: 90 }}
+		margin={{ top: 50, right: 150, bottom: 200, left: 90 }}
 		padding={0.3}
 		valueScale={{ type: "linear" }}
 		indexScale={{ type: "band", round: true }}
@@ -20,6 +20,7 @@ const MyResponsiveBar = ({ data }) => (
 				legend: {
 					text: {
 						fill: "#FFF",
+						fontSize: "1rem",
 					},
 				},
 			},
@@ -34,8 +35,8 @@ const MyResponsiveBar = ({ data }) => (
 		axisBottom={{
 			tickSize: 5,
 			tickPadding: 5,
-			tickRotation: -75,
-			legend: "Time",
+			tickRotation: 50,
+			legend: "Date",
 			legendPosition: "middle",
 			legendOffset: 110,
 		}}
@@ -45,7 +46,7 @@ const MyResponsiveBar = ({ data }) => (
 			tickRotation: 0,
 			legend: "Volume",
 			legendPosition: "middle",
-			legendOffset: -40,
+			legendOffset: -60,
 		}}
 		labelSkipWidth={12}
 		labelSkipHeight={12}

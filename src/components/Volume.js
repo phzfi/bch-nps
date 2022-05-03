@@ -4,8 +4,8 @@ const MyResponsiveBar = ({ data }) => (
 	<ResponsiveBar
 		data={data}
 		keys={["promoters", "passives", "detractors"]}
-		indexBy="week"
-		margin={{ top: 50, right: 150, bottom: 100, left: 80 }}
+		indexBy="timeSpan"
+		margin={{ top: 50, right: 150, bottom: 150, left: 90 }}
 		padding={0.3}
 		valueScale={{ type: "linear" }}
 		indexScale={{ type: "band", round: true }}
@@ -37,7 +37,7 @@ const MyResponsiveBar = ({ data }) => (
 			tickRotation: -75,
 			legend: "Time",
 			legendPosition: "middle",
-			legendOffset: 72,
+			legendOffset: 110,
 		}}
 		axisLeft={{
 			tickSize: 5,

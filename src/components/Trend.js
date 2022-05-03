@@ -29,6 +29,7 @@ const MyResponsiveLine = ({ data }) => {
 				stacked: true,
 				reverse: false,
 			}}
+			curve="monotoneX"
 			yFormat=" >-.2f"
 			axisTop={null}
 			axisRight={null}
@@ -52,8 +53,8 @@ const MyResponsiveLine = ({ data }) => {
 			}}
 			enableGridX={false}
 			colors={{ datum: "color" }}
-			pointSize={10}
-			pointColor={{ from: "color" }}
+			pointSize={5}
+			pointColor={{ theme: "background" }}
 			pointBorderWidth={5}
 			pointBorderColor={{ from: "serieColor" }}
 			pointLabelYOffset={-12}

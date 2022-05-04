@@ -142,7 +142,11 @@ const MuiForm = () => {
 
 	const labelsStars = [...Array(10).keys()].map((x) => x + 1);
 
-	const { vertical, horizontal } = { open: false, vertical: "bottom", horizontal: "left"};
+	const { vertical, horizontal } = {
+		open: false,
+		vertical: "bottom",
+		horizontal: "left",
+	};
 
 	// snackbar transition
 	function SlideTransition(props) {
@@ -278,22 +282,22 @@ const MuiForm = () => {
 						TransitionComponent={thankyouOpen.Transition}
 						key={thankyouOpen.Transition.name}
 				>
-					<Alert onClose={handleCloseThankyou}
+					<Alert
+						onClose={handleCloseThankyou}
 						severity="success"
-						sx={{ width: '100%' }}
+						sx={{ width: "100%" }}
 					>
 						Score <strong>submitted</strong>. Thank you for your feedback!
 					</Alert>
 				</Snackbar>
 			)}
 			{error && (
-				<Snackbar open={error}
-						autoHideDuration={5000}
-						onClose={handleCloseError}
+				<Snackbar
+					open={error}
+					autoHideDuration={5000}
+					onClose={handleCloseError}
 				>
-					<Alert severity="error"
-						onClose={handleCloseError}
-					>
+					<Alert severity="error" onClose={handleCloseError}>
 						{`${errorMessage}`}
 					</Alert>
 				</Snackbar>

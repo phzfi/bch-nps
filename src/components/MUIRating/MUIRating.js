@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./MUIRating.css";
-import axios from "axios";
+// import axios from "axios";
+import { db } from "../../firebase-config";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import {
 	Box,
 	FormControl,
@@ -35,13 +37,16 @@ const MuiForm = () => {
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const reviewsCollectionRef = collection(db, "reviews");
+
 	useEffect(() => {
 		checkIsSurveyAnswered();
 	}, [surveyAnswered, surveyOpen, error, score]);
 
-	useEffect(() => {
-		getResults();
-	}, [surveyOpen]);
+	// useEffect(() => {
+	// 	// getResults();
+	// 	// getReviews();
+	// }, [surveyOpen]);
 
 	const checkIsSurveyAnswered = () => {
 		const answered = "-surveyAnsweredInLast30days-";
@@ -107,24 +112,46 @@ const MuiForm = () => {
 		setError(false);
 	};
 
-	const sendSurvey = () => {
+	// const sendSurvey = () => {
+	// 	if (score) {
+	// 		axios
+	// 			// .post("http://localhost:8080/api/reviews", {
+	// 			.post("https://promoter-score-backend.herokuapp.com/api/reviews", {
+	// 				score: score,
+	// 				comment: comment,
+	// 			})
+	// 			.catch((err) => errorInSubmit(err))
+	// 			.then((res) => (res.status === 200 ? submitOK() : errorInSubmit()));
+	// 	}
+	// };
+
+	const sendSurvey = async () => {
 		if (score) {
-			axios
-				.post("http://localhost:8080/api/reviews", {
+			try {
+				await addDoc(reviewsCollectionRef, {
 					score: score,
 					comment: comment,
-				})
-				.catch((err) => errorInSubmit(err))
-				.then((res) => (res.status === 200 ? submitOK() : errorInSubmit()));
+					createdAt: new Date()
+				});
+				submitOK();
+			} catch (error) {
+				errorInSubmit();
+			}
 		}
 	};
 
-	const getResults = () => {
-		axios
-			.get("http://localhost:8080/api/reviews")
-			// .then((res) => console.log(res.data))
-			.catch((err) => console.log(err));
-	};
+	// const getResults = () => {
+	// 	axios
+	// 		.get("http://localhost:8080/api/reviews")
+	// 		// .then((res) => console.log(res.data))
+	// 		.catch((err) => console.log(err));
+	// };
+
+	const getReviews = async () => {
+		const data = await getDocs(reviewsCollectionRef);
+		console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+		console.log(data.docs);
+	}
 
 	const labels = {
 		0: "No rating given",

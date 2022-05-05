@@ -2,7 +2,11 @@ import { ResponsiveBar } from "@nivo/bar";
 
 const MyResponsiveBar = ({ data, months }) => {
 	const valuesToShow = data.map((v, i) =>
-		months >= 6 ? (i % 6 ? "" : v.timeSpan) : i % 2 ? "" : v.timeSpan
+		months >= 6 
+		? (i % 6 ? "" : v.timeSpan) 
+		: months >= 3 
+		? (i % 2 ? "" : v.timeSpan)
+		: v.timeSpan
 	);
 	return (
 		<ResponsiveBar

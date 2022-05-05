@@ -8,6 +8,7 @@ import Pie from "./Pie";
 import Trend from "./Trend";
 
 const daysAverageInMonth = 30.4;
+const lastTimeSelection = "-npSurveyTimeSelection-";
 
 const Dashboard = () => {
 	const [loading, setLoading] = useState(true);
@@ -20,7 +21,9 @@ const Dashboard = () => {
 		detractors: 0,
 	});
 	const [volume, setVolume] = useState([]);
-	const [months, setMonths] = useState(6);
+	const [months, setMonths] = useState(localStorage.getItem(lastTimeSelection) 
+		? localStorage.getItem(lastTimeSelection)
+		: 6);
 	const [trend, setTrend] = useState([]);
 	const [clicked, setClicked] = useState("");
 
@@ -37,18 +40,25 @@ const Dashboard = () => {
 		}));
 		setReviews(reviewData);
 		setLoading(false);
-		setPromoterScore(calcPromoterScore(reviewData));
 		if (filteredReviews.length === 0) setFilteredReviews(reviewData);
+		setPromoterScore(calcPromoterScore(reviewData));
 		setVolume(getVolume(reviewData));
 		setTrend(calcTrendData(reviewData));
 	};
 
 	const calcPromoterScore = (data) => {
-		let respondants = data.length;
+		let date = new Date();
+		for (let i = daysAverageInMonth * months; i > 0; i--) {
+			date.setDate(date.getDate() - 1);
+		}
+		const filteredReviews = data.filter(
+			(review) => Date.parse(review.createdAt.toDate()) > date
+		);
+		let respondants = filteredReviews.length;
 		let promoters = 0;
 		let passives = 0;
 		let detractors = 0;
-		for (let review of data) {
+		for (let review of filteredReviews) {
 			if (review.score > 8) {
 				promoters += 1;
 			} else if (review.score < 7) {
@@ -69,6 +79,7 @@ const Dashboard = () => {
 
 	const handleTimeSelection = (e) => {
 		setMonths(e.target.value);
+		localStorage.setItem(lastTimeSelection, e.target.value);
 		const date = new Date();
 		date.setMonth(date.getMonth() - e.target.value);
 		const filteredReviews = reviews?.filter(
@@ -194,6 +205,7 @@ const Dashboard = () => {
 				? -100
 				: ((day.promoters - day.detractors) / total) * 100;
 		}
+		 /* eslint-disable */
 		dates.reverse().map((item) => {
 			const trimmedDate = `${item.date}`.replace(
 				/\D+\s(\D+)\s(\d+)\s\d+/g,
@@ -205,6 +217,7 @@ const Dashboard = () => {
 			});
 		});
 		return trendData;
+		 /* eslint-disable */
 	};
 
 	const trendData = [
@@ -219,7 +232,7 @@ const Dashboard = () => {
 		<div className="dashboard">
 			<div className="pie-wrapper">
 				<h2>Promoter Score</h2>
-				<select defaultValue="6" onChange={handleTimeSelection}>
+				<select defaultValue={months} onChange={handleTimeSelection}>
 					<option value="1">Rolling 1 month</option>
 					<option value="3">Rolling 3 months</option>
 					<option value="6">Rolling 6 months</option>

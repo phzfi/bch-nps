@@ -26,7 +26,7 @@ const Review = ({ reviews, clicked }) => {
 	return (
 		<div className="reviews">
 			<h2>
-				Comments <span>({reviews.length})</span>
+				Comments <span>({sortedReviews().length})</span>
 			</h2>
 			<div className="container">
 				{sortedReviews()

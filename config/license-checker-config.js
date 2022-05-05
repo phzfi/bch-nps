@@ -12,6 +12,10 @@ module.exports = {
 			name: "argparse@2.0.1",
 			reason: "create-react-app had this package",
 		},
+		{
+			name: "pako@1.0.11",
+			reason: "create-react-app had this package",
+		},
 	],
 	disallowedPackages: [],
 	allowedLicenses: [

@@ -1,6 +1,6 @@
 import { ResponsivePie } from "@nivo/pie";
 
-const MyResponsivePie = ({ data, promoterScore }) => {
+const MyResponsivePie = ({ data, promoterScore, setClicked }) => {
 	const CenteredMetric = ({ centerX, centerY }) => {
 		return (
 			<text
@@ -18,12 +18,17 @@ const MyResponsivePie = ({ data, promoterScore }) => {
 			</text>
 		);
 	};
+
+	const handlePieClick = (data) => {
+		setClicked(data);
+	};
 	return (
 		<ResponsivePie
 			data={data}
+			onClick={(node, event) => handlePieClick(node.id)}
 			margin={{ top: 20, right: 50, bottom: 160, left: 50 }}
 			innerRadius={0.7}
-			padAngle={2}
+			padAngle={0.1}
 			cornerRadius={3}
 			activeOuterRadiusOffset={10}
 			borderWidth={1}

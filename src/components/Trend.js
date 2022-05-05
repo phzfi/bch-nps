@@ -1,6 +1,9 @@
 import { ResponsiveLine } from "@nivo/line";
 
-const MyResponsiveLine = ({ data }) => {
+const MyResponsiveLine = ({ data, months }) => {
+	const valuesToShow = data[0].data.map((v, i) =>
+		months >= 6 ? (i % 6 ? "" : v.x) : i % 2 ? "" : v.x
+	);
 	return (
 		<ResponsiveLine
 			data={data}
@@ -36,11 +39,12 @@ const MyResponsiveLine = ({ data }) => {
 			axisBottom={{
 				orient: "bottom",
 				tickSize: 5,
-				tickPadding: 5,
+				tickPadding: 10,
 				tickRotation: 50,
 				legend: "Date",
 				legendOffset: 72,
 				legendPosition: "middle",
+				format: (v) => (valuesToShow.find((vts) => vts === v) ? v : ""),
 			}}
 			axisLeft={{
 				orient: "left",
@@ -53,7 +57,7 @@ const MyResponsiveLine = ({ data }) => {
 			}}
 			enableGridX={false}
 			colors={{ datum: "color" }}
-			pointSize={5}
+			pointSize={3}
 			pointColor={{ theme: "background" }}
 			pointBorderWidth={5}
 			pointBorderColor={{ from: "serieColor" }}

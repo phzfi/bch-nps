@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./MUIRating.css";
 // import axios from "axios";
 import { db } from "../../firebase-config";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import {
 	Box,
 	FormControl,
@@ -21,6 +21,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Slide from '@mui/material/Slide';
 import { useTheme } from "@mui/material/styles";
 import StarIcon from "@mui/icons-material/Star";
+
+
 
 const MuiForm = () => {
 	const [surveyOpen, setSurveyOpen] = useState(true);
@@ -147,11 +149,11 @@ const MuiForm = () => {
 	// 		.catch((err) => console.log(err));
 	// };
 
-	const getReviews = async () => {
-		const data = await getDocs(reviewsCollectionRef);
-		console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-		console.log(data.docs);
-	}
+	// const getReviews = async () => {
+	// 	const data = await getDocs(reviewsCollectionRef);
+	// 	console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+	// 	console.log(data.docs);
+	// }
 
 	const labels = {
 		0: "No rating given",

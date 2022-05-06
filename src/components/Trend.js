@@ -2,7 +2,11 @@ import { ResponsiveLine } from "@nivo/line";
 
 const MyResponsiveLine = ({ data, months }) => {
 	const valuesToShow = data[0].data.map((v, i) =>
-		months >= 6 ? (i % 6 ? "" : v.x) : i % 2 ? "" : v.x
+		months >= 6 
+		? (i % 6 ? "" : v.x) 
+		: months >= 3 
+		? (i % 2 ? "" : v.x)
+		: v.x
 	);
 	return (
 		<ResponsiveLine

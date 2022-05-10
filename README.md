@@ -1,5 +1,7 @@
 # Promoter Score Documentation V1.0.0
 
+- No deployment when updating README.md
+
 ## 1. Project purpose
 
 The purpose of this application is to measure the promoter score of the customer.
@@ -10,9 +12,7 @@ The typical question is:
 
 The scale for the answer ranges from 1 to 10 or from 0 to 10.
 
-
 The promoter score can be interpreted and used as an indicator of customer loyalty and its value ranges from -100 to +100. A specific promoter score can be used, for example, as a treshold for a bonus salary payment. For instance an employer can set a promoter score of 30 as the threshold to pay a bonus to her employees.
-
 
 The purpose of this application is to create a survey that can be embedded in any site.
 
@@ -21,21 +21,20 @@ The purpose of this application is to create a survey that can be embedded in an
 <span style="color:red">Don't hesitate to use a picture.</span>
 
 The project is divided into three repositories:
-  - form --> https://github.com/BCHteam1/ps_form
+
+- form --> https://github.com/BCHteam1/ps_form
 
 The survey form is deployed on Netlify. Changes in the form repository will result in a new automatic deploy.
 
-  - dashboard --> https://github.com/BCHteam1/admin_dashboard
+- dashboard --> https://github.com/BCHteam1/admin_dashboard
 
 The survey will be deployed on <span style="color:red">XXX</span>
 
-  - backend --> https://github.com/BCHteam1/promoter_score_backend
-
+- backend --> https://github.com/BCHteam1/promoter_score_backend
 
 The database will be hosted on <span style="color:red">XXX</span>
 
-
-### 2.1 Main languages and technologies: PERN stack  
+### 2.1 Main languages and technologies: PERN stack
 
 - Javascript/JSX
 - React
@@ -49,16 +48,15 @@ The database will be hosted on <span style="color:red">XXX</span>
 - cypress for E2E testing
 - <span style="color:red">else? please check list</span>
 
-
 ### 2.2 Information collected from users
 
-  The survey collects from the user only the likelyhood rate, that is a number for 1 to 10, and an optional comment. These informations are stored into the database with a generated timestamp.
+The survey collects from the user only the likelyhood rate, that is a number for 1 to 10, and an optional comment. These informations are stored into the database with a generated timestamp.
 
-  No cookies are collected or stored so there is a No Cookie Policy.
+No cookies are collected or stored so there is a No Cookie Policy.
 
-  When a user submits the survey, an item with an expiration date is set into the browser localStorage so that is not possible to submit again the form in the following 30 days.
+When a user submits the survey, an item with an expiration date is set into the browser localStorage so that is not possible to submit again the form in the following 30 days.
 
-  If a user does not want to answer and clicks the CLOSE button, an item with an expiration date is set into the browser localStorage so that the form is not presented again in the following 7 days.
+If a user does not want to answer and clicks the CLOSE button, an item with an expiration date is set into the browser localStorage so that the form is not presented again in the following 7 days.
 
 ## 3. Development environment
 
@@ -66,9 +64,9 @@ The database will be hosted on <span style="color:red">XXX</span>
 
 In order to set up a development environment you need to have installed:
 
+- form
+  <span style="color:red">CHECK --> all needed?</span>
 
-  - form
- <span style="color:red">CHECK --> all needed?</span>
 ```json
 "dependencies": {
   "@emotion/react": "^11.8.2",
@@ -91,7 +89,8 @@ In order to set up a development environment you need to have installed:
 }
 ```
 
-  - backend <span style="color:red">CHECK --> all needed?</span>
+- backend <span style="color:red">CHECK --> all needed?</span>
+
 ```json
 "dependencies": {
   "@nivo/bar": "^0.79.1",
@@ -116,7 +115,8 @@ In order to set up a development environment you need to have installed:
 }
 ```
 
-  - backend <span style="color:red">CHECK license ISC?</span>
+- backend <span style="color:red">CHECK license ISC?</span>
+
 ```json
 "dependencies": {
   "cors": "^2.8.5",
@@ -134,13 +134,12 @@ In order to set up a development environment you need to have installed:
 }
 ```
 
-At the moment there is no separate file for environmental variables. If there will be one, a developer will get one that works from  <span style="color:red">XXX</span>
+At the moment there is no separate file for environmental variables. If there will be one, a developer will get one that works from <span style="color:red">XXX</span>
 
 <span style="color:red">
 Are other changes - such as /etc/hosts, port-forwardings - needed?</span>
 
 ### 3.2. Run tests
-
 
 To run Cypress E2E form test:
 
@@ -154,7 +153,6 @@ To run cypress tests on browserstack:
 browserstack-cypress run --sync
 ```
 
-
 ### 3.3. Migrations
 
 <span style="color:red">How to run database migrations locally (if necessary). Sometimes the migrations are run as part of the test suite,
@@ -162,22 +160,21 @@ which is preferable.</span>
 
 ### 3.4. Start the application locally
 
-  - open the form with:
+- open the form with:
 
-  ```sh
-  npm start
-  ```
+```sh
+npm start
+```
 
-  - open the admin dashboard to see the promoter score and charts with:
+- open the admin dashboard to see the promoter score and charts with:
 
-  ```sh
-  npm start
-  ```
+```sh
+npm start
+```
 
-  from the dashboard project https://github.com/BCHteam1/admin_dashboard 
+from the dashboard project https://github.com/BCHteam1/admin_dashboard
 
-
-  `licence-checker` will automatically check that all packages and dependencies pass the licence check. The allowed licences are:
+`licence-checker` will automatically check that all packages and dependencies pass the licence check. The allowed licences are:
 
 ```json
 	allowedLicenses: [
@@ -205,17 +202,15 @@ which is preferable.</span>
 		"0BSD",
 		"CC0-1.0",
 	]
-  ```
+```
 
-  The last two licences, `0BSD` and `CC0-1.0` still need confirmation from the legal deparment. They were added to the customer provided list to pass the licence check.
+The last two licences, `0BSD` and `CC0-1.0` still need confirmation from the legal deparment. They were added to the customer provided list to pass the licence check.
 
-
-  - start the database with <span style="color:red">XXX</span>
+- start the database with <span style="color:red">XXX</span>
 
 ### 3.5. Access the application locally
 
 To access the locally running application go to `localhost:3000` or whatever port is set by `npm start`
-
 
 At the moment no credentialis are needed to access relevant pieces of the application. Login implementation has been postponed as per customer's suggestion since the application can be used internally with no need for login.
 
@@ -223,22 +218,21 @@ At the moment no credentialis are needed to access relevant pieces of the applic
 
 No particular setup needed.
 
-### 3.7. Version control: git 
-
+### 3.7. Version control: git
 
 - the git workflow used in this project is merge
 - we initially agreed on squashing commits to have a clean and readble history but we dropped this practice as the project progressed since we would commit fairly rarely already, once a day or even less often
-- no specific commit messages requirements 
+- no specific commit messages requirements
 - naming conventions for branches:
-Create and switch to new branch:
+  Create and switch to new branch:
 
 ```sh
 git checkout -b feature/T1-1_featureName
 ```
+
 where `T1-1`is the issue/task id in Jira, followed by underscore and then the feature name which can is the Jira issue/task title.
 
-
-When a feature/issue is ready, push to feature branch and make a pull request. Another team member need to merge into main. Possible conflicts may be resolved together. 
+When a feature/issue is ready, push to feature branch and make a pull request. Another team member need to merge into main. Possible conflicts may be resolved together.
 
 ### 3.8. How to make a production data dump and import it into the local development environment
 
@@ -249,18 +243,17 @@ development environment with production data. Describe how to do that here.</spa
 
 ### 4.1. Access
 
-- The URL where the test environment of the application can be found:  <span style="color:red">https...</span>
+- The URL where the test environment of the application can be found: <span style="color:red">https...</span>
 
 - The credentials to use in the test environment. For example, username and password <span style="color:red">Do we need DB info here?</span>
 
 ### 4.2. Deployment
 
- <span style="color:red">How a deployment is done.</span>
-
+<span style="color:red">How a deployment is done.</span>
 
 ### 4.3. Verifying that a deployment was successful
 
- <span style="color:red">The steps needed to verify that a new version is running in the test environment successfully.</span>
+<span style="color:red">The steps needed to verify that a new version is running in the test environment successfully.</span>
 
 #### 4.3.1. Automated test cases
 
@@ -270,28 +263,27 @@ development environment with production data. Describe how to do that here.</spa
 
 <span style="color:red">Things that you have to test manually in order to ensure that a deployment was successful.</span>
 
-
 ### 4.4. Rollback
 
 <span style="color:red">How to restore the previous version of the software when a deployment goes wrong?</span>
-
 
 ## 5. Production environment
 
 ### 5.1. Access
 
-- The URL where the test environment of the application can be found:  <span style="color:red">https...</span>
+- The URL where the test environment of the application can be found: <span style="color:red">https...</span>
 
 - The credentials to use in the test environment. For example, username and password <span style="color:red">DB info here?</span>
 
--  <span style="color:red">If a VPN, SSH tunneling or some other similar way to access the production environment is required,
+- <span style="color:red">If a VPN, SSH tunneling or some other similar way to access the production environment is required,
   describe the steps needed here.</span>
 
 #### 5.1.1. Usage
 
 - Place the below HTML elements anywhere on your page
 
- <span style="color:red">UPDATE LINK</span>
+<span style="color:red">UPDATE LINK</span>
+
 ```html
 <!-- EMBEDDABLE PROMOTER SCORE SURVEY -->
 <div id="psForm"></div>
@@ -301,8 +293,8 @@ development environment with production data. Describe how to do that here.</spa
 ></script>
 <!-- EMBEDDABLE PROMOTER SCORE SURVEY -->
 ```
-<span style="color:red">UPDATE LINK</span>
 
+<span style="color:red">UPDATE LINK</span>
 
 ### 5.2. Deployment
 
@@ -340,7 +332,7 @@ The form depolyment is connected to the form repository. Any change pushed into 
 
 ## 7. Code style
 
-in `package.json`  <span style="color:red">Check if needed</span>
+in `package.json` <span style="color:red">Check if needed</span>
 
 ```json
 "eslintConfig": {
@@ -360,6 +352,7 @@ with these instructions.</span>
 ## 9. More useful information, Tips and Tricks
 
 <span style="color:red">DELETE?</span>
+
 - We used [jsDelivr](https://www.jsdelivr.com/) to use our form embedding script as _src_ attribute in HTML script element
 
 ## 10. Screenshots

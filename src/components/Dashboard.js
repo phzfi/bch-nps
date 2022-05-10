@@ -70,6 +70,7 @@ const Dashboard = () => {
 				passives += 1;
 			}
 		}
+		setFilteredReviews(filteredReviews);
 		if (respondants) {
 			return {
 				score: ((promoters - detractors) / respondants) * 100,

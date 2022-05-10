@@ -1,4 +1,4 @@
-import { CopyBlock, monokaiSublime } from "react-code-blocks";
+import ReactSyntaxHighlighter from "react-syntax-highlighter";
 import "./Instructions.css";
 
 const Instructions = () => {
@@ -15,14 +15,13 @@ const Instructions = () => {
 				<h1>How to embed the questionnaire form?</h1>
 				<p>Copy and insert the HTML code below to your application.</p>
 				<div className="code-block">
-					<CopyBlock
-						text={embedCode}
+					<ReactSyntaxHighlighter
 						language="html"
 						showLineNumbers={true}
-						wrapLines
-						theme={monokaiSublime}
 						customStyle={{ margin: "3rem" }}
-					/>
+					>
+						{embedCode}
+					</ReactSyntaxHighlighter>
 				</div>
 			</div>
 		</div>

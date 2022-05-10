@@ -20,13 +20,15 @@ const Review = ({ reviews, clicked }) => {
 		}
 		return sorted;
 	};
-	// console.log(sortedReviews());
 	// console.log(clicked);
 
 	return (
 		<div className="reviews">
 			<h2>
-				Comments <span>({sortedReviews().length})</span>
+				Comments{" "}
+				<span>
+					({sortedReviews().filter((review) => review.comment).length})
+				</span>
 			</h2>
 			<div className="container">
 				{sortedReviews()

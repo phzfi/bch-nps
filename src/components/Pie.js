@@ -8,10 +8,12 @@ const MyResponsivePie = ({ data, promoterScore, setClicked }) => {
 				y={centerY}
 				textAnchor="middle"
 				dominantBaseline="central"
+				onClick={() => setClicked("")}
 				style={{
 					fontSize: "2.5rem",
 					fontWeight: 500,
 					fill: "#fff",
+					cursor: "pointer",
 				}}
 			>
 				{`${Math.ceil(promoterScore.score)}`}

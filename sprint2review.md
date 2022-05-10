@@ -7,18 +7,18 @@
 3. - [x] THE question for the form is: see DIMBAL --> kept as it was
 4. - [x] Time selection is at the left upper corner where the score is. It effects the pie chart. ~~The lower chart/promoter score over time can show always 1 year~~
 5. - [x] Sorting comments: show the latest comment at the top 
-6. - [ ] HR/Maj wants to see comments of the selected time span near the promoter score
-7. - [ ] Doughnut percentages of promoters, detractors and passives are clickable and will show the relative comments
+6. - [x] HR/Maj wants to see comments of the selected time span near the promoter score
+7. - [x] Doughnut percentages of promoters, detractors and passives are clickable and will show the relative comments
 8. - [ ] Maj wants to see the TOTAL RESPONSES count for a time period ~~(as I understod it, she also wants to be able to see last year's April, for example)~~
 9. There is NO REQUIREMENT for multiple questionnaires
 10. - [ ] machine readable API so that on the last/first day of every month they make an API query to ask what is the PS average --> if it's grater than X (was it 30?) a bonus will be paid
-11. - [ ] host backend (PHZ server?)
+11. - [ ] ~~host backend (PHZ server?)~~ --> firebase
 12. - [x] graph for response volume is optional
 13. - [ ] Additional req: Google React Localization FI SWE EN ---> how the customer can change lang: is it a hardcoded JSON in the backend or other way?
 
 14. - [ ] Testing of dashboard?
-15. - [ ] Last selected time span is remembered in browser
-16. - [ ] Fill in the excel with info
+15. - [x] Last selected time span is remembered in browser
+16. - [x] Fill in the excel with info
 
 ### Feedback/ TO DO for Team-1:
 

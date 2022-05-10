@@ -21,15 +21,18 @@ const Dashboard = () => {
 		detractors: 0,
 	});
 	const [volume, setVolume] = useState([]);
-	const [months, setMonths] = useState(localStorage.getItem(lastTimeSelection) 
-		? localStorage.getItem(lastTimeSelection)
-		: 6);
+	const [months, setMonths] = useState(
+		localStorage.getItem(lastTimeSelection)
+			? localStorage.getItem(lastTimeSelection)
+			: 6
+	);
 	const [trend, setTrend] = useState([]);
 	const [clicked, setClicked] = useState("");
 
 	useEffect(() => {
 		getReviews();
-	}, [months]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [months, clicked]);
 
 	const getReviews = async () => {
 		const reviewsCollectionRef = collection(db, "reviews");
@@ -205,7 +208,7 @@ const Dashboard = () => {
 				? -100
 				: ((day.promoters - day.detractors) / total) * 100;
 		}
-		 /* eslint-disable */
+		/* eslint-disable */
 		dates.reverse().map((item) => {
 			const trimmedDate = `${item.date}`.replace(
 				/\D+\s(\D+)\s(\d+)\s\d+/g,
@@ -217,7 +220,7 @@ const Dashboard = () => {
 			});
 		});
 		return trendData;
-		 /* eslint-disable */
+		/* eslint-disable */
 	};
 
 	const trendData = [
@@ -238,6 +241,9 @@ const Dashboard = () => {
 					<option value="6">Rolling 6 months</option>
 					<option value="12">Rolling 1 year</option>
 				</select>
+				<h3>
+					Responses<span>{filteredReviews.length}</span>
+				</h3>
 				{!loading && (
 					<Pie
 						data={pieData}

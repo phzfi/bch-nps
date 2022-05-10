@@ -242,7 +242,7 @@ const Dashboard = () => {
 					<option value="6">Rolling 6 months</option>
 					<option value="12">Rolling 1 year</option>
 				</select>
-				<h3>
+				<h3 onClick={() => setClicked("")}>
 					Responses<span>{filteredReviews.length}</span>
 				</h3>
 				{!loading && (

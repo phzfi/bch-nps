@@ -34,6 +34,7 @@
 	flex-direction: column;
 	align-items: center;
 	background-color: #fff;
+	cursor: pointer;
 }
 
 .pie-wrapper h3 span {

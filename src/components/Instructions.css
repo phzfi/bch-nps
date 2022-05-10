@@ -1,0 +1,23 @@
+.embed-container {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	height: 100vh;
+}
+
+.embed-card {
+	background-color: #142236;
+	border-radius: 1rem;
+	border: 2px solid black;
+	border-radius: 1rem;
+	box-shadow: 5px 5px 5px #142236;
+	margin-top: 2rem;
+	width: 95%;
+}
+
+.embed-card h1,
+.embed-card p {
+	text-align: center;
+	color: #fff;
+	padding: 1.5rem;
+}

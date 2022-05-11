@@ -1,6 +1,8 @@
 import React from "react";
 import "./Review.css";
 import classNames from "classnames";
+import { AiFillStar } from 'react-icons/ai';
+
 
 const Review = ({ reviews, clicked }) => {
 	const sortedReviews = () => {
@@ -47,7 +49,7 @@ const Review = ({ reviews, clicked }) => {
 							<div key={review.id} className="review-single">
 								<div className="rate-group">
 									<p className="rate">{review.score}</p>
-									<div className={wrapperClasses}></div>
+									<AiFillStar className={wrapperClasses}/>
 								</div>
 								<p className="comment">{review.comment}</p>
 								<p className="date">{reviewDate}</p>

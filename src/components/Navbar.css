@@ -24,8 +24,14 @@ li {
 li a {
 	color: white;
 	text-decoration: none;
+	display: flex;
+	align-items: center;
 }
 
 .active {
 	color: #ed6930;
+}
+
+svg {
+	margin-right: 5px;
 }

@@ -1,7 +1,9 @@
+import { useState } from "react";
 import ReactSyntaxHighlighter from "react-syntax-highlighter";
 import "./Instructions.css";
 
 const Instructions = () => {
+	const [copied, setCopied] = useState(false);
 	const embedCode = `<!-- EMBEDDABLE PROMOTER SCORE SURVEY -->
 <div id="psForm"></div>
 <script 
@@ -23,6 +25,15 @@ const Instructions = () => {
 						{embedCode}
 					</ReactSyntaxHighlighter>
 				</div>
+				<button
+					onClick={() => {
+						navigator.clipboard.writeText(embedCode);
+						setCopied(true);
+					}}
+				>
+					Copy to clipboard
+				</button>
+				{copied ? <span className="copied">Copied!</span> : null}
 			</div>
 		</div>
 	);

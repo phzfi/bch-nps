@@ -4,7 +4,7 @@ const MyResponsivePie = ({ data, promoterScore, setClicked }) => {
 	const CenteredMetric = ({ centerX, centerY }) => {
 		return (
 			<text
-				x={promoterScore.score >= 0 ? centerX : centerX - 8}
+				x={promoterScore?.score >= 0 ? centerX : centerX - 8}
 				y={centerY}
 				textAnchor="middle"
 				dominantBaseline="central"

@@ -32,7 +32,7 @@ const Dashboard = () => {
 	useEffect(() => {
 		getReviews();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [months, clicked]);
+	}, []);
 
 	const getReviews = async () => {
 		const reviewsCollectionRef = collection(db, "reviews");
@@ -43,11 +43,15 @@ const Dashboard = () => {
 		}));
 		setReviews(reviewData);
 		setLoading(false);
-		if (filteredReviews.length === 0) setFilteredReviews(reviewData);
-		setPromoterScore(calcPromoterScore(reviewData));
-		setVolume(getVolume(reviewData));
-		setTrend(calcTrendData(reviewData));
 	};
+
+	useEffect(() => {
+		if (filteredReviews.length === 0) setFilteredReviews(reviews);
+		setPromoterScore(calcPromoterScore(reviews));
+		setVolume(getVolume(reviews));
+		setTrend(calcTrendData(reviews));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [reviews, months, clicked]);
 
 	const calcPromoterScore = (data) => {
 		let date = new Date();
@@ -99,19 +103,19 @@ const Dashboard = () => {
 		{
 			id: "Promoters",
 			label: "Promoters",
-			value: promoterScore.promoters,
+			value: promoterScore?.promoters,
 			color: "#3AC92E",
 		},
 		{
 			id: "Passives",
 			label: "Passives",
-			value: promoterScore.passives,
+			value: promoterScore?.passives,
 			color: "#F7B055",
 		},
 		{
 			id: "Detractors",
 			label: "Detractors",
-			value: promoterScore.detractors,
+			value: promoterScore?.detractors,
 			color: "#ED6930",
 		},
 	];

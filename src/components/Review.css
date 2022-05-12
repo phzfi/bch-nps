@@ -27,21 +27,21 @@
 }
 
 .star {
-	width: 18px;
-	height: 18px;
-	
+	width: 20px;
+	height: 20px;
+	margin-left: 5px;
 }
 
 .green {
-	color: #3AC92E;
+	color: #3ac92e;
 }
 
 .orange {
-	color: #ED6930;
+	color: #ed6930;
 }
 
 .yellow {
-	color: #F7B055;
+	color: #f7b055;
 }
 
 .rate-group {

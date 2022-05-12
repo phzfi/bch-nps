@@ -16,7 +16,7 @@ nav ul {
 }
 
 li {
-	margin: 1rem;
+	margin: 1rem 1rem 1rem 0;
 	padding: 1rem;
 	text-align: center;
 }
@@ -26,12 +26,14 @@ li a {
 	text-decoration: none;
 	display: flex;
 	align-items: center;
+	font-weight: 700;
 }
 
 .active {
 	color: #ed6930;
 }
 
-svg {
-	margin-right: 5px;
+li a svg {
+	margin-right: 20px;
+	font-size: 2rem;
 }

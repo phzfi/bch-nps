@@ -27,27 +27,26 @@
 }
 
 .star {
-	width: 25px;
-	height: 25px;
-	background-repeat: no-repeat;
-	background-position: center;
-	background: cover;
+	width: 18px;
+	height: 18px;
+	
 }
 
 .green {
-	background-image: url(../images/greenStar.png);
+	color: #3AC92E;
 }
 
 .orange {
-	background-image: url(../images/orangeStar.png);
+	color: #ED6930;
 }
 
 .yellow {
-	background-image: url(../images/yellowStar.png);
+	color: #F7B055;
 }
 
 .rate-group {
 	display: flex;
+	align-items: center;
 }
 
 .rate {

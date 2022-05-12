@@ -59,7 +59,7 @@ const Dashboard = () => {
 			date.setDate(date.getDate() - 1);
 		}
 		const filteredReviews = data.filter(
-			(review) => Date.parse(review.createdAt.toDate()) > date
+			(review) => Date.parse(review.createdAt.toDate()) >= date
 		);
 		let respondants = filteredReviews.length;
 		let promoters = 0;
@@ -197,7 +197,10 @@ const Dashboard = () => {
 		for (let day of dates) {
 			for (let review of data) {
 				const reviewDay = new Date(review.createdAt.toDate()).getTime();
-				if (+reviewDay <= new Date(day.date).getTime()) {
+				if (
+					reviewDay <= new Date(day.date).getTime() &&
+					reviewDay > new Date(dates[dates.length - 1].date).getTime()
+				) {
 					if (review.score > 8) {
 						day.promoters += 1;
 					} else if (review.score < 7) {
@@ -209,9 +212,7 @@ const Dashboard = () => {
 			}
 
 			let total = day.promoters + day.passives + day.detractors;
-			day.trendTilDay = isNaN(((day.promoters - day.detractors) / total) * 100)
-				? -100
-				: ((day.promoters - day.detractors) / total) * 100;
+			day.trendTilDay = ((day.promoters - day.detractors) / total) * 100;
 		}
 		/* eslint-disable */
 		dates.reverse().map((item) => {
@@ -231,7 +232,7 @@ const Dashboard = () => {
 	const trendData = [
 		{
 			id: "Score",
-			color: "#2765E3",
+			color: "#F7B055",
 			data: trend,
 		},
 	];

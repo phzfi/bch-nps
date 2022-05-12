@@ -2,11 +2,7 @@ import { ResponsiveLine } from "@nivo/line";
 
 const MyResponsiveLine = ({ data, months }) => {
 	const valuesToShow = data[0].data.map((v, i) =>
-		months >= 6 
-		? (i % 6 ? "" : v.x) 
-		: months >= 3 
-		? (i % 2 ? "" : v.x)
-		: v.x
+		months >= 6 ? (i % 6 ? "" : v.x) : months >= 3 ? (i % 2 ? "" : v.x) : v.x
 	);
 	return (
 		<ResponsiveLine
@@ -61,12 +57,26 @@ const MyResponsiveLine = ({ data, months }) => {
 			}}
 			enableGridX={false}
 			colors={{ datum: "color" }}
-			pointSize={3}
+			pointSize={0}
 			pointColor={{ theme: "background" }}
 			pointBorderWidth={5}
 			pointBorderColor={{ from: "serieColor" }}
 			pointLabelYOffset={-12}
 			useMesh={true}
+			enableArea={true}
+			areaBaselineValue={30}
+			markers={[
+				{
+					axis: "y",
+					value: 30,
+					lineStyle: { stroke: "green", strokeWidth: 4 },
+					legend: "Bonus limit",
+					textStyle: {
+						fill: "#FFF",
+					},
+					legendPosition: "right",
+				},
+			]}
 			legends={[
 				{
 					anchor: "bottom-right",

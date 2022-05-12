@@ -16,7 +16,7 @@ const MyResponsivePie = ({ data, promoterScore, setClicked }) => {
 					cursor: "pointer",
 				}}
 			>
-				{`${Math.ceil(promoterScore.score)}`}
+				{`${Math.ceil(promoterScore?.score)}`}
 			</text>
 		);
 	};

@@ -2,18 +2,22 @@ import { ResponsiveBar } from "@nivo/bar";
 
 const MyResponsiveBar = ({ data, months }) => {
 	const valuesToShow = data.map((v, i) =>
-		months >= 6 
-		? (i % 6 ? "" : v.timeSpan) 
-		: months >= 3 
-		? (i % 2 ? "" : v.timeSpan)
-		: v.timeSpan
+		months >= 6
+			? i % 6
+				? ""
+				: v.timeSpan
+			: months >= 3
+			? i % 2
+				? ""
+				: v.timeSpan
+			: v.timeSpan
 	);
 	return (
 		<ResponsiveBar
 			data={data}
 			keys={["promoters", "passives", "detractors"]}
 			indexBy="timeSpan"
-			margin={{ top: 50, right: 150, bottom: 200, left: 90 }}
+			margin={{ top: 50, right: 150, bottom: 150, left: 90 }}
 			padding={0.1}
 			valueScale={{ type: "linear" }}
 			indexScale={{ type: "band", round: true }}
@@ -46,7 +50,7 @@ const MyResponsiveBar = ({ data, months }) => {
 				tickRotation: 50,
 				legend: "Date",
 				legendPosition: "middle",
-				legendOffset: 110,
+				legendOffset: 72,
 				format: (v) => (valuesToShow.find((vts) => vts === v) ? v : ""),
 			}}
 			axisLeft={{

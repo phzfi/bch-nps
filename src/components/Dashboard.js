@@ -232,7 +232,7 @@ const Dashboard = () => {
 	const trendData = [
 		{
 			id: "Score",
-			color: "#F7B055",
+			color: "#0390fc",
 			data: trend,
 		},
 	];

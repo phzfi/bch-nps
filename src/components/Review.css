@@ -5,17 +5,31 @@
 .comment,
 .rate,
 .date {
-	color: #142236;
+	color: #fff;
+	/* color: #142236; */
 }
 
 .review-single {
 	background: #f6f6f8;
-	border: 1px solid #142236;
+	/* border: 2px solid #142236; */
 	box-sizing: border-box;
 	border-radius: 10px;
 	width: 90%;
 	padding: 10px;
 	margin: 0 10px 10px 0;
+}
+
+.promoter {
+	border: 2px solid #3ac92e;
+	background-color: #3ac92e33;
+}
+.passive {
+	border: 2px solid #f7b055;
+	background-color: #f7b05533;
+}
+.detractor {
+	border: 2px solid #ed6930;
+	background-color: #ed693033;
 }
 
 .review-single p {

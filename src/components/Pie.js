@@ -16,7 +16,9 @@ const MyResponsivePie = ({ data, promoterScore, setClicked }) => {
 					cursor: "pointer",
 				}}
 			>
-				{`${Math.ceil(promoterScore?.score)}`}
+				{isNaN(promoterScore?.score)
+					? "No data"
+					: `${Math.ceil(promoterScore?.score)}`}
 			</text>
 		);
 	};

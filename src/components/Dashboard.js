@@ -7,7 +7,6 @@ import Volume from "./Volume";
 import Pie from "./Pie";
 import Trend from "./Trend";
 
-const daysAverageInMonth = 30.4;
 const lastTimeSelection = "-npSurveyTimeSelection-";
 
 const Dashboard = () => {
@@ -54,13 +53,13 @@ const Dashboard = () => {
 	}, [reviews, months, clicked]);
 
 	const calcPromoterScore = (data) => {
-		let date = new Date();
-		for (let i = daysAverageInMonth * months; i > 0; i--) {
-			date.setDate(date.getDate() - 1);
-		}
+		const startDate = new Date();
+		startDate.setMonth(startDate.getMonth() - months);
+
 		const filteredReviews = data.filter(
-			(review) => Date.parse(review.createdAt.toDate()) >= date
+			(review) => Date.parse(review.createdAt.toDate()) >= startDate
 		);
+
 		let respondants = filteredReviews.length;
 		let promoters = 0;
 		let passives = 0;
@@ -124,9 +123,17 @@ const Dashboard = () => {
 
 	const getVolume = (data) => {
 		const dates = [];
+
+		const startDate = new Date();
+		startDate.setMonth(startDate.getMonth() - months);
+
 		let date = new Date();
-		for (let i = daysAverageInMonth * months; i > 0; i--) {
-			const curdate = date;
+		for (
+			let i = startDate;
+			i <= date;
+			startDate.setDate(startDate.getDate() + 1)
+		) {
+			const curdate = i;
 			dates.push({
 				date: curdate.toDateString(),
 				weekStart: 0,
@@ -136,8 +143,9 @@ const Dashboard = () => {
 				responses: 0,
 				score: 0,
 			});
-			date.setDate(date.getDate() - 1);
 		}
+
+		dates.reverse();
 
 		for (let day of dates) {
 			// look for reviews of the given day
@@ -181,9 +189,16 @@ const Dashboard = () => {
 	const calcTrendData = (data) => {
 		const trendData = [];
 		const dates = [];
+		const startDate = new Date();
+		startDate.setMonth(startDate.getMonth() - months);
+
 		let date = new Date();
-		for (let i = daysAverageInMonth * months; i > 0; i--) {
-			const curdate = date;
+		for (
+			let i = startDate;
+			i <= date;
+			startDate.setDate(startDate.getDate() + 1)
+		) {
+			const curdate = i;
 			dates.push({
 				date: curdate.toDateString(),
 				promoters: 0,
@@ -191,8 +206,9 @@ const Dashboard = () => {
 				detractors: 0,
 				trendTilDay: -100,
 			});
-			date.setDate(date.getDate() - 1);
 		}
+
+		dates.reverse();
 
 		for (let day of dates) {
 			for (let review of data) {

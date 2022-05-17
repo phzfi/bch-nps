@@ -27,7 +27,7 @@
     "license": "./node_modules/.bin/license-to-fail ./config/license-checker-config.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

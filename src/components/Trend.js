@@ -33,7 +33,7 @@ const MyResponsiveLine = ({ data, months }) => {
 				reverse: false,
 			}}
 			curve="monotoneX"
-			yFormat=" >-.2f"
+			yFormat="0"
 			axisTop={null}
 			axisRight={null}
 			axisBottom={{

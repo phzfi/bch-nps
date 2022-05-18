@@ -37,7 +37,11 @@ const Dashboard = () => {
 		const reviewsCollectionRef = collection(db, "reviews");
 		const data = await getDocs(reviewsCollectionRef);
 		const reviewData = data.docs.map((doc) => ({
-			...doc.data(),
+			...doc.data({
+				comment: doc.data().comment,
+				score: doc.data().score,
+				createdAt: doc._document.version.timestamp, // timestamp created by Firebase
+			}),
 			id: doc.id,
 		}));
 		setReviews(reviewData);
@@ -55,6 +59,7 @@ const Dashboard = () => {
 	const calcPromoterScore = (data) => {
 		const startDate = new Date();
 		startDate.setMonth(startDate.getMonth() - months);
+		startDate.setHours(0, 0, 0, 0);
 
 		const filteredReviews = data.filter(
 			(review) => Date.parse(review.createdAt.toDate()) >= startDate
@@ -126,6 +131,7 @@ const Dashboard = () => {
 
 		const startDate = new Date();
 		startDate.setMonth(startDate.getMonth() - months);
+		startDate.setHours(0, 0, 0, 0);
 
 		let date = new Date();
 		for (
@@ -191,6 +197,7 @@ const Dashboard = () => {
 		const dates = [];
 		const startDate = new Date();
 		startDate.setMonth(startDate.getMonth() - months);
+		startDate.setHours(0, 0, 0, 0);
 
 		let date = new Date();
 		for (
@@ -213,8 +220,10 @@ const Dashboard = () => {
 		for (let day of dates) {
 			for (let review of data) {
 				const reviewDay = new Date(review.createdAt.toDate()).getTime();
+				const endOfCurrentDay = new Date(day.date);
+				endOfCurrentDay.setHours(23, 59, 59, 0);
 				if (
-					reviewDay <= new Date(day.date).getTime() &&
+					reviewDay <= endOfCurrentDay.getTime() &&
 					reviewDay > new Date(dates[dates.length - 1].date).getTime()
 				) {
 					if (review.score > 8) {
@@ -230,19 +239,18 @@ const Dashboard = () => {
 			let total = day.promoters + day.passives + day.detractors;
 			day.trendTilDay = ((day.promoters - day.detractors) / total) * 100;
 		}
-		/* eslint-disable */
+
 		dates.reverse().map((item) => {
 			const trimmedDate = `${item.date}`.replace(
 				/\D+\s(\D+)\s(\d+)\s\d+/g,
 				"$1 $2"
 			);
-			trendData.push({
+			return trendData.push({
 				x: `${trimmedDate}`,
-				y: isNaN(item.trendTilDay) ? -100 : item.trendTilDay,
+				y: isNaN(item.trendTilDay) ? -100 : Math.ceil(item.trendTilDay),
 			});
 		});
 		return trendData;
-		/* eslint-disable */
 	};
 
 	const trendData = [

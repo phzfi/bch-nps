@@ -23,8 +23,7 @@ The database is hosted on Firebase Firestore Database.
 
 ### 2.1 Main languages and technologies:
 
-- Javascript/JSX<img width="1206" alt="Screenshot 2022-05-19 at 14 50 23" src="https://user-images.githubusercontent.com/75204814/169286752-3f7fc062-bf01-40f8-b34f-d59f15c7516c.png">
-
+- Javascript/JSX
 - React
 - nivo for data visualization
 - git/GitHub

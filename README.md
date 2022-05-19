@@ -23,7 +23,8 @@ The database is hosted on Firebase Firestore Database.
 
 ### 2.1 Main languages and technologies:
 
-- Javascript/JSX
+- Javascript/JSX<img width="1206" alt="Screenshot 2022-05-19 at 14 50 23" src="https://user-images.githubusercontent.com/75204814/169286752-3f7fc062-bf01-40f8-b34f-d59f15c7516c.png">
+
 - React
 - nivo for data visualization
 - git/GitHub
@@ -169,8 +170,28 @@ Manually deployed on Netlify using one of our team member's personal account.
 
 ## 6. More useful information, Tips and Tricks
 
-Firebase config to be replaced with user's own credentials.
+Firebase Firestore Database configuration in file `firebase-config.js` need to be replaced with user's own project credentials:
+
+```js
+const firebaseConfig = {
+	apiKey: "your-api-key",
+	authDomain: "your-domain",
+	projectId: "your-project-id",
+	storageBucket: "your-bucket",
+	messagingSenderId: "your-id",
+	appId: "your-app-id",
+};
+```
+
+For that a new project should be created on user's Firebase account.
+
 
 Open API with a limit of 20 reviews per page: https://firestore.googleapis.com/v1/projects/promoter-score/databases/(default)/documents/reviews To see next page: https://firestore.googleapis.com/v1/projects/promoter-score/databases/(default)/documents/reviews?pageToken={nextPageToken}
 
-## 7. Screen recording
+## 7. Screenshots
+<img width="1440" alt="Screenshot 2022-05-19 at 14 49 14" src="https://user-images.githubusercontent.com/75204814/169286529-f21c0328-2dcd-478d-bd89-13828b29a10a.png">
+
+<img width="1204" alt="Screenshot 2022-05-19 at 14 51 11" src="https://user-images.githubusercontent.com/75204814/169286894-7fc9b2b3-3f25-44be-a8a0-cd0614f6d549.png">
+
+<img width="1440" alt="Screenshot 2022-05-19 at 14 51 44" src="https://user-images.githubusercontent.com/75204814/169286983-a47f1874-4825-4ce3-a047-085a5886e2bd.png">
+

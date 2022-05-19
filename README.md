@@ -17,7 +17,8 @@ The purpose of this application is to create a survey that can be embedded in an
 ## 2. Architecture
 
 The project is divided into two repositories:
-![repos](images/repos.png)
+- form https://github.com/BCHteam1/ps_form
+- dashboard https://github.com/BCHteam1/admin_dashboard
 
 The database is hosted on Firebase Firestore Database.
 
@@ -59,37 +60,11 @@ In order to set up a development environment you need to have installed:
   "@testing-library/jest-dom": "^5.16.3",
   "@testing-library/react": "^12.1.4",
   "@testing-library/user-event": "^13.5.0",
-  "axios": "^0.26.1",
   "react": "^17.0.2",
   "react-dom": "^17.0.2",
   "react-scripts": "5.0.0",
   "web-vitals": "^2.1.4"
 },
-"devDependencies": {
-  "cypress": "^9.5.4",
-  "license-checker": "^25.0.1",
-  "license-to-fail": "^4.0.0"
-}
-```
-
-- backend
-
-```json
-"dependencies": {
-    "@emotion/react": "^11.8.2",
-    "@emotion/styled": "^11.8.1",
-    "@mui/icons-material": "^5.5.1",
-    "@mui/material": "^5.5.2",
-    "@testing-library/jest-dom": "^5.16.3",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.26.1",
-    "firebase": "^9.7.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
-    "web-vitals": "^2.1.4"
-  },
 "devDependencies": {
   "cypress": "^9.5.4",
   "license-checker": "^25.0.1",
@@ -220,9 +195,21 @@ in `package.json`
 
 ## 7. More useful information, Tips and Tricks
 
-Firebase config to be replaced with user's own credentials. For that a new project should be created on user's Firebase account.
+Firebase Firestore Database configuration in file `firebase-config.js` need to be replaced with user's own project credentials:
 
-Open API with a limit of 20 reviews per page: https://firestore.googleapis.com/v1/projects/promoter-score/databases/(default)/documents/reviews To see next page: https://firestore.googleapis.com/v1/projects/promoter-score/databases/(default)/documents/reviews?pageToken={nextPageToken}
+```js
+const firebaseConfig = {
+	apiKey: "your-api-key",
+	authDomain: "your-domain",
+	projectId: "your-project-id",
+	storageBucket: "your-bucket",
+	messagingSenderId: "your-id",
+	appId: "your-app-id",
+};
+```
+
+For that a new project should be created on user's Firebase account.
+
 
 ## 8. Screenshots
 

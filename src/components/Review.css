@@ -1,5 +1,7 @@
 .reviews h2 {
 	color: white;
+	display: flex;
+	align-items: center;
 }
 
 .comment,

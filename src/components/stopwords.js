@@ -1,0 +1,1 @@
+export const customeStopwords = ["I'm", "i'm", "not", "it's", "It's", "it", "It", "with", "With", "be", "Be", "am", "This", "this", "Very", "very", "can't", "Can't", "cannot", "Cannot", "no", "No", ];

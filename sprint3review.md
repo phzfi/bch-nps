@@ -2,7 +2,7 @@
 
 ## Feedback/ TO DO
 
-1. - [ ] change orange to red?
+1. - [x] change orange to red?
 2. - [x] fix filtering on comments when clicking pie
 
 ### Still to do from previous sprint:
@@ -12,7 +12,7 @@
 3. - [ ] host dashboard
 4. - [ ] fix and fill documentation --> readme
 5. - [ ] hide ENV variables
-6. - [ ] detach time span selection from making a new call to firebase? or filter fetched data from firebase directly?
+6. - [x] detach time span selection from making a new call to firebase
 7. - [ ] machine readable API --> to get last 6 months data/PS at midnight of 1st of every month
 
 ### Low priority:

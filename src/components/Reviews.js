@@ -1,8 +1,7 @@
 import React from "react";
 import "./Review.css";
 import classNames from "classnames";
-import { AiFillStar } from 'react-icons/ai';
-
+import { AiFillStar } from "react-icons/ai";
 
 const Review = ({ reviews, clicked }) => {
 	const sortedReviews = () => {
@@ -46,10 +45,19 @@ const Review = ({ reviews, clicked }) => {
 							orange: starColor <= 6,
 						});
 						return (
-							<div key={review.id} className="review-single">
+							<div
+								key={review.id}
+								className={`review-single ${
+									review.score > 8
+										? "promoter"
+										: review.score <= 8 && review.score > 6
+										? "passive"
+										: "detractor"
+								}`}
+							>
 								<div className="rate-group">
 									<p className="rate">{review.score}</p>
-									<AiFillStar className={wrapperClasses}/>
+									<AiFillStar className={wrapperClasses} />
 								</div>
 								<p className="comment">{review.comment}</p>
 								<p className="date">{reviewDate}</p>

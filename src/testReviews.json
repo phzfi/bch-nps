@@ -1,0 +1,52 @@
+[
+    {
+        "score": 5,
+        "comment": "I dont know waht to say",
+        "createdAt": "Mon May 16 2022 19:46:10"
+    },
+    {
+        "score": 1,
+        "comment": "very disappointed",
+        "createdAt": "Mon May 16 2022 19:56:10"
+    },
+    {
+        "score": 10,
+        "comment": "excellent",
+        "createdAt": "Tue Apr 19 2022 08:56:10"
+    },
+    {
+        "score": 9,
+        "comment": "very good",
+        "createdAt": "Thu Apr 14 2022 19:21:10"
+    },
+    {
+        "score": 1,
+        "comment": "very disappointed",
+        "createdAt": "Thu Apr 14 2022 17:56:10"
+    },
+    {
+        "score": 8,
+        "comment": "very unsure",
+        "createdAt": "Wed Apr 6 2022 07:56:10"
+    },
+    {
+        "score": 10,
+        "comment": "loved the jacuzzi at the party",
+        "createdAt": "Sat Apr 16 2022 14:43:10"
+    },
+    {
+        "score": 9,
+        "comment": "fantastic party, especially the sauna and the jacuzzi",
+        "createdAt": "Sat Apr 16 2022 11:34:10"
+    },
+    {
+        "score": 3,
+        "comment": "terrible atmosphere",
+        "createdAt": "Sat Jan 11 2022 10:34:10"
+    },
+    {
+        "score": 2,
+        "comment": "no no no fun",
+        "createdAt": "Thu Nov 11 2021 08:32:10"
+    }
+]

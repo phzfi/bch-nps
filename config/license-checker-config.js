@@ -16,6 +16,10 @@ module.exports = {
 			name: "pako@1.0.11",
 			reason: "came when installing firabase package",
 		},
+		{
+			name: "randomcolor@0.6.2",
+			reason: "tag words",
+		},
 	],
 	disallowedPackages: [],
 	allowedLicenses: [

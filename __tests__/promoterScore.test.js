@@ -1,7 +1,7 @@
 const revs = require('../src/testReviews.json');
 
 const calcPromoterScore = (data, months) => {
-    const startDate = new Date();
+    const startDate = new Date("Tue 17 May 2022");
 		startDate.setMonth(startDate.getMonth() - months);
 
 		const filteredReviews = data.filter(

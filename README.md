@@ -2,6 +2,14 @@
 
 ##### This project is forked from [BCHteam1's repositories](https://github.com/BCHteam1/)
 
+## Super Quick Start
+
+```
+$ npm install       # install deps
+$ npm start         # start form & dashboard dev env
+$ npm run deploy    # build & deploy to Firebase
+```
+
 ## 1. Project purpose
 
 The purpose of this application is to measure the promoter score of the customer.

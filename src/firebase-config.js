@@ -1,16 +1,14 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "@firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyD_nGSu_L_8wBub-dTKbOVuIFVpfSMX0rY",
-	authDomain: "promoter-score.firebaseapp.com",
-	projectId: "promoter-score",
-	storageBucket: "promoter-score.appspot.com",
-	messagingSenderId: "523044621567",
-	appId: "1:523044621567:web:a023062d86968c3bc190ca",
+    apiKey: "AIzaSyCJPHyGZTovh2dOn5NWFzuSPoaFOI59mN4",
+    authDomain: "phzgs-nps.firebaseapp.com",
+    projectId: "phzgs-nps",
+    storageBucket: "phzgs-nps.appspot.com",
+    messagingSenderId: "611941675651",
+    appId: "1:611941675651:web:373fcb796e1ab483b461b6"
 };
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 export const db = getFirestore();
-
-console.clear(app);

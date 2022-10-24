@@ -32,7 +32,7 @@ The project is divided into two applications:
 
 The applications and the database are hosted on Firebase.
 
-### 2.1 Main languages and technologies: PERN stack
+### 2.1 Main languages and technologies: Firebase & React
 
 - Javascript/JSX
 - React

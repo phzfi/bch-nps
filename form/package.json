@@ -19,7 +19,7 @@
 	},
 	"scripts": {
 		"prestart": "npm run license",
-		"license": "./node_modules/.bin/license-to-fail ./config/license-checker-config.js",
+		"license": "license-to-fail ./config/license-checker-config.js",
 		"cypress:open": "cypress open",
 		"start": "react-scripts start",
 		"build": "react-scripts build",

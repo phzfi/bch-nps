@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "default": "phzgs-nps"
+  },
+  "targets": {
+    "phzgs-nps": {
+      "hosting": {
+        "target": "admin_dash",
+        "admin_dash": [
+          "phzgs-nps-admin"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

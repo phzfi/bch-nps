@@ -1,0 +1,47 @@
+.embed-container {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	height: 100vh;
+}
+
+.embed-card {
+	background-color: #142236;
+	border-radius: 1rem;
+	border: 2px solid black;
+	border-radius: 1rem;
+	box-shadow: 5px 5px 5px #142236;
+	margin-top: 2rem;
+	width: 95%;
+	display: flex;
+	flex-direction: column;
+}
+
+.embed-card h1,
+.embed-card p {
+	text-align: center;
+	color: #fff;
+	padding: 1.5rem;
+}
+
+.embed-card button {
+	margin: -1rem 1rem 1rem 1rem;
+	padding: 1rem;
+	cursor: pointer;
+	border: 4px solid #142236;
+	border-radius: 1rem;
+	align-self: center;
+	font-size: 1rem;
+	font-weight: 500;
+	transition: 0.2s ease-in-out;
+}
+
+.embed-card button:hover {
+	border: 4px solid #ed6930;
+}
+
+.copied {
+	padding: 1rem;
+	align-self: center;
+	color: #3ac92e;
+}

@@ -1,0 +1,83 @@
+.reviews h2 {
+	color: white;
+	display: flex;
+	align-items: center;
+}
+
+.comment,
+.rate,
+.date {
+	color: #fff;
+	/* color: #142236; */
+}
+
+.review-single {
+	background: #f6f6f8;
+	/* border: 2px solid #142236; */
+	box-sizing: border-box;
+	border-radius: 10px;
+	width: 90%;
+	padding: 10px;
+	margin: 0 10px 10px 0;
+}
+
+.promoter {
+	border: 2px solid #3ac92e;
+	background-color: #3ac92e33;
+}
+.passive {
+	border: 2px solid #f7b055;
+	background-color: #f7b05533;
+}
+.detractor {
+	border: 2px solid #ed6930;
+	background-color: #ed693033;
+}
+
+.review-single p {
+	padding: 0.2rem 0;
+}
+
+.container {
+	margin-top: 1.5rem;
+}
+
+.star {
+	width: 20px;
+	height: 20px;
+	margin-left: 5px;
+}
+
+.green {
+	color: #3ac92e;
+}
+
+.orange {
+	color: #ed6930;
+}
+
+.yellow {
+	color: #f7b055;
+}
+
+.rate-group {
+	display: flex;
+	align-items: center;
+}
+
+.rate {
+	font-weight: 700;
+}
+
+.reviews {
+	width: 60%;
+	background-color: #142236;
+	border-radius: 30px;
+	margin: 1rem;
+	padding: 20px;
+	height: 400px;
+	overflow: scroll;
+	border: 2px solid black;
+	border-radius: 1rem;
+	box-shadow: 5px 5px 5px #142236;
+}

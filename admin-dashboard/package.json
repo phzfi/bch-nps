@@ -1,0 +1,56 @@
+{
+  "name": "admin_dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@nivo/bar": "^0.79.1",
+    "@nivo/core": "^0.79.0",
+    "@nivo/line": "^0.79.1",
+    "@nivo/pie": "^0.79.1",
+    "@react-icons/all-files": "^4.1.0",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.0.1",
+    "@testing-library/user-event": "^13.5.0",
+    "classnames": "^2.3.1",
+    "firebase": "^9.7.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-icons": "^4.3.1",
+    "react-router-dom": "^6.3.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-tagcloud": "^2.2.0",
+    "stopword": "^2.0.2",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "prestart": "npm run license",
+    "license": "./node_modules/.bin/license-to-fail ./config/license-checker-config.js",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "jest",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "license-checker": "^25.0.1",
+    "license-to-fail": "^4.0.0",
+    "react-scripts": "5.0.1"
+  }
+}

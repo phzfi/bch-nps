@@ -1,0 +1,22 @@
+{
+  "hosting": [
+    {
+      "target": "form",
+      "public": "form/build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "target": "admin-dashboard",
+      "public": "admin-dashboard/build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    }
+  ]
+}

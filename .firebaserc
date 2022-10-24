@@ -6,7 +6,10 @@
     "phzgs-nps": {
       "hosting": {
         "target": "admin_dash",
-        "admin_dash": [
+        "form": [
+          "phzgs-nps"
+        ],
+        "admin-dashboard": [
           "phzgs-nps-admin"
         ]
       }

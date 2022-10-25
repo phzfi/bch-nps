@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth, EmailAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCJPHyGZTovh2dOn5NWFzuSPoaFOI59mN4",
@@ -11,4 +12,14 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
+
+export const authUiConfig = {
+    signInFlow: 'popup',
+    signInSuccessUrl: '/',
+    signInOptions: [
+        EmailAuthProvider.PROVIDER_ID
+    ]
+}
+
 export const db = getFirestore();
+export const auth = getAuth();

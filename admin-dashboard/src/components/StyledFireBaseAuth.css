@@ -1,0 +1,9 @@
+.firebase-auth {
+    z-index: 1;
+    position: fixed;
+    width: 350px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 50px;
+}

@@ -1,4 +1,4 @@
-# Promoter Score Documentation V1.0.0
+# Net Promoter Score form & dashboard
 
 ##### This project is forked from [BCHteam1's repositories](https://github.com/BCHteam1/)
 
@@ -12,15 +12,15 @@ $ npm run deploy    # build & deploy to Firebase
 
 ## 1. Project purpose
 
-The purpose of this application is to measure the promoter score of the customer.
-The promoter score is a research metric that takes the form of a single survey question asking respondents to rate the likelihood that they would recommend a company, product, or a service to a friend or colleague.
+The purpose of this application is to measure the net promoter score of the customer.
+The net promoter score is a research metric that takes the form of a single survey question asking respondents to rate the likelihood that they would recommend a company, product, or a service to a friend or colleague.
 The typical question is:
 
 > How likely are you to recommend us?
 
 The scale for the answer ranges from 1 to 10.
 
-The promoter score can be interpreted and used as an indicator of customer loyalty and its value ranges from -100 to +100. A specific promoter score can be used, for example, as a threshold for a bonus salary payment. For instance an employer can set a promoter score of 30 as the threshold to pay a bonus to her employees.
+The net promoter score can be interpreted and used as an indicator of customer loyalty and its value ranges from -100 to +100. A specific net promoter score can be used, for example, as a threshold for a bonus salary payment. For instance an employer can set a net promoter score of 30 as the threshold to pay a bonus to her employees.
 
 The purpose of this application is to create a survey that can be embedded in any site.
 

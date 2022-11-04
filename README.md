@@ -109,7 +109,7 @@ The applications are deployed to Firebase Hosting, check the configuration files
 The applications can be built and deployed to Firebase with a convenience script:
 
 ```
-$ npm deploy
+$ npm run deploy
 ```
 
 ### 4.2 Access control

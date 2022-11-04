@@ -104,6 +104,7 @@ The applications are deployed to Firebase Hosting, check the configuration files
 
 - [`.firebaserc`](./.firebaserc)
 - [`firebase.json`](./firebase.json)
+- [`firestore.rules`](./firestore.rules)
 
 The applications can be built and deployed to Firebase with a convenience script:
 
@@ -111,7 +112,18 @@ The applications can be built and deployed to Firebase with a convenience script
 $ npm deploy
 ```
 
-#### 4.2 Form embedding
+### 4.2 Access control
+
+Since the form is designed to allow anonymous submissions, unauthenticated writes to collection `/reviews/` are allowed.
+
+Collection can be read only if currently authenticated user has the role `admin`. Role to user account mappings are defined in collection `/users/`.
+
+To add a new admin user, create a new document into the collection `/users/` through the Firebase web console.
+Document ID should be user's email and document should have a field `role` with a value `admin`.
+
+Access control is implemented with Firestore security rules, see [`firestore.rules`](./firestore.rules).
+
+#### 4.3 Form embedding
 
 - Place the below HTML elements anywhere on your page
 

@@ -11,8 +11,11 @@ nav {
 }
 
 nav ul {
+	display: flex;
+	flex-direction: column;
 	list-style-type: none;
 	margin: 2rem 0;
+	height: 100%;
 }
 
 li {
@@ -27,6 +30,10 @@ li a {
 	display: flex;
 	align-items: center;
 	font-weight: 700;
+}
+
+li:last-of-type {
+	margin-top: auto;
 }
 
 .active {

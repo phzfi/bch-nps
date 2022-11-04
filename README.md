@@ -114,14 +114,18 @@ $ npm run deploy
 
 ### 4.2 Access control
 
+Access control is implemented with Firestore security rules, see [`firestore.rules`](./firestore.rules).
+
 Since the form is designed to allow anonymous submissions, unauthenticated writes to collection `/reviews/` are allowed.
 
-Collection can be read only if currently authenticated user has the role `admin`. Role to user account mappings are defined in collection `/users/`.
+Collection can be read only if currently authenticated user has the role `admin`. Role to user account mappings are defined in the collection `/users/`.
 
-To add a new admin user, create a new document into the collection `/users/` through the Firebase web console.
-Document ID should be user's email and document should have a field `role` with a value `admin`.
+#### Add a new admin user
 
-Access control is implemented with Firestore security rules, see [`firestore.rules`](./firestore.rules).
+Create a new email/password user to Firebase Auth at the web console.
+
+Then, create a new document into the collection `/users/` through the Firebase web console.
+Document ID should be user's email and it should have a field `role` with a value `admin`.
 
 #### 4.3 Form embedding
 

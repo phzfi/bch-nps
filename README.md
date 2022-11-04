@@ -127,7 +127,11 @@ Create a new email/password user to Firebase Auth at the web console.
 Then, create a new document into the collection `/users/` through the Firebase web console.
 Document ID should be user's email and it should have a field `role` with a value `admin`.
 
-#### 4.3 Form embedding
+#### 4.3 Form title
+
+Form title is user-configurable and is stored in the Firestore document `/config/form`.
+
+#### 4.4 Form embedding
 
 - Place the below HTML elements anywhere on your page
 

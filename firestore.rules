@@ -9,5 +9,9 @@ service cloud.firestore {
       allow read, write: if isAdmin(request.auth.token.email)
       allow create: if true
     }
+
+    match /config/form/{document=**} {
+      allow read: if true
+    }
   }
 }

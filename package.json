@@ -6,11 +6,9 @@
     "start": "run-p start:form start:admin-dashboard",
     "start:form": "npm run -w form start",
     "start:admin-dashboard": "PORT=3001 npm run -w admin-dashboard start",
-
     "build": "run-p build:form build:admin-dashboard",
     "build:form": "npm run -w form build",
     "build:admin-dashboard": "npm run -w admin-dashboard build",
-
     "deploy": "run-s build deploy:firebase",
     "deploy:firebase": "npx firebase deploy"
   },

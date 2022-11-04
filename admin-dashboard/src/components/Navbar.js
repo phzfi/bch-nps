@@ -4,8 +4,6 @@ import { FaChartPie } from 'react-icons/fa';
 import { ImEmbed2 } from 'react-icons/im';
 
 
-
-
 const Navbar = () => {
 	return (
 		<nav>

@@ -197,7 +197,7 @@ const MuiForm = () => {
 						align="center"
 						sx={{ fontSize: "1.8rem", padding: "3rem" }}
 					>
-						How likely are you to recommend PHZ to a friend or colleague?
+						Would you recommend Alma's Alchemia to your Friend?
 					</DialogTitle>
 					<Typography
 						variant="subtitle1"

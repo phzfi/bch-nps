@@ -44,7 +44,7 @@ The applications and the database are hosted on Firebase.
 - [Firebase](https://firebase.google.com/)
   - Firestore
 
-### 2.2. Information collected from users<a id='2.2'></a>
+### 2.2. Information collected from users<a id='2.2.'></a>
 
 The survey collects from the user only the likelyhood rate, that is a number for 1 to 10, and an optional comment. These informations are stored into the database with a generated timestamp.
 
@@ -86,7 +86,7 @@ Form can be accessed at [`localhost:3000`](http://localhost:3000), admin dashboa
 
 **N.B.:** *Despite running locally, applications are currently using the project's Firestore storage.*
 
-**N.B.:** *Local storage must be cleared (e.g. using developer console) between the form submissions, for more details, see [section 2.2](#2.2)*
+**N.B.:** *Local storage must be cleared (e.g. using developer console) between the form submissions, for more details, see [section 2.2.](#2.2.)*
 
 ### 3.3. Run tests
 
@@ -96,7 +96,7 @@ Form can be accessed at [`localhost:3000`](http://localhost:3000), admin dashboa
 The allowed licences can be found in `<app_dir>/config/license-checker-config.js`
 The last two licences, `0BSD` and `CC0-1.0` still need confirmation from the legal deparment. They were added to the customer provided list to pass the licence check.
 
-## 4. Production environment & configuration
+## 4. Production environment & configuration<a id='4.'></a>
 
 ### 4.1. Deployment
 
@@ -120,12 +120,12 @@ Since the form is designed to allow anonymous submissions, unauthenticated write
 
 Collection can be read only if currently authenticated user has the role `admin`. Role to user account mappings are defined in the collection `/users/`.
 
-#### Add a new admin user
+#### 4.2.1. Add a new admin user<a id='4.2.1.'></a>
 
 Create a new email/password user to Firebase Auth at the web console.
 
 Then, create a new document into the collection `/users/` through the Firebase web console.
-Document ID should be user's email and it should have a field `role` with a value `admin`.
+Document ID should be user's email and it should have a field `role` with a value of `admin`.
 
 ### 4.3. Form title
 

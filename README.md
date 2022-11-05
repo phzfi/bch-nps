@@ -32,7 +32,7 @@ The project is divided into two applications:
 
 The applications and the database are hosted on Firebase.
 
-### 2.1 Main languages and technologies: Firebase & React
+### 2.1. Main languages and technologies: Firebase & React
 
 - Javascript/JSX
 - React
@@ -44,7 +44,7 @@ The applications and the database are hosted on Firebase.
 - [Firebase](https://firebase.google.com/)
   - Firestore
 
-### 2.2 Information collected from users<a id='2.2'></a>
+### 2.2. Information collected from users<a id='2.2'></a>
 
 The survey collects from the user only the likelyhood rate, that is a number for 1 to 10, and an optional comment. These informations are stored into the database with a generated timestamp.
 
@@ -96,9 +96,9 @@ Form can be accessed at [`localhost:3000`](http://localhost:3000), admin dashboa
 The allowed licences can be found in `<app_dir>/config/license-checker-config.js`
 The last two licences, `0BSD` and `CC0-1.0` still need confirmation from the legal deparment. They were added to the customer provided list to pass the licence check.
 
-## 4. Production environment
+## 4. Production environment & configuration
 
-### 4.1 Deployment
+### 4.1. Deployment
 
 The applications are deployed to Firebase Hosting, check the configuration files and Firebase project settings for details:
 
@@ -112,7 +112,7 @@ The applications can be built and deployed to Firebase with a convenience script
 $ npm run deploy
 ```
 
-### 4.2 Access control
+### 4.2. Access control
 
 Access control is implemented with Firestore security rules, see [`firestore.rules`](./firestore.rules).
 
@@ -127,11 +127,11 @@ Create a new email/password user to Firebase Auth at the web console.
 Then, create a new document into the collection `/users/` through the Firebase web console.
 Document ID should be user's email and it should have a field `role` with a value `admin`.
 
-#### 4.3 Form title
+### 4.3. Form title
 
 Form title is user-configurable and is stored in the Firestore document `/config/form`.
 
-#### 4.4 Form embedding
+### 4.4. Form embedding
 
 - Place the below HTML elements anywhere on your page
 

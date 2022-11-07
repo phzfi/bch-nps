@@ -19,7 +19,6 @@ import './StyledFireBaseAuth.css';
     className?: string;
        CSS class for the component */
 const StyledFireBaseAuth = ({uiConfig, firebaseAuth, className, uiCallback}) => {
-    console.log("DEBUG:", uiConfig)
     const [userSignedIn, setUserSignedIn] = useState(false);
     const elementRef = useRef(null);
 

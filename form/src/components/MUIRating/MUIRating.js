@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 import "./MUIRating.css";
 // import axios from "axios";
 import { db } from "../../firebase-config";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, doc, addDoc, getDoc } from "firebase/firestore";
 import {
 	Box,
 	FormControl,
@@ -38,8 +38,12 @@ const MuiForm = () => {
 	const theme = useTheme();
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 	const [errorMessage, setErrorMessage] = useState("");
+	const [surveyTitle, setSurveyTitle] = useState("");
 
 	const reviewsCollectionRef = collection(db, "reviews");
+
+	const docRef = doc(db, "config", "form")
+	getDoc(docRef).then((data) => setSurveyTitle(data.data().surveyTitle))
 
 	useEffect(() => {
 		checkIsSurveyAnswered();
@@ -181,7 +185,7 @@ const MuiForm = () => {
 	function SlideTransition(props) {
 		return <Slide {...props} direction="up" />;
 	}
-
+    
 	return (
 		<div>
 			{!surveyAnswered && (
@@ -197,7 +201,7 @@ const MuiForm = () => {
 						align="center"
 						sx={{ fontSize: "1.8rem", padding: "3rem" }}
 					>
-						How likely are you to recommend PHZ to a friend or colleague?
+						{ surveyTitle }
 					</DialogTitle>
 					<Typography
 						variant="subtitle1"

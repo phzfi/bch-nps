@@ -2,9 +2,15 @@ import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 import { FaChartPie } from 'react-icons/fa';
 import { ImEmbed2 } from 'react-icons/im';
+import { HiOutlineLogout } from 'react-icons/hi'
+import { signOut } from "firebase/auth";
 
+import { auth } from "../firebase-config";
 
-
+const handleSignOut = _ => {
+	signOut(auth).then(() => console.log("sign-out successful"))
+	.catch((err) => console.log("couldn't sign out:", err))
+}
 
 const Navbar = () => {
 	return (
@@ -16,6 +22,9 @@ const Navbar = () => {
 				</li>
 				<li>
 					<NavLink to="/embedform"><ImEmbed2 /> Embed</NavLink>
+				</li>
+				<li>
+				    <NavLink onClick={handleSignOut}><HiOutlineLogout /> Sign out</NavLink>
 				</li>
 			</ul>
 		</nav>

@@ -36,6 +36,11 @@ To deploy the applications, you must:
 - have an appropriate access to a Firebase project
 - [configure the application](#4.1.) for the Firebase project
 
+---
+
+![High level application architecture](docs/img/bch-nps-architecture.drawio.svg "Application architecture")<br/>
+_High level application architecture_
+
 ### 2.1. Main languages and technologies: Firebase & React
 
 - Javascript/JSX
@@ -193,6 +198,6 @@ in `package.json`
 
 ## 6. Screenshots
 
-![Mobile view of empty form](src/components/assets/ScreenshotEmptyForm.png?raw=true "Empty form")
+![Mobile view of filled survey form](form/src/components/assets/ScreenshotRatedForm.png "Survey form")
 
-![Mobile view of filled form](src/components/assets/ScreenshotRatedForm.png?raw=true "Filled form")
+![View of the admin dashboard on desktop browser](https://user-images.githubusercontent.com/75204814/169286529-f21c0328-2dcd-478d-bd89-13828b29a10a.png "Admin dashboard on desktop")

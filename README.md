@@ -30,7 +30,11 @@ The project is divided into two applications:
 - [`form`](./form/)
 - [`admin-dashboard`](./admin-dashboard/)
 
-The applications and the database are hosted on Firebase.
+The applications are hosted on [Firebase](https://firebase.google.com/). [Firestore](https://firebase.google.com/products/firestore) is used as a backend storage for the survey results, and also as the application configuration database.
+
+To deploy the applications, you must:
+- have an appropriate access to a Firebase project
+- [configure the application](#4.1.) for the Firebase project
 
 ### 2.1. Main languages and technologies: Firebase & React
 
@@ -42,7 +46,7 @@ The applications and the database are hosted on Firebase.
 - git/GitHub
 - cypress for E2E testing
 - [Firebase](https://firebase.google.com/)
-  - Firestore
+  - [Firestore](https://firebase.google.com/products/firestore)
 
 ### 2.2. Information collected from users<a id='2.2.'></a>
 
@@ -54,7 +58,7 @@ When a user submits the survey, an item with an expiration date is set into the 
 
 If a user does not want to answer and clicks the CLOSE button, an item with an expiration date is set into the browser localStorage so that the form is not presented again in the following 7 days.
 
-## 3. Development environment
+## 3. Development environment<a id='3.'></a>
 
 ### 3.1. Prerequisites, and what to do first
 
@@ -98,13 +102,14 @@ The last two licences, `0BSD` and `CC0-1.0` still need confirmation from the leg
 
 ## 4. Production environment & configuration<a id='4.'></a>
 
-### 4.1. Deployment
+### 4.1. Deployment<a id='4.1.'></a>
 
-The applications are deployed to Firebase Hosting, check the configuration files and Firebase project settings for details:
+The applications are deployed to Firebase, check the configuration files and Firebase project settings for details:
 
 - [`.firebaserc`](./.firebaserc)
 - [`firebase.json`](./firebase.json)
 - [`firestore.rules`](./firestore.rules)
+- [`config/index.js`](./config/index.js)
 
 The applications can be built and deployed to Firebase with a convenience script:
 
@@ -112,15 +117,41 @@ The applications can be built and deployed to Firebase with a convenience script
 $ npm run deploy
 ```
 
+#### 4.1.1. Deployment from the absolute scratch
+
+0. Make sure your [development environment](#3.) is working. You must be able to successfully `npm run build`.
+1. [Log the CLI into Firebase](https://firebase.google.com/docs/cli#sign-in-test-cli): `$ npx firebase login`
+2. [Create a new Firebase _project_](https://firebase.google.com/docs/web/setup#create-project). Google Analytics is not used by the applications and can be disabled. After creating the project, configure it as desired.
+    - from CLI: `$ npx firebase projects:create -n <display name> <project id>`
+3. Add the project as a default for Firebase CLI: `$ npx firebase use --add`
+4. [Register a new Firebase _web app_](https://firebase.google.com/docs/web/setup#register-app).
+    - from CLI: `$ npx firebase apps:create web <app name>`
+5. Print and copy the _project configuration_ object  to [`config/index.js`](config/index.js) to configure the applications for Firebase.
+    - from CLI: `$ npx firebase apps:sdkconfig WEB <app id>`
+    - [`firebaseConfig` object](https://firebase.google.com/docs/web/setup#add-sdks-initialize) from the project settings in the web console
+6. Create Firebase Hosting _sites_ for the form and the dashboard:<br/>`$ npx firebase hosting:sites:create <site id>`
+    - Project might have already a site created you might want to use. List all sites with:<br/>`$ npx firebase hosting:sites:list`
+7. [Add _deploy targets_](https://firebase.google.com/docs/hosting/multisites#set_up_deploy_targets) to Firebase CLI:
+    ```
+    $ npx firebase target:apply hosting admin-dashboard <dashboard site id>
+    $ npx firebase target:apply hosting form <form site id>
+    ```
+    Additionally, clean up [`.firebaserc`](./.firebaserc). Remove references to other Firebase projects from the `"targets"` object.
+8. [Enable the Email/Password Authentication provider](https://firebase.google.com/docs/auth/web/firebaseui#email_address_and_password) for your project.
+9. [Provision Cloud Firestore](https://firebase.google.com/docs/firestore/quickstart#create) for your project.
+10. [Add a _collection_](https://firebase.google.com/docs/firestore/using-console#add_data) `config` and a _document_ `form` into it. Add a _field_ `surveyTitle` of type string to the document to set the title of the survey form.
+11. Add a collection `users` for user account to role mapping. Adding the user roles is explained in [section 4.2.0.](#4.2.0.)
+12. Deploy the applications: `$ npm run deploy`
+
 ### 4.2. Access control
 
 Access control is implemented with Firestore security rules, see [`firestore.rules`](./firestore.rules).
 
-Since the form is designed to allow anonymous submissions, unauthenticated writes to collection `/reviews/` are allowed.
+Since the form is designed to allow anonymous submissions, unauthenticated writes to the collection `/reviews/` are allowed.
 
-Collection can be read only if currently authenticated user has the role `admin`. Role to user account mappings are defined in the collection `/users/`.
+Survey results should be read only by privileged users, thus the collection `/reviews/` can be read only if currently authenticated user has the role `admin`. Role to user account mappings are defined in the collection `/users/`.
 
-#### 4.2.1. Add a new admin user<a id='4.2.1.'></a>
+#### 4.2.0. Add a new admin user<a id='4.2.0.'></a>
 
 Create a new email/password user to Firebase Auth at the web console.
 
@@ -129,7 +160,7 @@ Document ID should be user's email and it should have a field `role` with a valu
 
 ### 4.3. Form title
 
-Form title is user-configurable and is stored in the Firestore document `/config/form`.
+Form title is user-configurable and is stored in a field `surveyTitle` in the Firestore document `/config/form`.
 
 ### 4.4. Form embedding
 
@@ -145,11 +176,7 @@ Form title is user-configurable and is stored in the Firestore document `/config
 <!-- EMBEDDABLE PROMOTER SCORE SURVEY -->
 ```
 
-## 5. Continuous integration
-
-Changes in the form repository will not result in a new automatic deploy. Requires manual deployment.
-
-## 6. Code style
+## 5. Code style
 
 Cypress requires the following:
 
@@ -164,7 +191,7 @@ in `package.json`
 },
 ```
 
-## 7. Screenshots
+## 6. Screenshots
 
 ![Mobile view of empty form](src/components/assets/ScreenshotEmptyForm.png?raw=true "Empty form")
 

@@ -14,7 +14,8 @@
   },
   "workspaces": [
     "form",
-    "admin-dashboard"
+    "admin-dashboard",
+    "common"
   ],
   "devDependencies": {
     "firebase-tools": "^11.15.0",

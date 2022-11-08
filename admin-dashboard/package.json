@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^14.4.3",
     "bootstrap": "^5.2.2",
     "classnames": "^2.3.2",
+    "config": "file:../config",
     "firebase": "^9.12.1",
     "firebaseui": "^6.0.1",
     "react": "^18.2.0",

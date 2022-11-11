@@ -12,9 +12,7 @@ import {
 	Snackbar,
 	Alert,
 } from "@mui/material";
-import IconButton from '@mui/material/IconButton';
 import StarIcon from "@mui/icons-material/Star";
-import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 
 const MuiForm = () => {

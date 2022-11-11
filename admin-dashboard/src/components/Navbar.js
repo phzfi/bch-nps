@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 import { FaChartPie } from 'react-icons/fa';
-import { ImEmbed2 } from 'react-icons/im';
 import { HiOutlineLogout } from 'react-icons/hi'
 import { signOut } from "firebase/auth";
 
@@ -19,9 +18,6 @@ const Navbar = () => {
 			<ul>
 				<li>
 					<NavLink to="/"><FaChartPie /> Dashboard</NavLink>
-				</li>
-				<li>
-					<NavLink to="/embedform"><ImEmbed2 /> Embed</NavLink>
 				</li>
 				<li>
 				    <NavLink onClick={handleSignOut}><HiOutlineLogout /> Sign out</NavLink>

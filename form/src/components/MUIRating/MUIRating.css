@@ -12,3 +12,10 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+
+#surveyForm {
+    display: flex;
+    align-items: center;
+    width: 100hv;
+    flex-direction: column;
+}

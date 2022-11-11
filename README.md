@@ -22,7 +22,7 @@ The scale for the answer ranges from 1 to 10.
 
 The net promoter score can be interpreted and used as an indicator of customer loyalty and its value ranges from -100 to +100. A specific net promoter score can be used, for example, as a threshold for a bonus salary payment. For instance an employer can set a net promoter score of 30 as the threshold to pay a bonus to her employees.
 
-The purpose of this application is to create a survey that can be embedded in any site.
+The purpose of this application is to create a user-configurable NPS survey form and a dashboard for result analysis.
 
 ## 2. Architecture
 
@@ -59,10 +59,6 @@ The survey collects from the user only the likelyhood rate, that is a number for
 
 No cookies are collected or stored so there is a No Cookie Policy.
 
-When a user submits the survey, an item with an expiration date is set into the browser localStorage so that is not possible to submit again the form in the following 30 days.
-
-If a user does not want to answer and clicks the CLOSE button, an item with an expiration date is set into the browser localStorage so that the form is not presented again in the following 7 days.
-
 ## 3. Development environment<a id='3.'></a>
 
 ### 3.1. Prerequisites, and what to do first
@@ -93,9 +89,7 @@ $ npm start
 Form and dashboard should be automatically opened in the browser.
 Form can be accessed at [`localhost:3000`](http://localhost:3000), admin dashboard at [`localhost:3001`](http://localhost:3001) 
 
-**N.B.:** *Despite running locally, applications are currently using the project's Firestore storage.*
-
-**N.B.:** *Local storage must be cleared (e.g. using developer console) between the form submissions, for more details, see [section 2.2.](#2.2.)*
+**N.B.:** *Despite running locally, applications are currently using the **project's Firestore storage.***
 
 ### 3.3. Run tests
 
@@ -163,23 +157,16 @@ Create a new email/password user to Firebase Auth at the web console.
 Then, create a new document into the collection `/users/` through the Firebase web console.
 Document ID should be user's email and it should have a field `role` with a value of `admin`.
 
-### 4.3. Form title
+### 4.3. Configuration
 
-Form title is user-configurable and is stored in a field `surveyTitle` in the Firestore document `/config/form`.
+Survey form title and the post-survey message are user-configurable. Values are stored in a Firestore document `/config/form` and can be edited e.g. through the [web console](https://console.firebase.google.com/).
 
-### 4.4. Form embedding
+Configuration options in the document `/config/form`:
 
-- Place the below HTML elements anywhere on your page
-
-```html
-<!-- EMBEDDABLE PROMOTER SCORE SURVEY -->
-<div id="psForm"></div>
-<script
-  src="<URL TO DEPLOYMENT /static/js/main.*.js>"
-  type="text/javascript"
-></script>
-<!-- EMBEDDABLE PROMOTER SCORE SURVEY -->
-```
+| Field | Description |
+|-------|-------------|
+| `surveyTitle` | Title of the survey form. |
+| `thankYouMessage` | Message to show after a successful form submission. |
 
 ## 5. Code style
 
